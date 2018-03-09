@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+        .fullTap {
+            background-color: yellowgreen;
+            width: 500px;
+            height: 500px;
+            border: 3px solid red;
+            margin-left: 100px;
+        }
+
+        .testDiv {
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+            margin-left: 100px;
+            margin-top: 50px;
+        }
+
+
+        button {
+            margin-top: 20px;
+        }
+
+        #fullScreen {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="fullTap">
+        <div class="testDiv">
+            H5应用的分类： 根据应用的提供方，可分为学乐内置应用，和第三方接入的应用两大类。 根据应用的显示区域，可分为主应用（屏幕底部是C++底栏，剩余区域为主应用）、工具类应用（右侧边栏）、全屏应用（整个屏幕）三类。 每个H5应用通过一个唯一的appId进行标识，appId需要通过申请才能获得。 appId的编码规则：8位数字，00000000 ~ 99999999 00000000 ~ 00009999：学乐内置应用 00010000 ~ 99999999：第三方接入的应用
+        </div>
+
+        <button id="fullScreen">全屏</button>
+        <button id="cancelFullScreen">撤销全屏</button>
+    </div>
+    <script>
+        
+        $("#fullScreen").click(function () {
+            if (window.xl) {
+                xl.showOtherBar("123", false);
+            }
+        });
+        $("#cancelFullScreen").click(function () {
+            if (window.xl) {
+                xl.showOtherBar("123", true);
+            }
+        });
+    </script>
+</body>
+</html>

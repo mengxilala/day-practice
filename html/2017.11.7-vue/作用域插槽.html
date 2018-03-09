@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域插槽</title>
+</head>
+<body>
+    <script src="../../js/vue.js"></script>
+    <!-- <script id="my-list" type="text/x-template">  -->
+            <div class="my-list"> 
+                <div class="title">{{ title }}</div> 
+                <div class="list"> 
+                    <div class="list-item" v-for="shape in shapes"> 
+                        <div>{{ shape.name }} <small>({{ shape.sides }} sides)</small></div> 
+                    </div> 
+                </div> 
+            </div> 
+        <!-- </script> -->
+    <div id="app">
+        <my-list></my-list>
+    </div>
+
+
+    <script>
+        let app = new Vue({
+            el: "#app"
+        })
+        Vue.component('my-list', {
+            template: 'my-list',
+            data() {
+                return {
+                    title: 'Shapes',
+                    shapes: [
+                        {
+                            name: 'Square',
+                            sides: 4
+                        },
+                        {
+                            name: 'Hexagon',
+                            sides: 6
+                        },
+                        {
+                            name: 'Triangle',
+                            sides: 3
+                        }
+                    ]
+                }
+            }
+        })
+    </script>
+</body>
+</html>

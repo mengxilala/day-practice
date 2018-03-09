@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件注册语法糖</title>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+    </div>
+    <div id="app2">
+        <my-component2></my-component2>
+        <my-component3></my-component3>
+    </div>
+    <script src="../../../js/vue.js"></script>
+    <script>
+        // 以上组件注册的方式有些繁琐，Vue.js为了简化这个过程，提供了注册语法糖。
+        // 使用Vue.component()直接创建和注册组件：
+
+        // Vue.component()的第1个参数是标签名称，第2个参数是一个选项对象，使用选项对象的template属性定义组件模板。
+        // 使用这种方式，Vue在背后会自动地调用Vue.extend() 。
+
+
+        // 全局注册
+        Vue.component('my-component', {
+            template: '<div>This is the first component!</div>'
+        })
+        var vm = new Vue({
+            el: "#app"
+        })
+
+        var vm1 = new Vue({
+            el: "#app2",
+            components: {
+                // 局部注册，my-component2是标签名称
+                'my-component2': {
+                    template: '<div>This is the second component!</div>'
+                },
+                // 局部注册，my-component3是标签名称
+                'my-component3': {
+                    template: '<div>This is the third component!</div>'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

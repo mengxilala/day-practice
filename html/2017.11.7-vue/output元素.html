@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>outPut元素</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="range"] {
+            -webkit-box-shadow: 0 1px 0 0px #424242, 0 1px 0 #060607 inset, 0px 2px 10px 0px black inset, 1px 0px 2px rgba(0, 0, 0, 0.4) inset, 0 0px 1px rgba(0, 0, 0, 0.6) inset;
+            margin-top: 2px;
+            background-color: #272728;
+            border-radius: 15px;
+            width: 400px;
+            -webkit-appearance: none;
+            height: 10px;
+        }
+
+        /* input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            cursor: default;
+            top: -5px;
+            height: 30px;
+            width: 20px;
+            transform: translateY(-4px);
+            background: none repeat scroll 0 0 #777;
+            border-radius: 15px;
+            -webkit-box-shadow: 0 -1px 1px black inset;
+        } */
+    </style>
+</head>
+<body>
+    <input type="range" name="quantity" id="quantity" min="0" max="100">
+    <output for="quantity">50</output>
+
+    <script>
+        // var rangeInput = document.querySelector('input');
+        // var outPut = document.querySelector('output');
+
+        // function setDefaultState() {
+        //     outPut.value = rangeInput.value;
+        // }
+        // rangeInput.addEventListener('change', function () {
+        //     outPut.value = this.value;    //this.value总是指向input的range的值
+        // })
+
+        // // 当DOM完成加载，然后触发这个函数：
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     setDefaultState();
+        // })
+
+
+        // 当你向左或向右滑动时，事件监听器的变化非常大，但它不会立即更新输出的值。幸运的是，有一种新型的事件监听器，它被称为input
+        var rangeInput = document.querySelector('input');
+        var outPut = document.querySelector('output');
+
+        function setDefaultState() {
+            outPut.value = rangeInput.value;
+        }
+        rangeInput.addEventListener('input', function () {    // 有一种新型的事件监听器，它被称为input
+            outPut.value = this.value;    //this.value总是指向input的range的值
+        })
+
+        // 当DOM完成加载，然后触发这个函数：
+        document.addEventListener('DOMContentLoaded', function () {
+            setDefaultState();
+        })
+
+
+    </script>
+</body>
+</html>

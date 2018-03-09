@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if和v-show</title>
+</head>
+<body>
+    <!-- v-if根据表达式来的值来判断在DOM中生成元素 -->
+    <div id="app">
+        <h1 v-if="isShow">如果v-if为true,就显示这句话，否则不显示</h1>
+        <!-- 在Vue中，我们切换多个元素一般不这么使用，而是配合<template>元素当做包装元素，并在上面使用v-if。最终的渲染结果不会包含<template>元素 -->
+        <template v-if="isShow">
+            <h1>这是一个h1标题</h1>
+            <h2>这是一个h2标题</h2>
+            <h3>这是一个h3标题</h3>
+            <h4>这是一个h4标题</h4>
+            <h5>这是一个h5标题</h5>
+        </template>
+    </div>
+
+
+    <!-- v-else
+    v-else和JavaScript中的else类似，但其要和v-if配合使用。比如我们做登录，如果登录了显示一个欢迎语，反则提示用户去登录 -->
+
+    <div id="example">
+        <h1 v-if="isLogined">欢迎来到梦想家园</h1>
+        <h1 v-else>您好，您尚未登录</h1>
+    </div>
+
+
+    <!-- 在实际项目中，当一个组件在两种状态渲染的效果不一样的时候，这个时候使用v-if和v-else配合<template> -->
+    <div id="example2">
+        <template v-if='isPrized'>
+            <figure>
+                <figcaption>恭喜你中了5元红包</figcaption>
+            </figure>
+        </template>
+        <template v-else>
+            <figure>
+                <figcaption>亲，就差那么一点点</figcaption>
+            </figure>
+        </template>
+    </div>
+
+    <!-- v-else-if
+    v-else-if和JavaScript中的else if类似，需要和v-if配合在一起使用。当有几个条件同时在的时候，根据运算结果决定显示与否 -->
+    <div id="example3">
+        <div v-if="type==='A'">此时显示A区域</div>
+        <div v-else-if="type==='B'">此时显示B区域</div>
+        <div v-else="type==='C'">此时显示C区域</div>
+    </div>
+
+
+    <!-- 除了v-if之外，Vue还提供v-show也可以控制元素的渲染。v-show和v-if功能有点相似，其中v-if依赖于控制DOM节点，而v-show是依赖于控制DOM节点的display属性。
+    当v-show传入的值为true时，对应DOM元素的display的值为block之类的，反之为false时，display的值为none。
+    也就是用户看不到元素的显示，但其DOM元素还是存在的。 -->
+
+    <!-- v-show 不支持 <template> 语法，也不支持 v-else。 -->
+        
+    <div id="example4">
+        <h1 v-show="true">我是一个标题</h1>
+        <p v-show="isShow">我是一个段落</p>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isShow: true
+            }
+        })
+
+        var example = new Vue({
+            el: "#example",
+            data: {
+                isLogined: true
+            }
+        })
+
+        var example2 = new Vue({
+            el: "#example2",
+            data: {
+                isPrized: true
+            }
+        })
+
+        var example3 = new Vue({
+            el: "#example3",
+            data: {
+                type: "A"
+            }
+        })
+
+        
+        var example4 = new Vue({
+            el: "#example4",
+            data: {
+                isShow:false
+            }
+        })
+    </script>
+</body>
+</html>

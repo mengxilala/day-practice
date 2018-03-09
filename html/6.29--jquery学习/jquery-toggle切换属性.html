@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>toggle切换属性</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+    <ul>
+        <li style="cursor:pointer">click me</li>
+    </ul>
+
+    <script>
+        $(function () {
+           
+            $("li").toggle(
+        
+                function () 
+                {
+                    $(this).css({ "list-style-type": "disc", "color": "blue" });
+                },
+                function () 
+                {
+                    $(this).css({ "list-style-type": "circle", "color": "green" });
+                },
+                function ()
+                 {
+                    $(this).css({ "list-style-type": "square", "color": "red" });
+                }
+                
+            );
+        })
+    </script>
+</body>
+
+</html>

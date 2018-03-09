@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-wrap</title>
+    <script src="../../js/jquery.min.js"></script>
+    <style>
+        .wrap {
+            border: 1px solid red;
+        }
+
+        #content {
+            background-color: skyblue;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- wrap(html|element|fn) 把所有匹配的元素用其他元素的结构化标记包裹起来。 -->
+    <!-- html参数描述:把所有的段落用一个新创建的div包裹起来 -->
+    <!-- <p>I would like to say:hello </p>
+    <p>I would like to say:i like english </p>
+    <p>I would like to say:good good study </p>
+    <p>I would like to say:day day up </p> -->
+
+
+
+    <!-- elem参数描述: 用ID是"content"的div将每一个段落包裹起来 -->
+    <!-- <p>I would like to say:hello </p>
+    <p>I would like to say:i like english </p>
+    <p>I would like to say:good good study </p>
+    <p>I would like to say:day day up </p>
+    <div id="content"></div> -->
+
+
+    <!-- 回调函数 描述:用原先div的内容作为新div的class，并将每一个元素包裹起来 -->
+    <!-- <div class="container">
+        <div class="inner">Hello</div>
+        <div class="inner">Goodbye</div>
+    </div> -->
+
+
+
+
+
+
+
+    <!-- unwrap() 这个方法将移出元素的父元素。这能快速取消 .wrap()方法的效果。匹配的元素（以及他们的同辈元素）会在DOM结构上替换他们的父元素。 -->
+    <!-- 描述: 移除p元素的父元素 -->
+    <!-- <div>
+        <p>Hello</p>
+        <p>cruel</p>
+        <p>World</p>
+    </div> -->
+
+
+
+
+    <!-- wrapAll(html|ele) 将所有匹配的元素用单个元素包裹起来 -->
+    <!-- html描述: 用一个生成的div将所有段落包裹起来 -->
+    <!-- <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p> -->
+
+
+
+    <!-- wrapInner(htm|element|fnl) 将每一个匹配的元素的子内容(包括文本节点)用一个HTML结构包裹起来 -->
+    <!-- 参数html描述:把所有段落内的每个子内容加粗 -->
+    <!-- <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p> -->
+
+
+    <!-- 参数elem描述:把所有段落内的每个子内容加粗 -->
+    <!-- <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p> -->
+
+
+    <!-- 回调函数 描述:用原先div的内容作为新div的class，并将每一个元素包裹起来 -->
+    <div class="container">
+        <div class="inner">Hello</div>
+        <div class="inner">Goodbye</div>
+    </div>
+    <script>
+        // html参数描述:把所有的段落用一个新创建的div包裹起来   
+        // $("p").wrap("<div class='wrap'></div>");
+
+        // elem参数描述: 用ID是"content"的div将每一个段落包裹起来
+        // $("p").wrap(document.getElementById('content'));
+
+        //    回调函数 描述:用原先div的内容作为新div的class，并将每一个元素包裹起来
+        // $('.inner').wrap(function () {
+        //     return '<div class="' + $(this).text() + '" />';
+        // });
+
+
+
+        // 描述: 移除p元素的父元素
+        // $("p").unwrap();
+
+
+
+
+
+        // html描述: 用一个生成的div将所有段落包裹起来
+        // $("p").wrapAll("<div></div>");
+
+        // elem描述:用一个生成的div将所有段落包裹起来
+        // $("p").wrapAll(document.createElement("div"));
+
+
+        //    参数html描述:把所有段落内的每个子内容加粗
+        // $("p").wrapInner("<b></b>");
+
+        // 参数elem描述:把所有段落内的每个子内容加粗
+        // $("p").wrapInner(document.createElement("b"));
+
+
+        // 回调函数 描述:用原先div的内容作为新div的class，并将每一个元素包裹起来
+
+        $('.inner').wrapInner(function () {
+            return '<div class="' + $(this).text() + '" />';
+        });
+    </script>
+</body>
+</html>

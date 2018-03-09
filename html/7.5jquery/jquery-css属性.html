@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-css属性</title>
+    <script src="../../js/jquery.min.js"></script>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+
+        p {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <p>我们都是好孩子！</p>
+    <div></div>
+
+    <script>
+        // 1.css(name | pro | [, val | fn])  访问匹配元素的样式属性。
+
+        //  参数name 描述: 取得第一个段落的color样式属性的值。 
+        // jQuery 代码:
+        // $("p").css("color"); //红色
+        // 参数properties 描述: 将所有段落的字体颜色设为红色并且背景为蓝色。 
+        // jQuery 代码: 
+        //$("p").css({ "color": "#ff0011", "background": "blue" });
+        // 参数name, value 描述: 将所有段落字体设为红色 
+        // jQuery 代码: 
+        //$("p").css("color", "red");
+        // 参数name, 回调函数 描述: 逐渐增加div的大小 
+        // jQuery 代码:
+        // $("div").click(function () {
+        //     $(this).css({
+        //         width: function (index, value) {
+        //             return parseFloat(value) * 1.2;
+        //         },
+        //         height: function (index, value) {
+        //             return parseFloat(value) * 1.2;
+        //         }
+        //     });
+        // });
+
+     // cssHooks
+        (function ($) {
+            // first, check to see if cssHooks are supported
+            if (!$.cssHooks) {
+                // if not, output an error message
+                throw ("jQuery 1.4.3 or above is required for this plugin to work");
+                return;
+            }
+            $.cssHooks["someCSSProp"] = {
+                get: function (elem, computed, extra) {
+                    // handle getting the CSS property
+                }, set: function (elem, value) {
+                    // handle setting the CSS value 
+                }
+            };
+        })(jQuery);
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- jQuery.noConflict([extreme])  
+    jQuery.noConflict() 函数用于让出jQuery库对变量 $(和变量jQuery) 的控制权。
+    jQuery.noConflict( [ removeAll ] )  removeAll	可选/Boolean类型 是否彻底移交对变量jQuery的控制权，默认为false。
+    如果省略了参数 removeAll或该参数 不为true，则表示只让出对变量$的控制权；如果该参数为true，则表示同时让出变量$和jQuery的控制权。 -->
+
+    <!-- jQuery.noConflict()函数的返回值是jQuery类型，返回变量jQuery的引用。 -->
+
+
+   
+   
+    <!-- 以下是加载Prototype和jQuery库的情况： -->
+
+    <!-- <script src="prototype.js"></script>
+    <script src="jquery.js"></script> -->
+    <!-- <script >
+        // 让出对变量$的控制权
+        jQuery.noConflict();
+
+        // 使用jQuery进行DOM操作
+        jQuery("#uname").hide();
+
+        // 使用Prototype进行DOM操作
+        $("myDiv").setStyle({ color: "#ffffff" });
+    </script> -->
+
+
+
+
+    <!-- 此外，我们还可以使用其他自定义的变量名来操作jQuery：
+    
+    // 让出对变量$的控制权，并将jQuery赋给新的别名j
+    var j = jQuery.noConflict();
+    
+    // 基于jQuery进行DOM操作(使用变量j)
+    j("#uname").hide();
+    
+    // 基于Prototype进行DOM操作
+    $("myDiv").setStyle( {color: "#ffffff"} ); -->
+
+
+
+    <!-- 如果要实现两个版本的jQuery库共存，我们可以编写如下代码：
+    
+    <script type="text/javascript" src="jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+    // 让出jQuery-1.11.1对变量$和变量jQuery的控制权
+    var j = jQuery.noConflict( true );
+    
+    document.writeln( j.fn.jquery ); // 1.11.1
+    
+    document.writeln( $.fn.jquery ); // 1.4.2
+    document.writeln( jQuery.fn.jquery ); // 1.4.2
+    
+    /*
+     * 如果前面的jQuery.noConflict()没有传入参数true，
+     * 也就是说只让出变量$的控制，则$表示1.4.2，jQuery表示1.11.1
+     * 此时，jQuery.fn.jquery为1.11.1
+     */
+     </script> -->
+
+
+
+
+    <!-- 三个版本的jQuery库共存，对应的jQuery示例代码如下：
+    
+    <script type="text/javascript" src="jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+
+    // 让出jQuery-1.11.1对变量$和变量jQuery的控制权，使用变量j来控制
+    var j = jQuery.noConflict( true );
+    
+    // 让出jQuery-1.8.3对变量$的控制权
+    jQuery.noConflict();
+    
+    document.writeln( j.fn.jquery ); // 1.11.1
+    document.writeln( jQuery.fn.jquery ); // 1.8.3
+    document.writeln( $.fn.jquery ); // 1.4.2
+    </script>
+    注意：多个可能存在全局变量重名冲突的JS库，变量的实际控制权一般取决于JS库的加载顺序。
+    以上面三个版本的jQuery库的示例代码为例，后加载的jQuery库的变量覆盖了之前版本的变量，因此每次让出变量的控制权，控制权就会交给上一个JS库。 -->
+
+
+<!-- 
+    即使是多个库共存，我们也可以在jQuery.ready()的回调函数或其他自定义函数中将局部变量$作为jQuery的别名使用：
+    
+    // 让出jQuery库对变量$的控制权
+    jQuery.noConflict();
+    
+    jQuery(document).ready(function($){
+        // 使用局部变量$进行jQuery操作
+        $("p").css("color", "");    
+    });
+    
+    
+    (function($){
+        // 使用局部变量$进行jQuery操作
+        $("ul li").addClass("item");    
+    }(jQuery)); -->
+
+
+</body>
+</html>

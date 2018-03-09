@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-操作元素属性</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+        .active {
+            width: 30px;
+            height: 20px;
+            border: 1px solid #000;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+        .highlight{
+            background-color: skyblue;
+            opacity:.5;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="active" src="test.png" alt=''>111</img>
+    <img src="test.png" alt=''>222</img>
+    <img src="test.png" alt=''>333</img>
+
+    <ul>
+        <li>aaa</li>
+        <li>bbb</li>
+        <li>ccc</li>
+    </ul>
+
+    <script>
+        // 操作元素的"元素属性"
+        // $("img").attr("alt", "就这样吧"); //设置单个属性 元素名和属性值之间用逗号隔开 都要加引号
+        $("img").attr({ src: "test.png", title: "test.jpg", alt: "Test Image" }); //设置多个属性 元素名和属性值之间用冒号隔开 ，多个属性之间用逗号隔开
+
+        $("li").attr("title", "我是li元素");
+
+
+        // 修改css样式
+
+        $('li').addClass('active');  // 为匹配的元素加上 'active' 类: 
+
+        if ($("img").hasClass("active")) {    // 判断匹配的元素是否至少有一个元素应用了指定的CSS类
+            console.log('有')
+        } else {
+            console.log('没有')
+        }
+
+
+        // $("img").removeClass("active");     //从匹配的元素中删除 'active' 类: 
+
+
+        $("img").toggleClass("active"); // 为匹配的元素切换 'active' 类:  如果存在（不存在）就删除（添加）一个类。
+
+
+        // 每三次点击切换高亮样式: toggleClass( class, switch )  当switch是true时添加类, 当switch是false时删除类
+
+        var count = 0;
+        $("li").click(function () {
+            $(this).toggleClass("highlight", count++ % 3 == 0);
+        });
+    </script>
+</body>
+
+</html>

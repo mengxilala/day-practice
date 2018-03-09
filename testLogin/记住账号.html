@@ -1,0 +1,57 @@
+<!doctype html>
+<meta charset=utf-8>
+<center>
+    <input>
+    <br>
+    <br>现有的 arr 是
+    <br>
+    <pre></pre>
+</center>
+<script>
+    var arr;
+    pre = document.querySelector("pre");
+
+    try {
+        arr = JSON.parse(localStorage.usernames);
+    } catch (e) {
+        // 未从 localStorage 获取到有用的数据所以使用空数组
+        arr = [];
+    }
+
+    if (!Array.isArray(arr))
+        arr = []; // 如果 localStorage.usernames 解析后不是数组就不能用它, 使用空数组
+
+    // pre.textContent = arr.join("\n");
+    document.querySelector("input").addEventListener("keypress", onKeypress);
+
+    function onKeypress(e) {
+        if (e.key == "Enter" && this.value) {
+            arr.push(this.value);
+            this.value = "";
+            arr = unique(arr);
+            localStorage.usernames = JSON.stringify(arr);
+
+            var ccc=unique(JSON.parse(localStorage.usernames));
+            console.log(ccc);
+            pre.innerHTML ='';
+            for(var i=0;i<ccc.length;i++){
+             var p=document.createElement('p');
+             pre.innerHTML += "<p>"+ccc[i]+"</p>"
+            }
+        }
+    }
+
+    function unique(arr) {
+        var res = [];
+        var json = {};
+        for (var i = 0; i < arr.length; i++) {
+            if (!json[arr[i]]) {
+                res.push(arr[i]);
+                json[arr[i]] = 1;
+            }
+        }
+        return res;
+    }
+
+
+</script>

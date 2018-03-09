@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day1</title>
+    <style>
+        p {
+            font-family: 'helvetica neue', helvetica, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;  /* 文本转大写 */
+            text-align: center;
+            border: 2px solid rgba(0, 0, 200, 0.6);
+            background: rgba(0, 0, 200, 0.3);
+            color: rgba(0, 0, 200, 0.6);
+            box-shadow: 1px 1px 2px rgba(0, 0, 200, 0.4);
+            border-radius: 10px;
+            padding: 3px 10px;
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <p>Player 1: Chris</p>
+    <script>
+        var para = document.querySelector('p');
+        para.addEventListener('click', updateName);
+        function updateName() {
+            var name = prompt('please enter your name');     // prompt()方法用于显示可提示用户进行输入的对话框。 弹出个输入框要用户输入东西
+            para.textContent = 'Player 1: ' + name;
+        }
+    </script>
+</body>
+</html>

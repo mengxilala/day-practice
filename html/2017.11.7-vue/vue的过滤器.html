@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的过滤器</title>
+    <style>
+        body {
+            background: #988185;
+            background-image: linear-gradient(40deg, rgba(70, 57, 60, 0.05), rgba(128, 0, 21, 0.05)), linear-gradient(135deg, #796366 0%, #796366 10%, #8c7377 11%, #8c7377 40%, #a38f92 41%, #a38f92 50%, #796366 51%, #796366 60%, #8c7377 61%, #8c7377 90%, #a38f92 91%);
+            background-size: 7px 7px, 4px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+        }
+
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #app3 {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            max-width: 50vw;
+            margin: 20px;
+            text-align: left;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none outside none;
+        }
+
+        ul li:not(:last-child) {
+            border-bottom: 1px solid #d3d7d9;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        h2 a {
+            font-size: 24px;
+            color: #29B4F0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        h2 a:hover {
+            color: #0d8abf;
+        }
+
+
+        .summary {
+            font-size: 16px;
+            line-height: 30px;
+            margin-bottom: 25px;
+        }
+
+        .action {
+            text-align: right;
+        }
+
+        .action a {
+            background-color: #008fb5;
+            color: #fff;
+            padding: 5px 10px;
+            line-height: 18px;
+            border-radius: 3px;
+            transition: all 0.28s ease-in;
+            text-decoration: none;
+        }
+
+        .action a:hover {
+            background-color: #00b7e9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 定义和使用过滤器 -->
+    <!-- 1.全局过滤器 -->
+    <div id="app">
+        <p>{{ price | toUSD }}</p>
+    </div>
+
+
+    <!-- 2.本地过滤器 -->
+    <!-- 本地过滤器被注册到一个Vue组件中 -->
+    <div id="app2">
+        <h1>{{ name | upper }}</h1>
+    </div>
+
+    <!-- 3.实例 利用过滤器添加参数 -->
+    <!-- 创建一个名为readMore的过滤器，它将把字符串的长度限制为给定的字符数，并将其附加到你的选择的后缀中。 -->
+    <div id="app3">
+        <ul>
+            <li v-for="article in articles">
+                <h2>
+                    <a v-bind:href="article.link">{{article.title}}</a>
+                </h2>
+
+                <div class="summary">{{ article.summary | readMore(100,'...')}}</div>
+                <div class="action">
+                    <a v-bind:href="article.link">阅读更多</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 4.过滤器串联 -->
+    <div id="app4">
+        <h1>{{ price | toFixed(2) | toUSD }}</h1>
+    </div>   
+    <script src="../../js/vue.js"></script>
+    <script>
+        // 声明一个全局的Vue过滤器
+        // 声明的过滤器必须在Vue实例前，否则将报错
+        Vue.filter('toUSD', function (value) {
+            return `$${value}`;
+        })
+
+        let app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    price: 351.99
+                }
+            }
+        })
+
+
+        let app2 = new Vue({
+            el: "#app2",
+            data() {
+                return {
+                    name: 'w3cplus.com'
+                }
+            },
+            // 声明一个本地的过滤器
+            // 本地过滤器存储在Vue组件中，作过filters属性中的函数。这个时候你想注册多少个就能注册多少个
+            filters: {
+                upper: function (value) {
+                    return value.toUpperCase();
+                },
+                lower: function (value) {
+                    return value.toLowerCase();
+                }
+            }
+        })
+
+
+        // 声明一个全局的过滤器readMore   这个过滤器传了三个参数：text, length, suffix
+        Vue.filter('readMore', function (text, length, suffix) {
+            return text.substring(0, length) + suffix;
+
+        })
+
+        // 补充:stringObject.substring(start,stop) 方法用于提取字符串中介于两个指定下标之间的字符。
+        // 一个新的字符串，该字符串值包含 stringObject 的一个子字符串，其内容是从 start 处到 stop-1 处的所有字符，其长度为 stop 减 start。
+        // substring() 方法返回的子串包括 start 处的字符，但不包括 stop 处的字符。
+        // 如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+        // substring() 不接受负的参数。
+        // var str="Hello world!"
+        // document.write(str.substring(3,7))  lo w
+        // document.write(str.substring(3))    lo world
+
+        let app3 = new Vue({
+            el: "#app3",
+            data() {
+                return {
+                    articles: [
+                        {
+                            title: 'CSS :focus-within',
+                            summary: 'CSS的世界真是一个神奇的世界。可能众多前端开发者听说过:focus并未听说过:focus-within。那么:focus-within是什么鬼。' +
+                                '这篇文章，我们就说说:focus-within这个东东。在CSS中:focus-within是一个伪类，现在已经被列入到CSS选择器中（CSS Level 4 selector）。' +
+                                '他就像你知道的:focus或者:hover。:focus-within能非常方便处理获取焦点状态。当元素本身或其后代元素获得焦点时，:focus-within伪类的元素就会有效。',
+                            link: 'http://www.w3cplus.com/css/focus-within.html'
+                        },
+                        {
+                            title: '如何改变表单控件光标颜色',
+                            summary: '表单大家应该不陌生，当然了，今天并不是来聊怎么做表单或者处理表单的样式网格。而是来聊聊怎么改变表单控件中光标的颜色。' +
+                                '不知道在大家心中，表单控件的光标颜色是根据color属性来控制的。那么如果需要用CSS来改变表单控件，比如说input或者textarea元素的光标颜色，' +
+                                '应该怎么处理呢？',
+                            link: 'http://www.w3cplus.com/css/caret-color.html'
+                        }
+
+
+                    ]
+                }
+            }
+        })
+
+
+        // 声明两个全局的过滤器
+        Vue.filter('toFixed',function(price,limit){
+            return price.toFixed(limit);
+        })
+        Vue.filter('toUSD',function(price){
+            return `$${price}`;
+        })
+
+        let app4=new Vue({
+            el:"#app4",
+            data(){
+                return{
+                    price: 435.333
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

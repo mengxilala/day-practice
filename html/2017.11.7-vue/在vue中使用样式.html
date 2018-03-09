@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在vue中使用样式</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: #988185;
+            background-image: linear-gradient(40deg, rgba(70, 57, 60, 0.05), rgba(128, 0, 21, 0.05)), linear-gradient(135deg, #796366 0%, #796366 10%, #8c7377 11%, #8c7377 40%, #a38f92 41%, #a38f92 50%, #796366 51%, #796366 60%, #8c7377 61%, #8c7377 90%, #a38f92 91%);
+            background-size: 7px 7px, 4px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            font-family: montserrat;
+        }
+
+        #app {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shape {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            background: #f36;
+        }
+
+        .circle {
+            background-color: orange;
+            border-radius: 50%;
+        }
+
+        .square {
+            background-color: #c89;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+        }
+
+        .triangle.up {
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid orange;
+        }
+
+        .triangle.right {
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            border-left: 150px solid green;
+        }
+
+        .triangle.down {
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-top: 150px solid #49A5C4;
+        }
+
+        .triangle.left {
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            border-right: 150px solid #A549C4;
+        }
+
+        /* Animations */
+
+        .shape.animate {
+            animation-name: stretch;
+            animation-duration: 1.0s;
+            animation-timing-function: ease-out;
+        }
+
+        @keyframes stretch {
+            0% {
+                transform: scale(.3);
+            }
+            100% {
+                transform: scale(1.0);
+            }
+        }
+    </style>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 1.在vue中使用内联样式 -->
+    <div id="app">
+        <!-- <button v-on:click=changeColor>Click Me (^_^)</button> -->
+        <div v-bind:style="styles"></div>
+    </div>
+
+
+    <!-- 添加多个样式 -->
+    <div id="app1">
+        <div v-bind:style="[styles,moreStyles]"></div>
+    </div>
+
+
+    <!-- 2.在vue中使用CSS类样式 -->
+    <div id="app2">
+        <!-- <div v-for="shape in shapes" class="shape" v-bind:class="{circle:shape.isRound, square:!shape.isRound }"></div> -->
+        <div v-for="shape in shapes" class="shape" v-bind:class="[ shape.shape, shape.direction ? shape.direction : '',{ animate: shape.animate }]"></div>
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                // styles: {
+                //     'background-color': 'blue',
+                //     'width': '200px',
+                //     'height':'200px'
+                // }
+            },
+            computed: {
+                styles: function () {
+                    let height = 200;
+                    return {
+                        'background-color': 'blue',
+                        'width': (height / 2) + 'px',
+                        'height': height + 'px',
+                    }
+                }
+            }
+        })
+
+
+
+        // 3.在vue组件中使用样式
+        //  <template>  组件模板写在这里 </template> 
+        //   <script>  组件逻辑相关代码写这里  
+        //   <style> 
+        //    组件样式写在这里  
+        //   </style> 
+        // 在大多数情况下，我们希望组件间定义的样式是相互隔离的。所以我们可以增加scoped标识。 <style scoped>  </style>
+
+        // 添加多个样式
+        let app1 = new Vue({
+            el: "#app1",
+            data() {
+                return {
+                    moreStyles: {
+                        'border-radius': '5px',
+                        'background-color': 'red'
+                    }
+                }
+            },
+            computed: {
+                styles: function () {
+                    let height = 200;
+                    return {
+                        'background-color': 'blue',
+                        'width': (height / 2) + 'px',
+                        'height': height + 'px',
+                    }
+                }
+            }
+        })
+
+        // 2.在vue中使用CSS类样式
+        let app2 = new Vue({
+            el: "#app2",
+            data() {
+                return {
+                    shapes: [
+                        {
+                            shape: 'circle',
+                            //  isRound:true
+                        },
+                        {
+                            shape: 'square',
+                            //  isRound:false
+                        },
+                        {
+                            shape: 'triangle',
+                            direction: 'up'
+                        },
+                        {
+                            shape: 'triangle',
+                            direction: 'right',
+                            animate: true
+                        },
+                        {
+                            shape: 'triangle',
+                            direction: 'down'
+                        },
+                        {
+                            shape: 'triangle',
+                            direction: 'left',
+                            animate: false
+                        }
+
+                    ]
+                }
+            }
+        })
+    </script>
+</body>
+</html>

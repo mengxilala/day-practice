@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过渡&动画</title>
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0
+        }
+
+
+        /* 
+        对于这些过渡中切换 class，每个都以过渡的 name 作为前缀。当您使用没有 name 的 <transition> 元素时，会默认前缀为 v-。
+        举个例子，如果你使用 <transition name="my-transition">，那么默认的 v-enter class 将会被替换为 my-transition-enter。 */
+
+        .my-transition-enter-active,
+        .my-transition-leave-active {
+            transition: opacity .5s
+        }
+
+        .my-transition-enter,
+        .my-transition-leave-to {
+            opacity: 0
+        }
+
+
+        /* 进入和离开动画可以分别 */
+
+        /* 设置不同的持续时间(duration)和动画函数(timing function) */
+
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .slide-fade-enter,
+        .slide-fade-leave-to {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
+        /* CSS3动画 */
+
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+
+        .bounce-leave-active {
+            animation: bounce-in .5s reverse;
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 进入式过渡和离开式过渡 */
+
+        .list-item {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .list-enter-active,
+        .list-leave-active {
+            transition: all 1s;
+        }
+
+        .list-enter,
+        .list-leave-to {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+    <script src="./js/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+</head>
+<body>
+    <!-- 1.单元素/组件的过渡 -->
+    <div id="demo">
+        <button v-on:click="show = !show">toggle</button>
+        <transition name="fade">
+            <!-- <transition name="my-transition"> -->
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+    <!-- 2.CSS过渡 -->
+    <div id="demo1">
+        <button v-on:click="show = !show"> Toggle render</button>
+        <transition name="slide-fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+    <!-- 3.CSS动画 -->
+    <div id="example-2">
+        <button @click="show = !show">Toggle show</button>
+        <transition name="bounce">
+            <p v-if="show">Look at me!</p>
+        </transition>
+    </div>
+
+    <!-- 4.JavaScript 钩子函数 -->
+    <div id="example-3">
+        <button v-on:click="show = !show"> Toggle render</button>
+        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter" v-on:enter-cancelled="enterCancelled" v-on:before-leave="beforeLeave" v-on:leave="leave" v-on:after-leave="afterLeave" v-on:leave-cancelled="leaveCancelled">
+        </transition>
+    </div>
+
+    <!-- 一个简单的使用 Velocity.js 的 JavaScript 式过渡 -->
+
+    <div id="example-4">
+        <button @click="show = !show">
+            Toggle
+        </button>
+        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+            <p v-if="show">
+                Demo
+            </p>
+        </transition>
+    </div>
+
+    <!-- 进入式过渡和离开式过渡 -->
+    <div id="list-demo">
+        <button v-on:click="add">Add</button>
+        <button v-on:click="remove">Remove</button>
+        <transition-group name="list" tag="p">
+            <span v-for="item in items" v-bind:key="item" class="list-item">{{item}}</span>
+        </transition-group>
+    </div>
+    <script>
+        new Vue({
+            el: "#demo",
+            data: {
+                show: true
+            }
+        })
+
+
+        // 2.CSS过渡
+        new Vue({
+            el: "#demo1",
+            data: {
+                show: true
+            }
+        })
+
+        // 3.CSS动画
+        new Vue({
+            el: "#example-2",
+            data: {
+                show: true
+            }
+        })
+
+        // 4.JavaScript 钩子函数
+        new Vue({
+            el: "#example-3",
+            data: {
+                show: true
+            },
+            methods: {
+                // --------
+                // 进入时
+                // --------
+                beforeEnter: function (el) {
+                    // ...
+                },
+                // 在与 CSS 结合使用时
+                // 此回调函数 done 是可选项
+                enter: function (el, done) {
+                    // ...
+                    done()
+                },
+                afterEnter: function (el) {
+                    // ...
+                },
+                enterCancelled: function (el) {
+                    // ...
+                },
+                // --------
+                // 离开时
+                // --------
+                beforeLeave: function (el) {
+                    // ...
+                },
+                // 在与 CSS 结合使用时
+                // 此回调函数 done 是可选项
+                leave: function (el, done) {
+                    // ...
+                    done()
+                },
+                afterLeave: function (el) {
+                    // ...
+                },
+                // leaveCancelled 只能配合 v-show 使用
+                leaveCancelled: function (el) {
+                    // ...
+                }
+            }
+        })
+
+        // 当仅使用 JavaScript 式过渡的时候， 在 enter 和 leave 钩子函数中，必须有 done 回调函数。否则，这两个钩子函数会被同步调用，过渡会立即完成。
+        // 推荐对于仅使用 JavaScript 的过渡显式添加 v - bind: css = "false"，以便 Vue 可以跳过 CSS 侦测。这也可以防止 CSS 规则意外干涉到过渡。
+
+        // 一个简单的使用 Velocity.js 的 JavaScript 式过渡
+        new Vue({
+            el: '#example-4',
+            data: {
+                show: false
+            },
+            methods: {
+                beforeEnter: function (el) {
+                    el.style.opacity = 0
+                },
+                enter: function (el, done) {
+                    Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+                    Velocity(el, { fontSize: '1em' }, { complete: done })
+                },
+                leave: function (el, done) {
+                    Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+                    Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+                    Velocity(el, {
+                        rotateZ: '45deg',
+                        translateY: '30px',
+                        translateX: '30px',
+                        opacity: 0
+                    }, { complete: done })
+                }
+            }
+        })
+
+        // 进入式过渡和离开式过渡
+        new Vue({
+            el: "#list-demo",
+            data: {
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                nextNum: 10
+            },
+            methods: {
+                randomIndex: function () {
+                    return Math.floor(Math.random() * this.items.length);
+                },
+                add: function () {
+                    this.items.splice(this.randomIndex(), 0, this.nextNum++);
+                },
+                remove: function () {
+                    this.items.splice(this.randomIndex(), 1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

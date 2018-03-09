@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>watch的小demo</title>
+    <style>
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        #app {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            min-width: 200px;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3vw;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>{{date}}</div>
+    </div>
+
+    <script src="../../js/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    date: ''
+                }
+            },
+            created() {
+                let that = this;
+                setInterval(function () {
+                    let time = new Date();
+                    that.date = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+                }, 1000)
+            },
+            watch: {
+                date: function (val) {
+                    this.$el.style.backgroundColor = '#' + intToRGB(hashCode(val + val.split(':')[2]));
+                }
+            }
+        })
+
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash)
+            }
+            return hash
+        }
+
+        function intToRGB(i) {
+            let c = (i & 0x00FFFFFF).toString(16).toUpperCase()
+            return '000000'.substring(0, 6 - c.length) + c
+        }
+    </script>
+</body>
+</html>

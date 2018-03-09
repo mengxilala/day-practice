@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>requestAnimationFrame</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .show-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 500px;
+        }
+
+
+        .progress {
+            position: relative;
+            width: 100%;
+            height: 20px;
+            background-color: #e7edf4;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+
+        button {
+            color: #1F2225;
+            font-weight: 400;
+            text-decoration: none;
+            border: 2px solid #525961;
+            padding: 10px 25px;
+            transition: all .15s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #525961;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="show-container">
+        <div id="myDiv" style="background-color: lightblue;width: 0;height: 20px;line-height: 20px;" class="progress">0%</div>
+        <button id="btn" data-running>Run</button>
+    </div>
+    <script>
+        // 现在分别使用setInterval、setTimeout和requestAnimationFrame这三个方法制作一个简单的进度条效果
+        // 动画的播放时间应该跟现实时间挂钩。不知道绘制函数会执行几次
+
+        //  1.setInterval
+        // var btn = document.querySelector('#btn'),
+        //     myDiv = document.querySelector('#myDiv'),
+        //     timer;
+        // btn.onclick = function () {
+        //     clearInterval(timer);
+        //     console.log(111);
+        //     myDiv.style.width = '0';
+        //     timer = setInterval(function () {
+        //         if (parseInt(myDiv.style.width) < 500) {
+        //             myDiv.style.width = parseInt(myDiv.style.width) + 5 + 'px';
+        //             myDiv.innerHTML = parseInt(myDiv.style.width) / 5 + '%';
+        //         } else {
+        //             clearInterval(timer);
+        //         }
+        //     }, 16)
+        // }
+
+        //
+        //  2.setTimeout
+
+        // var btn = document.querySelector('#btn'),
+        //     myDiv = document.querySelector('#myDiv'),
+        //     timer;
+
+        // btn.onclick = function () {
+        //     clearTimeout(timer);
+
+        //     myDiv.style.width = '0';
+        //     timer = setTimeout(function fn() {
+        //         if (parseInt(myDiv.style.width) < 500) {
+        //             myDiv.style.width = parseInt(myDiv.style.width) + 5 + 'px';
+        //             myDiv.innerHTML = parseInt(myDiv.style.width) / 5 + '%';
+        //             timer = setTimeout(fn, 16);
+        //         } else {
+        //             clearTimeout(timer);
+        //         }
+        //     })
+        // }
+
+
+        //
+        // 3. requestAnimationFrame
+        // |---------------------
+        //                ^        ^ ^ ^
+        // load           start    draw
+
+        var btn = document.querySelector('#btn'),
+            myDiv = document.querySelector('#myDiv'),
+            totalTime = 1300,
+            startTime;
+
+        btn.onclick = onClickButton;
+
+        function onClickButton(e) {
+            if (e.target.dataset.running);
+            else {
+                startTime = performance.now();
+                e.target.dataset.running = "abc";
+                myDiv.style.width = '0';
+
+                requestAnimationFrame(draw);
+                // setTimeout(draw, 200, performance.now());
+            }
+        }
+
+        function draw(t) {
+            var percent = (t - startTime) / totalTime;
+
+            if (percent > 1) percent = 1;
+
+            if (parseInt(myDiv.style.width) < 500) {
+                myDiv.style.width = 500 * percent + 'px';
+                myDiv.innerHTML = (percent * 100).toFixed(0) + "%";
+
+                requestAnimationFrame(draw);
+                // setTimeout(draw, 200, performance.now());
+            } else
+                btn.dataset.running = "";
+        }
+    </script>
+</body>
+</html>

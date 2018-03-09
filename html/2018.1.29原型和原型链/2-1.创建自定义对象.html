@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建自定义对象</title>
+</head>
+<body>
+    <script>
+
+
+        var person = new Object();
+        person.name = "zmx";
+        person.age = 20;
+        person.job = "Soft Engineer";
+        person.sayName = function () {
+            alert(this.name);
+        }
+
+
+
+        // 用对象字面量的方式创建
+        var person = {
+            name: "zmx",
+            age: 20,
+            job: "Soft Engineer",
+            sayName: function () {
+                alert(this.name);
+            }
+        }
+
+        // ECMAScript有两种属性:数据属性和访问器属性
+        // 数据属性包含一个数据值的位置，在这个位置可以读取和写入值，有4个描述其行为的特性
+        // Configurable 能否通过delete删除属性从而重新定义属性，能否修改属性的特性
+        // Enumerable 能否通过for-in循环返回属性
+        // writable 能否修改属性的值
+        // value 属性的数据值
+
+
+        // 修改属性默认的特性，使用defineProperty()方法，该方法接收三个参数（属性所在的对象，属性的名字，描述符对象）
+
+        var person = {};
+        Object.defineProperty(person, 'name', {
+            writable: false,
+            value: "zmx"
+        });
+        alert(person.name); //zmx
+        person.name = "lyl";
+        alert(person.name); // zmx    因为writable设置为false了
+
+
+
+        // 访问器属性
+        // 访问器属性不包含数据值,包含一对getter和setter函数，
+        // 读取访问器属性时，会调用getter函数，这个函数会返回有效的值，写入访问器属性时，会调用setter函数并写入新值，这个函数负责决定如何处理数据
+
+        // 包含的属性
+        // Configurable 能否通过delete删除属性从而重新定义属性，能否修改属性的特性
+        // Enumerable 能否通过for-in循环返回属性
+        // get 读取属性时调用的函数 默认值为undefined
+        // set 写入属性时调用的函数 默认值为undefined
+
+        // 访问器属性不能直接定义，须使用Object.defineProperty()
+        var book = {
+            _year: 2004,
+            edition: 1
+        };
+        Object.defineProperty(book, 'year', {
+            get: function () {
+                return this._year;
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        })
+
+        book.year = 2005;
+        alert(book.edition);
+
+
+        // 定义多个属性 defineProperties()
+        var book = {};
+        Object.defineProperties(book, {
+            _year: {
+                value: 2004
+            },
+            edition: {
+                value: 1
+            },
+            year: {
+                get: function () {
+                    return this._year;
+                },
+                set: function (newValue) {
+                    if (newValue > 2004) {
+                        this._year = newValue;
+                        this.edition += newValue - 2004;
+                    }
+                }
+            }
+        })
+
+        // 读取属性的特性 getOwnPropertyDescriptor() 取得给定属性的描述符
+        var book = {};
+        Object.defineProperties(book, {
+            _year: {
+                value: 2004
+            },
+            edition: {
+                value: 1
+            },
+            year: {
+                get: function () {
+                    return this._year;
+                },
+                set: function (newValue) {
+                    if (newValue > 2004) {
+                        this._year = newValue;
+                        this.edition += newValue - 2004;
+                    }
+                }
+            }
+        })
+        var descriptor=Object.getOwnPropertyDescriptor(book,"_year");
+        alert(descriptor.value) // 2004
+        alert(descriptor.configurable); // false
+        alert(descriptor.get); // undefined
+
+        var descriptor1=Object.getOwnPropertyDescriptor(book,year);
+        alert(descriptor1.value) // 2004
+        alert(descriptor1.enumerable); // false
+        alert(descriptor1.get); // function
+
+
+    </script>
+</body>
+</html>

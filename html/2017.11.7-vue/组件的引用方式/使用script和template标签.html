@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用script和template标签</title>
+</head>
+<body>
+    <!-- 使用script标签 -->
+    <div id="app">
+        <my-component></my-component>
+    </div>
+    <script src="../../../js/vue.js"></script>
+
+    <!-- 使用<script>标签时，type指定为text/x-template，意在告诉浏览器这不是一段js脚本，浏览器在解析HTML文档时会忽略<script>标签内定义的内容。 -->
+    <script type="text/x-template" id="myComponent">
+        <div>This is a component!</div>
+    </script>
+
+    <!-- 如果使用<template>标签，则不需要指定type属性。 -->
+    <!-- <template id="myComponent">
+        <div>This is a component!</div>
+    </template> -->
+
+
+    <script>
+        Vue.component('my-component', {
+            //  template选项现在不再是HTML元素，而是一个id，Vue.js根据这个id查找对应的元素，然后将这个元素内的HTML作为模板进行编译。 
+            template: '#myComponent'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+</html>

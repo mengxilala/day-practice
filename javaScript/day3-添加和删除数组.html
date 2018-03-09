@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day3</title>
+
+</head>
+<body>
+    <div class="output">
+        <ul></ul>
+        <!-- <p></p> -->
+
+
+        <input type="text">
+        <button>searchValue</button>
+    </div>
+    <script>
+        //    添加和删除数组
+        var myArray = ['Manchester', 'London', 'Liverpool', 'Birmingham', 'Leeds', 'Carlisle'];
+
+        //    在数组末尾添加或删除一个项目，我们可以使用push()和pop()
+        myArray.push('China');    // 当方法调用完成时，将返回数组的新长度  7
+        myArray.pop(); // 当方法调用完成时，将返回已删除的项目  China
+
+
+        // unshift()和shift()以完全相同的方式工作，只是它们在数组的开始处，而不是结尾。
+        myArray.unshift('China');    // 当方法调用完成时，将返回数组的新长度  7
+        myArray.shift(); // 当方法调用完成时，将返回已删除的项目  China
+
+
+
+        // 示例   将字符串转化为数组
+
+        // var list = document.querySelector('.output ul'),
+        //     totalBox = document.querySelector('.output p'),
+        //     total = 0;
+        // list.innerHtml = '';
+        // totalBox.textContent = '';
+        // var products = ['Underpants:6.99',
+        //     'Socks:5.99',
+        //     'T-shirt:14.99',
+        //     'Trousers:31.99',
+        //     'Shoes:23.99'];
+        // for (var i = 0; i < products.length; i++) {
+        //     var subArray = products[i].split(':'),
+        //         name = subArray[0],
+        //         price = Number(subArray[1]);
+        //     total += price;
+        //     var itemText = name + '-$' + price;
+        //     var listItems = document.createElement('li');
+        //     listItems.textContent = itemText;
+        //     list.appendChild(listItems);
+        // }
+
+        // totalBox.textContent = 'Total: $' + total.toFixed(2);
+
+
+
+
+        // 给你一个假的搜索网站，一个搜索框。 这个想法是，当在搜索框中输入时，列表中会显示5个先前的搜索字词。 
+        // 当列表项目数量超过5时，每当新项目被添加到顶部时，最后一个项目开始被删除，因此总是显示5个以前的搜索字词。
+
+        var list = document.querySelector('.output ul');
+        var searchInput = document.querySelector('.output input');
+        var searchBtn = document.querySelector('.output button');
+
+        list.innerHTML = '';
+
+        var myHistory = [];
+
+        searchBtn.onclick = function () {
+            if (searchInput.value !== '') {
+                myHistory.unshift(searchInput.value);
+
+                list.innerHTML = '';
+
+                for (var i = 0; i < myHistory.length; i++) {
+                    itemText = myHistory[i];
+                    var listItem = document.createElement('li');
+                    listItem.textContent = itemText;
+                    list.appendChild(listItem);
+                }
+
+                if (myHistory.length >= 5) {
+                    myHistory.pop();
+                }
+
+                searchInput.value = '';
+                searchInput.focus();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的methods方法</title>
+    <style>
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        .commonCss {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 输出一个全名的方法 第一种方法 -->
+    <div id="app" class=commonCss>
+        {{firstName}}{{lastName}}
+    </div>
+    <!-- 输出一个全名的方法 第二种方法  vue computed-->
+    <div id="example" class=commonCss>
+        {{fullName}}
+    </div>
+    <!-- 用methods输出一个全名 vue methods-->
+    <div id="example1" class=commonCss>
+        {{fullName()}}
+    </div>
+
+    <!-- 在Vue中，使用methods可以做computed同样的事情，但两者之间还是有所差别的 -->
+    <div id="example2" class=commonCss>
+        {{fullName(firstName,lastName)}}
+        <!-- 或 -->
+        {{fullName('yaLong','liu')}}
+    </div>
+
+    <!-- 除了像上面一样，在方法中返回字符串之外，我们还可以返回对象和数组。 -->
+    <div id="example3" class=commonCss>
+        {{fullName(firstName,lastName).name}}
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    firstName: 'zhang',
+                    lastName: 'mengxi'
+                }
+            }
+        })
+
+        //  输出一个全名的方法 第二种方法 
+        let example = new Vue({
+            el: "#example",
+            data() {
+                return {
+                    firstName: 'zhang',
+                    lastName: 'mengxi'
+                }
+            },
+            computed: {
+                fullName: function () {
+                    return this.firstName + '' + this.lastName;
+                }
+            }
+        })
+
+        // 用methods输出一个全名
+        let example1 = new Vue({
+            el: "#example1",
+            data() {
+                return {
+                    firstName: 'zhang',
+                    lastName: 'mengxi'
+                }
+            },
+            methods: {
+                fullName() {
+                    return this.lastName + '' + this.firstName;
+                }
+            }
+        })
+
+        // 在Vue中，使用methods可以做computed同样的事情，但两者之间还是有所差别的
+        let example2 = new Vue({
+            el: "#example2",
+            data() {
+                return {
+                    firstName: 'zhang',
+                    lastName: 'mengxi'
+                }
+            },
+            methods: {
+                fullName(first, last) {
+                    return first + '' + last;
+                }
+            }
+        })
+
+        // 除了像上面一样，在方法中返回字符串之外，我们还可以返回对象和数组。
+        let example3 = new Vue({
+            el: "#example3",
+            data() {
+                return {
+                    firstName: 'liu',
+                    lastName: 'yaLong'
+                }
+            },
+            methods: {
+                fullName(first, last) {
+                    return {
+                        name: first + '' + last
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

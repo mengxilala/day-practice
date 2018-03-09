@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数声明提升和变量提升</title>
+</head>
+<body>
+    <script>
+        // http://blog.csdn.net/qq673318522/article/details/50810650
+
+        // 1.变量提升
+        var scope = 'global';
+        function f() {
+            console.log(scope); //undefined
+            var scope = 'local';
+            console.log(scope); //local
+        }
+
+        // 由于函数内声明提升，所以上面的代码实际上是这样的
+        var scope = 'global';
+        function f() {
+            var scope;    //变量声明提升到函数顶部
+            console.log(scope);
+            scope = 'local';    //变量初始化依然保留在原来的位置
+            console.log(scope);
+        }
+
+
+        // 2.函数声明提升
+        //  a.函数创建的两种方式-->函数的声明 / 函数表达式
+
+
+        //  函数声明语法
+        f('superman'); //superman
+        function f(name) {
+            console.log(name);
+        }
+
+        // 函数表达式语法
+        f('superman');  // 报错 Uncaught ReferenceError: f is not defined(…)
+        var f = function (name) {
+            console.log(name);
+        }
+        // 函数声明提升，函数声明语句将会被提升到外部脚本或者外部函数作用域的顶部（是不是跟变量提升非常类似）。正是因为这个特征，所以可以把函数声明放在调用它的语句后面
+
+        var getName = function () {
+            console.log(2);
+        }
+        function getName() {
+            console.log(1);
+        }
+        getName(); //2
+
+        // 以上代码相当于：
+        var getName;
+        function getName() {
+            console.log(1);
+        }
+        getName = function () {
+            console.log(2);
+        }
+
+        getName(); //2
+        // 变量声明和函数声明都被提升
+
+
+
+
+
+        // 1. 在JavaScript中变量和函数的声明会提升到最顶部执行。
+        // 2. 函数的提升高于变量的提升。
+        // 3. 函数内部如果用var声明了相同名称的外部变量，函数将不再向上寻找。
+        // 4. 匿名函数不会提升。
+        // 5. 不同 < script > 块中的函数互不影响。
+
+
+        // 函数声明提升高于变量声明
+        //同时声明变量a和函数a
+        var a;
+        function a() { }
+        alert(typeof a);  //function 初步证明function的优先级高于var
+
+        //先声明函数后声明变量，证明上边的例子不是function覆盖了变量
+        function a() { }
+        var a;
+        alert(typeof a); //显示的仍是"function",而不是"undefined"，即function的优先级高于var。
+
+        //声明了变量的同时赋值
+        function a() { }
+        var a = 1;
+        alert(typeof a); //number
+
+        // 函数内部用var定义了和外部相同的变量，函数将不再向上找外部的变量
+        var value = 'hello';
+        function show() {
+            alert(value); //undefined
+            if (!value) {
+                var value = 'function';
+            }
+            alert(value); //function
+        }
+        show();
+
+        // 如果上列中show内部定义value未用var,则会用到外部的变量
+        var value = 'hello';
+        function show() {
+            alert(value); //hello
+            if (!value) {
+                value = 'function';
+            }
+            alert(value); //hello
+        }
+        show();
+
+        // 匿名函数不会向上提升
+        getName(); //function
+        var getName = function () {
+            alert('closule')
+        }
+        function getName() {
+            alert('function')
+        }
+        getName(); //closule
+
+        //上边的代码相当于
+        function getName() { //函数向上提升
+            alert('function')
+        }
+        getName();
+        var getName = function () {
+            alert('closule')
+        }
+        getName();
+
+        // 不同<script>块中的函数互不影响
+        // <script>
+        getName()
+        var getName = function () {
+            alert('closule')
+        }
+        // <script>
+        // <script>
+        function getName() {
+            alert('function')
+        }
+        // <script>
+
+        //代码执行报错：TypeError: getName is not a function
+        //因为第一个<script>块中getName()函数未定义,匿名函数又不会向上提升
+
+
+    </script>
+</body>
+</html>

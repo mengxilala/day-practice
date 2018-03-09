@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- each(callback)  对于每个匹配的元素所要执行的函数 -->
+
+    <img src="../../../images/zhuan.png" alt="">
+    <img src="../../../images/warnSelect.png" class="example" alt="">
+
+
+    <button>Change colors</button>
+    <span></span>
+    <div>11</div>
+    <div>22</div>
+
+    <div>33</div>
+    <div>44</div>
+    <div id="stop">Stop here</div>
+    <div>55</div>
+
+    <div>66</div>
+    <div>77</div>
+
+
+    <ul>
+        <li>list <strong>item 1</strong></li>
+        <li><span>list item 2</span></li>
+        <li>list item 3</li>
+    </ul>
+    <script>
+        // 描述:迭代两个图像，并设置它们的 src 属性。注意:此处 this 指代的是 DOM 对象而非 jQuery 对象。
+        $("img").each(function (i) {
+            this.src = "../../../images/加载中.gif";
+            $(this).attr("src", "../../../images/加载中.gif");   //两种改变src的方法都可以
+        });
+
+        // 描述:如果你想得到 jQuery对象，可以使用 $(this) 函数。
+        $("img").each(function () {
+            console.log(this);   //得到的是DOM对象
+            console.log($(this));   // 得到的是jquery对象
+            $(this).toggleClass("example");
+        });
+
+
+        // 描述:你可以使用 'return' 来提前跳出 each() 循环。  重点为each和is的方法
+        $("button").click(function () {
+            $("div").each(function (index) {
+                console.log(index);
+                $(this).css("backgroundColor", "yellow");
+                if ($(this).is("#stop")) {
+                    $("span").text("Stopped at div index #" + index);
+                    return false;
+                }
+            });
+        });
+
+
+        $("ul").click(function (event) {
+            var target = $(event.target);
+            if (target.is("li")) {
+                target.css("background-color", "red");
+            }
+        });
+    </script>
+
+</body>
+</html>

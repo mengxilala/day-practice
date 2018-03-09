@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>creatElement方法</title>
+</head>
+<body>
+    <div id="testDiv">
+       <span>我是一个span标签</span>
+    </div>
+
+    <script>
+        // createElement方法   创建元素节点
+        // appendChild方法    
+        // createTextNode方法  创建文本
+        // insertBefore()     在现有元素前面插入一个元素
+        // insertAfter()     在现有元素后面插入一个元素
+        // parentNode         获取相应元素的父元素
+        var testDiv=document.getElementById('testDiv');
+        // var para=document.createElement('p');
+        var spanEle=testDiv.getElementsByTagName('span')[0];
+        // testDiv.appendChild(para);
+
+        var txt=document.createTextNode("Hello World");
+        // para.appendChild(txt);
+        var pEle=document.createElement('div');
+        pEle.appendChild(txt);
+        testDiv.insertBefore(pEle,spanEle)
+    </script>
+</body>
+</html>

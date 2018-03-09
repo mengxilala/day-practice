@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery 创建元素</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+        #box {
+            width: 500px;
+            height: 500px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="box2">
+
+        </div>
+        <div id="box3">
+
+        </div>
+    </div>
+
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+    <script>
+        //使用Dom标准创建元素
+
+        var createSelect = document.createElement('select');
+        createSelect.options[0] = new Option("加载项1", "value1");
+        createSelect.options[1] = new Option("加载项2", "value2");
+        createSelect.size = "5";
+        var object = box.appendChild(createSelect);
+
+        var createDiv = document.createElement('div');
+        createDiv.innerHTML = '你好';
+        box.appendChild(createDiv);
+
+
+        // 使用jQuery函数创建元素
+
+        // 当HTML字符串是没有属性的元素是, 内部使用document.createElement创建元素, 比如:
+        $('<div>').css('border', '1px solid blue').html('动态创建的div1').appendTo(box);
+
+        // 否则使用innerHTML方法创建元素:
+        $("<div style=\"border:solid 1px #000000\">动态创建的div2</div>").appendTo(box);
+
+
+
+        // 3.将元素添加到对象上
+
+        // 我们可以使用上面两种方式创建一个新元素, 但是上面已经提到一定不要在页面加载时就改变页面的DOM结构, 
+        // 比如添加一个元素.正确的做法是在页面加载完毕后添加或删除元素.
+        // 传统上, 使用window.onload完成上述目的:
+
+
+        // DOM加载完毕后添加元素
+        // 传统方法
+        window.onload = function () {
+            box2.innerHTML = "<div style=\"border:solid 1px #FF0000\">动态创建的div3</div>";
+        }
+
+
+        // 虽然能够在DOM完整加载后, 在添加新的元素, 但是不幸的是浏览器执行window.onload函数不仅仅是在构建完DOM树之后,
+        // 也是在所有图像和其他外部资源完整的加载并且在浏览器窗口显示完毕之后.
+        // 所以如果某个图片或者其他资源加载很长时间, 访问者就会看到一个不完整的页面, 甚至在图片加载之前就执行了需要依赖动态添加的元素的脚本而导致脚本错误.
+
+        // 解决办法就是等DOM被解析后, 在图像和外部资源加载之前执行我们的函数.在jQuery中让这一实现变得可行:
+        // jQuery 使用动态创建的$(document).ready(function)方法
+        $(document).ready(function () {
+            box3.innerHTML = "<div style=\"border:solid 1px #FF0000\">使用动态创建的$(document).ready(function)方法</div>";
+        });
+
+        // 或者使用简便语法:
+        // jQuery 使用$(function)方法
+        $(function () {
+            box3.innerHTML += "<div style=\"border:solid 1px #FF0000\">使用$(function)方法</div>"; // +=是不改变原来的内容 在原来的内容后面增加; 
+        });
+
+
+        // each的用法
+        $("li").each(function (index) {
+            console.log("index:" + index + " ,innerHTML:" +this.innerHTML);
+           
+        });                                                                                                                                                                                                                                                                                                                                   // =直接改变原来的内容
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+.network-box{
+    width: 100%;
+    height:100%;
+    position: absolute;
+    left: 0;
+    top:0;
+    background: #2C80FB;
+    overflow: hidden;
+}
+/* 内容 start */
+.network-content{
+    width: 340px;
+    height: 320px;
+    position: absolute;
+    left: 0;
+    right:0;
+    margin: auto;
+    top:35%;
+    z-index: 11;
+}
+.network-content .image{
+    width: 100%;
+    height: 200px;
+    background: url(../images/network_repaire.png) no-repeat center;
+}
+.network-content span{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top:20px; 
+    color: #BFDEFE;
+}
+.network-content .redo{
+    width: 155px;
+    height: 45px;
+    border-radius: 25px;
+    border:1px solid #57aeff;
+    position: absolute;
+    left: 0;
+    right:0;
+    margin: auto;
+    bottom: 0px;
+    text-align: center;
+    line-height: 47px;
+    background: #2772DE;
+    font-size: 18px;
+    cursor: pointer;
+}
+/*底部动画 start*/
+.network-wave{
+    width: 100%;
+    height: 139px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+/*底部动画 end*/
+/*底部黑色透明蒙板*/
+.blackOpacity{
+	width: 100%;
+	height: 64px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-image:url(../images/gradient.png) ;
+	background-repeat: no-repeat;
+}
+/* 底部按钮 */
+.network-btn{
+    width: 230px;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 18px;
+}
+.network-btn div{
+    float: left;
+    line-height: 30px;
+    text-align: right;
+    margin: -24px 0px 24px 30px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.network-btn .quit{
+    width: 68px;
+    height: 30px;
+    background: url(../images/network_quit.png) no-repeat left center;
+}
+.network-btn .smallerize{
+    width: 83px;
+    height: 30px;
+    background: url(../images/network_smallize.png) no-repeat left center;
+}

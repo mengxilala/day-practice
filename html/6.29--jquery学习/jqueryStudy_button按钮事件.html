@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>jqueryStudy_button按钮事件</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+    <div id="divMsg">Hello World!</div>
+    <input id="btnShow" type="button" value="显示" />
+    <input id="btnHide" type="button" value="隐藏" /><br />
+    <input id="btnChange" type="button" value="修改内容为 hahahahahaha" />
+
+    <script>
+        $('#btnShow').bind('click', function () {
+            $('#divMsg').show();
+        })
+        $('#btnHide').bind('click', function () {
+            $('#divMsg').hide();
+        })
+        $('#btnChange').bind('click', function () {
+            $('#divMsg').html('hahahahahaha');
+        })
+</script>                          
+</body>
+
+</html>

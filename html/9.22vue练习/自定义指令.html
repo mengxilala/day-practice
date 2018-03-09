@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="simplest-directive-example">
+        <input v-focus>
+    </div>
+    <script>
+        // 注册一个名为 v-focus 的全局自定义指令
+        Vue.directive('focus', {
+            // 当绑定的元素插入到 DOM 时调用此函数……
+            inserted: function (el) {
+                // 元素调用 focus 获取焦点
+                el.focus();
+            }
+        })
+        new Vue({
+            el: '#simplest-directive-example'
+        })
+
+
+
+        
+    </script>
+</body>
+</html>

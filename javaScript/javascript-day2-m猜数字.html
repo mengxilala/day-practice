@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javaScript-day2</title>
+</head>
+<body>
+    <!--
+        返回指定范围的随机数(m-n之间)的公式
+        document.write(Math.random()*(n-m)+m);
+        返回1-100之间的数
+        Math.random()*(100-1)+1
+        
+        要求
+        创建一个可以猜数字的游戏，它会在1~100以内随机选择一个数, 然后让玩家挑战在10轮以内猜出这个数字，
+        每一轮都要告诉玩家正确或者错误， 如果出错了，则告诉他数字是低了还是高了，并且还要告诉玩家之前猜的数字是什么。 
+        一旦玩家猜测正确，或者他们用完了回合，游戏将结束。 游戏结束后，可以让玩家选择再次开始。
+        -->
+    <button>开始游戏</button>
+    <script src="../js/jquery.js"></script>
+    <script>
+        var randomNumber = parseInt(Math.random() * (100 - 1) + 1);
+        var c = 0, previewAnswer;
+
+        $('button').click(function () {
+            enterYourGuess();
+        })
+
+        function enterYourGuess() {
+            var count; // hoisting
+
+            for (count = 0; count < 10;) {
+                previewAnswer = c;
+                c = Number(prompt('please enter your guess'));
+
+                if (isNaN(c) || c < 1 || c > 100) {
+                    alert("请输入1-100之间的数字");
+                } else {
+                    if (c < randomNumber) {
+                        alert('您的答案错误，因为数字低了,您上一次猜测的数字是' + previewAnswer);
+                    } else if (c > randomNumber) {
+                        alert('您的答案错误，因为数字高了,您上一次猜测的数字是' + previewAnswer);
+                    } else {
+                        alert('恭喜您，回答正确');
+                        return
+                    }
+
+                    ++count;
+                }
+            }
+
+            alert('今天的游戏机会已经用完');
+        }
+    </script>
+</body>
+</html>

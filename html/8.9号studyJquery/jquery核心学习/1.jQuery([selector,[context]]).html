@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <div class="page_one">
+        <p>我是pageone中的第一个p元素</p>
+        <p>我是pageone中的第二个p元素</p>
+        <ul>
+            <li>
+                <p>我是ul中的元素</p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // 1.描述:找到所有 p 元素，并且这些元素都必须是 div 元素的子元素 
+        // parent > child选择器(子代选择器)用于匹配parent元素的所有子辈child元素,不包括孙子辈以及后后辈元素
+        console.log($("div > p"));  //打印的是 <p>我是pageone中的第一个p元素</p> 和 <p>我是pageone中的第二个p元素</p>  不包括li中的p元素
+        console.log($("li > p "));  // 打印的是 <p>我是ul中的元素</p>
+        console.log($("p")); //将获取页面中所有的p元素
+        console.log($("p", "div")); //获取div中的所有p元素    此时打印的是三个p元素
+
+        // 2.描述: 在文档的第一个表单中，查找所有的单选按钮(即: type 值为 radio 的 input 元素) 。
+        // $("input:radio", document.forms[0]);
+        // 3.描述: 在一个由 AJAX 返回的 XML 文档中，查找所有的 div 元素。
+        // $("div", xml.responseXML);
+        // 4.描述: 设置页面背景色。
+        // $(document.body).css("background", "black");
+        // 5.描述: 隐藏一个表单中所有元素。
+        // $(myForm.elements).hide()
+    </script>
+
+</body>
+</html>

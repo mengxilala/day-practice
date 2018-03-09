@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表渲染</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <!-- 1.使用v-for遍历数组生成元素 -->
+
+    <!-- 我们可以使用 v-for 指令，将一个数组渲染为列表项。
+    v-for 指令需要限定格式为 item in items 的特殊语法，其中，items 是原始数据数组(source data array)，而 item 是数组中每个迭代元素的指代别名(alias)： -->
+    <ul id="example">
+        <li v-for="item in items">
+            {{item.message}}
+        </li>
+    </ul>
+    <!-- 在 v-for 代码块中，我们可以完全地访问父级作用域下的属性。v-for 还支持可选的第二个参数，作为当前项的索引。 -->
+    <ul id="example1">
+        <li v-for="(item,index) in items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+    </ul>
+    <!-- 你还可以不使用 in，而是使用 of 作为分隔符，因为它更加接近 JavaScript 迭代器语法： -->
+    <ul id="example2">
+        <li v-for="(item,index) of items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+    </ul>
+
+
+    <!-- 2.使用v-for遍历对象 -->
+    <!-- 也可以使用 v-for 来遍历对象的属性。 -->
+    <ul id="v-for-object" class="demo">
+        <li v-for="value in object">
+            {{value}}
+        </li>
+    </ul>
+
+
+
+    <!-- 还可以提供第二个参数，作为对象的键名(key)： -->
+    <ul id="example3" class="demo">
+        <li v-for="(value,key) in values">
+            {{key}}:{{value}}
+        </li>
+    </ul>
+    <!-- 然后第三个参数作为索引(index)： -->
+    <ul id="example4">
+        <li v-for="(value,key,index) in exampleValues">
+            {{ index }}. {{ key }}: {{ value }}
+        </li>
+    </ul>
+
+
+    <!-- 3.显示过滤排序结果
+    有时，我们想要显示一个数组过滤或排序后(filtered or sorted)的副本，而不是实际改变或重置原始数据。
+    在这种情况下，可以创建一个返回过滤或排序数组的计算属性。 -->
+    <ul id="example5">
+        <li v-for="n in evenNumbers">{{n}}</li>
+    </ul>
+    <!-- 在计算属性不适用的情况下（例如，在嵌套的 v-for 循环内），可以使用一个 method 方法： -->
+    <ul id="example6">
+        <li v-for="n in even(numbers)">{{n}}</li>
+    </ul>
+
+    <!-- 4.使用v-for在整数值范围内迭代 -->
+    <div id="example7">
+        <span v-for="n in 10">{{n}}</span>
+    </div>
+    <!-- 在template上使用v-for
+    类似于在 <template> 上使用 v-if，你还可以在 <template> 标签上使用 v-for，来渲染多个元素块。例如： -->
+    <ul id="example8">
+        <template v-for="item in items">
+            <li>{{ item.msg }}</li>
+            <li class="divider">1111</li>
+        </template>
+    </ul>
+    <!-- 带有v-if的v-for
+    当它们都处于同一节点时，v-for 的优先级高于 v-if。
+    这意味着，v-if 将分别在循环中的每次迭代上运行。当你只想将某些项渲染为节点时，这会非常有用，如下： -->
+    <li v-for="todo in todos" v-if="!todo.isComplete">
+        {{ todo }}
+    </li>
+    <!-- 以上只渲染 todos 中未完成的项。 如果你的意图与此相反，是根据条件跳过执行循环，可以将 v-if 放置于包裹元素上（或放置于
+    <template> 上）。例如： -->
+    <ul v-if="todos.length">
+        <li v-for="todo in todos">
+            {{ todo }}
+        </li>
+    </ul>
+    <p v-else>No todos left!</p>
+
+    <!-- 5.使用v-for遍历组件
+    在自定义组件上，你可以直接使用 v-for，就像其他普通元素： -->
+    <my-component v-for="item in items" :key="item.id"></my-component>
+    <!-- 现在，在 2.2.0+ 版本，当对组件使用 v-for 时，必须设置 key 属性。 -->
+
+
+    <!-- todo list完整实例 -->
+    <div id="todo-list-example">
+        <input v-model="newTodoText" v-on:keyUp.enter="addNewTodo" placeholder="Add a todo">
+        <ul>
+            <li is="todo-item" v-for="(todo, index) in todos" v-bind:key="todo.id" v-bind:title="todo.title" v-on:remove="todos.splice(index, 1)"></li>
+        </ul>
+    </div>
+
+    <script>
+        // 1.使用v-for遍历数组生成元素
+
+        // 我们可以使用 v-for 指令，将一个数组渲染为列表项。
+        // v-for 指令需要限定格式为 item in items 的特殊语法，其中，items 是原始数据数组(source data array)，而 item 是数组中每个迭代元素的指代别名(alias)：
+        new Vue({
+            el: "#example",
+            data: {
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar', }
+                ]
+            }
+        })
+        // 在 v-for 代码块中，我们可以完全地访问父级作用域下的属性。v-for 还支持可选的第二个参数，作为当前项的索引。
+        new Vue({
+            el: "#example1",
+            data: {
+                parentMessage: 'Parent',
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar', }
+                ]
+            }
+        })
+        // 你还可以不使用 in，而是使用 of 作为分隔符，因为它更加接近 JavaScript 迭代器语法：
+        new Vue({
+            el: "#example2",
+            data: {
+                parentMessage: '哈哈',
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar', }
+                ]
+            }
+        })
+
+
+        // 2.使用v-for遍历对象
+        // 也可以使用 v-for 来遍历对象的属性。
+        new Vue({
+            el: "#v-for-object",
+            data: {
+                object: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                }
+            }
+        })
+
+        // 还可以提供第二个参数，作为对象的键名(key)：
+        new Vue({
+            el: "#example3",
+            data: {
+                values: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                }
+            }
+        })
+        // 然后第三个参数作为索引(index)：
+        new Vue({
+            el: "#example4",
+            data: {
+                exampleValues: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                }
+            }
+        })
+
+
+        // 3.显示过滤排序结果
+        // 有时，我们想要显示一个数组过滤或排序后(filtered or sorted)的副本，而不是实际改变或重置原始数据。
+        // 在这种情况下，可以创建一个返回过滤或排序数组的计算属性
+        new Vue({
+            el: "#example5",
+            data: {
+                numbers: [1, 2, 3, 4, 5]
+            },
+            computed: {
+                evenNumbers: function (numbers) {
+                    return this.numbers.filter(function (number) {
+                        return number % 2 == 0
+                    })
+                }
+            }
+        })
+        // 在计算属性不适用的情况下（例如，在嵌套的 v-for 循环内），可以使用一个 method 方法：
+        new Vue({
+            el: "#example6",
+            data: {
+                numbers: [1, 2, 3, 4, 5]
+            },
+            methods: {
+                even: function (numbers) {
+                    return numbers.filter(function (number) {
+                        return number % 2 == 0
+                    })
+                }
+            }
+        })
+
+        // 4.使用v-for在整数值范围内迭代
+        new Vue({
+            el: "#example7",
+            data: {
+
+            }
+        })
+        // 在template上使用v -for
+        // 类似于在 < template > 上使用 v-if，你还可以在 < template > 标签上使用 v-for，来渲染多个元素块。例如：
+        new Vue({
+            el: "#example8",
+            data: {
+                items: [
+                    { msg: 'Foo55' },
+                    { msg: 'Foo11' },
+                    { msg: 'Bar22' },
+                    { msg: 'Foo33' },
+                    { msg: 'Bar44', }
+                ]
+            }
+        })
+
+
+
+        // todo list完整实例
+
+        Vue.component('todo-item', {
+            template: '<li> {{title}} <button v-on:click="$emit(\'remove\')">X</button> </li>',
+            props: ['title']
+        })
+
+        new Vue({
+            el: "#todo-list-example",
+            data: {
+                newTodoText: '',
+                todos: [
+                    {
+                        id: 1,
+                        title: 'Do the dishes',
+                    },
+                    {
+                        id: 2,
+                        title: 'Take out the trash',
+                    },
+                    {
+                        id: 3,
+                        title: 'Mow the lawn'
+                    }
+                ],
+                nextTodoId: 4
+            },
+            methods:{
+                addNewTodo:function(){
+                    this.todos.push({
+                        id:this.nextTodoId++,
+                        title:this.newTodoText
+                    })
+                    this.newTodoText=''
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

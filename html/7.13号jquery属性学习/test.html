@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+    <script src="../../js/jquery.js"></script>
+    <style>
+        div {
+            width: 220px;
+            height: 30px;
+            border: 1px solid #000;
+        }
+
+        #log {
+            width: 500px;
+            height: 40px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <!-- <li>
+        <a href="#">你好，我是张继科谢娜的迷妹</a><br>
+        <a href="#">我也是+1</a><br>
+        <a href="#">我也是+2</a><br>
+        <a href="#">我也是+3</a><br>
+        <a href="#">我也是+4</a><br>
+        <a href="#">我也是+5</a><br>
+        <a href="#">我也是+6</a><br>
+        <a href="#">我也是+7</a><br>
+    </li>
+    <div id="stop-log"></div>
+    <p>你说什么呢</p>
+    <button class="box">测试</button> -->
+    <!-- <a href="http://jquery.com">阻止链接跳转</a>
+    <div id="log"></div> -->
+    <!-- <div>
+        你好，我是张继科谢娜的迷妹
+    </div>
+    <br>
+    <div>
+        我也是+1
+    </div>
+    <br>
+    <div>
+        我也是+2
+    </div>
+    <button class="box">改变颜色</button> -->
+    <!-- 
+    <button class="box">测试</button>
+    <p><p> -->
+    <!-- 
+
+    <div id="log"></div>
+    <div>
+        <p>
+            <strong><span>click</span></strong>
+        </p>
+    </div> -->
+
+
+    <!-- <ul>
+        <li>item 1
+            <ul>
+                <li>sub item 1-a</li>
+                <li>sub item 1-b</li>
+            </ul>
+        </li>
+        <li>item 2
+            <ul>
+                <li>sub item 2-a</li>
+                <li>sub item 2-b</li>
+            </ul>
+        </li>
+    </ul> -->
+
+
+    <!-- <div></div> -->
+
+    <!-- <input id="whichkey" value="type something">
+    <div id="log"></div> -->
+    <script>
+        // $('#whichkey').bind('keydown', function (e) {
+        //     $('#log').html(e.type + ': ' + e.which);
+        // });
+
+
+        // $("div").mouseover(function (event) {
+        //     alert(event.type); // "mouseover"
+        // });
+
+
+
+
+        // var last, diff;
+        // $('div').click(function (event) {
+        //     if (last) {
+        //         diff = event.timeStamp - last;
+        //         $('div').append('time since last event: ' + diff + '<br/>');
+        //     } else {
+        //         $('div').append('Click again.<br/>');
+        //     }
+        //     last = event.timeStamp;
+        // });
+
+
+        // function handler(event) {
+        //     var $target = $(event.target);
+        //     if ($target.is("li")) {
+        //         $target.children().toggle();
+        //     }
+        // }
+        // $("ul").click(handler).find("ul").hide();
+
+
+
+
+        // $("body").click(function (event) {
+        //     $("#log").html("clicked: " + event.target.nodeName);
+        // });
+        // $("button").click(function (event) { return "hey"; });
+        // $("button").click(function (event) {
+        //     $("p").html(event.result);
+        // });
+
+
+
+        // $("a").click(function (event) {
+        //     event.preventDefault();
+        //     $('#log').append('default ' + event.type + ' prevented').appendTo('#log');
+        // });
+
+        // $("a").mouseenter(function (event) {
+        //     alert(event.relatedTarget.nodeName); // "DIV"
+        // });
+
+        // $(document).bind('mousemove', function (e) {
+        //     $("#log").text("e.pageX: " + e.pageX + ", e.pageY: " + e.pageY);
+        // });
+
+
+
+
+        // $("p").bind("test.我是娜娜呀", function (event) {
+        //     alert(event.namespace);
+        // });
+        // $("button").click(function (event) {
+        //     $("p").trigger("test.我是娜娜呀");  // 我是娜娜呀 弹出框
+        // })
+
+
+
+
+        // $("a").each(function (i) {
+        //     $(this).bind('click', { index: i }, function (e) {
+        //         alert('my index is ' + e.data.index);
+        //     });
+        // })
+
+
+        // $(".box").on("click", function (event) {
+        //     console.log('111');
+        //     $(event.delegateTarget).css("background-color", "red");
+        // });
+
+
+        // $("a").click(function (event) {
+        //     alert(event.isDefaultPrevented()); // false
+        //     event.preventDefault();
+        //     alert(event.isDefaultPrevented()); // true
+        // });
+
+
+        // function immediatePropStopped(e) {
+        //     var msg = "";
+        //     if (e.isImmediatePropagationStopped()) {
+        //         msg = "called";
+        //     } else {
+        //         msg = "not called";
+        //     }
+        //     $("#stop-log").append("<div>" + msg + "</div>");
+        // }
+        // $("button").click(function (event) {
+        //     immediatePropStopped(event);
+        //     event.stopImmediatePropagation();
+        //     immediatePropStopped(event);
+        // });
+    </script>
+</body>
+</html>

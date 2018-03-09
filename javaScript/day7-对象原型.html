@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript example</title>
+</head>
+
+<body>
+    <div>
+        <label for="jscode">Enter code:</label>
+        <input type="text" id="jscode">
+        <button>Submit code</button>
+    </div>
+
+    <p></p>
+</body>
+
+<script>
+    var input = document.querySelector('input');
+    var btn = document.querySelector('button');
+    var para = document.querySelector('p');
+    btn.onclick = function () {
+        var code = input.value;
+        para.textContent = eval(code);
+    }
+
+
+
+    // function createNewPerson(name) {
+    //     var obj = {};
+    //     obj.name = name;
+    //     obj.greeting = function () {
+    //         alert('Hi! I\'m ' + this.name + '.');
+    //     }
+    //     return obj;
+    // }
+
+    // var salva = createNewPerson('salva');
+    // salva.name;  // salva
+    // salva.greeting(); // 弹出 Hi! I\'m salva.
+
+
+
+
+
+    // 上述代码运行良好，但是有点冗长；如果我们知道如何创建一个对象，就没有必要创建一个新的空对象并且返回它。
+
+    // function Person(name) {
+    //     this.name = name;
+    //     this.greeting = function () {
+    //         alert('Hi! I\'m ' + this.name + '.');
+    //     };
+    // }
+
+
+    // 调用构建函数创建新的实例
+    // var lala =new Person('lala');
+    // lala.name;  // lala
+    // lala.greeting(); // 弹出 Hi! I\'m lala.
+
+
+    //  问题   
+    // 尽管您创建的Person是女性，或者是些别的性别类型，输出里的代词都总是 "He"。 
+    // 而且， 纵然您有更多的兴趣列举在interests数组中， bio只会展示您的两个兴趣。
+
+
+    // 解决方法
+
+    function Person(first, last, age, gender, interests) {
+        this.name = {
+            first,
+            last
+        };
+        this.age = age;
+        this.gender = gender;
+        this.interests = interests;
+        this.bio = function () {
+            var string = this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. ';
+            var pronoun;
+
+            // 判断性别
+            if (this.gender === 'male') {
+                pronoun = 'He likes ';
+            } else if (this.gender === 'female') {
+                pronoun = 'She likes ';
+            } else {
+                pronoun = 'They like ';
+            }
+            string += pronoun;
+
+            // 判断兴趣个数
+            if (this.interests.length === 1) {
+                string += this.interests[0] + '.';
+            } else if (this.interests.length === 2) {
+                string += this.interests[0] + ' and ' + this.interests[1] + '.';
+            } else {
+                for (var i = 0; i < this.interests.length; i++) {
+                    if (i === this.interests.length - 1) {
+                        string += 'and ' + this.interests[i] + '.';
+                    } else {
+                        string += this.interests[i] + ', ';
+                    }
+                }
+            }
+            alert(string);
+        };
+
+        this.greeting = function () {
+            alert('Hi! I\'m ' + this.name.first + '.');
+        };
+    };
+
+    var person1 = new Person('Tammi', 'Smith', 32, 'neutral', ['music', 'skiing', 'kickboxing']);
+
+
+
+
+
+    // 修改原型
+    // 为构造器的 prototype 属性添加一个新的方法：
+    Person.prototype.farewell = function () {
+        alert(this.name.first + ' has left the building. Bye for now!');
+    }
+
+    // person1.farewell();  Tammi has left the building. Bye for now!
+</script>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>classList兼容</title>
+</head>
+<body>
+    <script>
+        var classList = null;
+        (function () {
+            classList = function (obj) {
+                this.obj = obj;
+            };
+            classList.prototype.add = function (value) {
+                if (typeof value !== "string") throw TypeError("the type of value is error");
+                if (this.obj.classList) {
+                    this.obj.classList.add(value);
+                } else {
+                    var arr = value.replace(/^\s+|\s+$/g, "").split(/\s+/);
+                    this.obj.classList += " " + arr.join(" ");
+                }
+            };
+            classList.prototype.contains = function (value) {
+                if (typeof value !== "string") throw TypeError("the type of value is error");
+                if (this.obj.classList) {
+                    return this.obj.classList.contains(value);
+                } else {
+                    var arr = value.replace(/^\s+|\s+$/g, "").split(/\s+/);
+                    var _className = this.obj.className;
+                    for (var i = 0, len = arr.length; i < len; i++) {
+                        if (_className.search(new RegExp("(\\s+)?" + arr[i] + "(\\s+)?")) === -1) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            };
+            classList.prototype.remove = function (value) {
+                if (typeof value !== "string") throw TypeError("the type of value is error");
+                if (this.obj.classList) {
+                    return this.obj.classList.remove(value);
+                } else {
+                    var arr = value.replace(/^\s+|\s+$/g, "").split(/\s+/);
+                    var _className = this.obj.className;
+                    for (var i = 0, len = arr.length; i < len; i++) {
+                        if (_className.search(new RegExp("(\\s+)?" + arr[i] + "(\\s+)?")) !== -1) {
+                            _className = _className.replace(new RegExp("(\\s+)?" + arr[i] + "(\\s+)?"), "");
+                        }
+                    }
+                    this.obj.className = _className;
+                }
+            };
+            classList.prototype.toggle = function (value) {
+                if (typeof value !== "string") throw TypeError("the type of value is error");
+                if (this.contains(value)) {
+                    this.remove(value);
+                } else {
+                    this.add(value);
+                }
+            };
+        })();
+    </script>
+</body>
+</html>
+
+
+<!-- 兼容classlist -->
+
+<!-- if (!("classList" in document.documentElement)) {  
+    Object.defineProperty(HTMLElement.prototype, 'classList', {  
+        get: function() {  
+            var self = this;  
+            function update(fn) {  
+                return function(value) {  
+                    var classes = self.className.split(/\s+/g),  
+                        index = classes.indexOf(value);  
+                      
+                    fn(classes, index, value);  
+                    self.className = classes.join(" ");  
+                }  
+            }  
+              
+            return {                      
+                add: update(function(classes, index, value) {  
+                    if (!~index) classes.push(value);  
+                }),  
+                  
+                remove: update(function(classes, index) {  
+                    if (~index) classes.splice(index, 1);  
+                }),  
+                  
+                toggle: update(function(classes, index, value) {  
+                    if (~index)  
+                        classes.splice(index, 1);  
+                    else  
+                        classes.push(value);  
+                }),  
+                  
+                contains: function(value) {  
+                    return !!~self.className.split(/\s+/g).indexOf(value);  
+                },  
+                  
+                item: function(i) {  
+                    return self.className.split(/\s+/g)[i] || null;  
+                }  
+            };  
+        }  
+    });  
+}   -->
+
+
+
+
+
+
+
+
+<!-- 兼容classlist
+Object.defineProperty(Element.prototype, 'classList', {
+    get: function() {
+        var self = this, bValue = self.className.split(" ")
+
+        bValue.add = function (){
+            var b;
+            for(i in arguments){
+                b = true;
+                for (var j = 0; j<bValue.length;j++)
+                    if (bValue[j] == arguments[i]){
+                        b = false
+                        break
+                    }
+                if(b)
+                    self.className += (self.className?" ":"")+arguments[i]
+            }
+        }
+        bValue.remove = function(){
+            self.className = ""
+            for(i in arguments)
+                for (var j = 0; j<bValue.length;j++)
+                    if(bValue[j] != arguments[i])
+                        self.className += (self.className?" " :"")+bValue[j]
+        }
+        bValue.toggle = function(x){
+            var b;
+            if(x){
+                self.className = ""
+                b = false;
+                for (var j = 0; j<bValue.length;j++)
+                    if(bValue[j] != x){
+                        self.className += (self.className?" " :"")+bValue[j]
+                        b = false
+                    } else b = true
+                if(!b)
+                    self.className += (self.className?" ":"")+x
+            } else throw new TypeError("Failed to execute 'toggle': 1 argument required")
+            return !b;
+        }
+
+        return bValue; 
+    },
+    enumerable: false
+}) -->

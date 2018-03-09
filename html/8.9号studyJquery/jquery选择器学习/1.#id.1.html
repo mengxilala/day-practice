@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 1. #id 根据给定的ID匹配一个元素。 -->
+    <div id="notMe">
+        <p>id="notMe"</p>
+    </div>
+    <div id="myDiv">id="myDiv"</div>
+    <div class="test">test1</div>
+    <div class="test">test2</div>
+    <div class="test">test3</div>
+
+
+
+    <!--2. element 根据给定的元素标签名匹配所有元素 -->
+    <div>DIV1</div>
+    <div>DIV2</div>
+    <span>SPAN</span>
+
+    <script>
+        // 1. 描述:查找 ID 为"myDiv"的元素。 
+        $('#myDiv'); //返回jquery对象
+        document.getElementById('myDiv'); //返回Dom对象  <div id="myDiv">id="myDiv"</div>
+        document.querySelector('#myDiv'); //返回Dom对象  <div id="myDiv">id="myDiv"</div>
+
+        // 补充：
+        // querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。 如果没有找到，返回 null。
+        // 注意： querySelector() 方法仅仅返回匹配指定选择器的第一个元素。如果你需要返回所有的元素，请使用 querySelectorAll() 方法替代。
+
+
+        // 2. 描述:查找一个 DIV 元素。
+        $("div");  // [ <div>DIV1</div>, <div>DIV2</div> ]
+    </script>
+
+</body>
+</html>

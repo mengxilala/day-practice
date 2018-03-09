@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day1</title>
+
+</head>
+<body>
+    <!-- <button onclick="createParagraph()">Click Me</button>    可以这样创建P元素  内联语法-->
+    <!-- 也可以这样创建 -->
+    <button>Click Me</button>  
+
+
+    <script>
+        function createParagraph() {
+            var para = document.createElement('p');
+            para.textContent = "You clicked the Button!";
+            document.body.appendChild(para);
+        }
+
+        var buttons = document.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', createParagraph);
+        }
+    </script>
+</body>
+</html>

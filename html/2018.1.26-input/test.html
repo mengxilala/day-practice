@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+    <input type="text" id="input">
+    <button id="button">登录</button>
+    <script>
+        var aaa = [1, 2, 3, 4, 5, 5, 5, 2, 3, 45, 6, 7, 7, 3, 8, 9];
+        function searchKeys(needle, haystack) {
+            var result = [];
+            for (i in haystack) {
+                if (haystack[i] == needle) {
+                    result.push(i);
+                }
+            }
+            return result;
+        }
+        var list = [];
+        console.log(searchKeys(7, aaa));
+        list = searchKeys(7, aaa);
+        for (var i = 0; i < list.length; i++) {
+            console.log(list[i]);
+            aaa.splice(list[i] - i, 1)
+
+        }
+
+    </script>
+</body>
+</html>

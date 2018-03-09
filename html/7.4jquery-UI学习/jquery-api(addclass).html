@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-api(addclass)演示</title>
+    <!-- 引入所需文件 css-->
+
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .big-blue {
+            width: 200px;
+            height: 200px;
+            background-color: #00f;
+        }
+    </style>
+    <!-- 引入所需文件js -->
+
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        $("div").click(function () {
+            $(this).addClass("big-blue", 1000, "easeOutBounce");
+        });
+    </script>
+</body>
+
+</html>

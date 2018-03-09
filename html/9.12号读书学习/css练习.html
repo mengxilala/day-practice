@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css练习</title>
+    <style>
+        body{
+            font-size:20px;
+            font-family: simsun;
+        }
+        h2.special{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <p class="special">这是一个p标签</p>
+    <h2 class="special">这是一个标题标签</h2>
+    <div class="special important"></div>
+    <div class="red "></div>
+
+    <script> 
+        var items=document.getElementsByClassName('special important');   //获取多个类名  中间用空格隔开
+        console.log(items);
+    </script>
+</body>
+</html>

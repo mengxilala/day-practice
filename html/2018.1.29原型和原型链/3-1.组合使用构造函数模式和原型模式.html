@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组合使用构造函数模式</title>
+</head>
+<body>
+    <script>
+
+        function Person(name, age, job) {
+
+        }
+        Person.prototype = {
+            constructor: Person,
+            name: "zmx",
+            age: 20,
+            job: "boss",
+            friends: ["poppy", "zhenzhen"],
+            sayName: function () {
+                alert(this.name);
+            }
+        }
+
+        var person1 = new Person();
+        var person2 = new Person();
+
+        person1.friends.push("xueniu");
+        alert(person1.friends); // poppy, zhenzhen,xueniu
+        alert(person2.friends); // poppy, zhenzhen,xueniu
+        alert(person1.friends == person2.friends); // true
+
+
+
+
+        // 组合使用构造函数模式
+
+        function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.friends = ["poppy", "zhenzhen"];
+        }
+        Person.prototype = {
+            constructor: Person,
+            sayName: function () {
+                alert(this.name);
+            }
+        }
+
+        var person1 = new Person("zmx", 20, "boss");
+        var person2 = new Person("lyl", 20, "CEO");
+
+        person1.friends.push("xueniu");
+        alert(person1.friends); // poppy, zhenzhen,xueniu
+        alert(person2.friends); // poppy, zhenzhen
+        alert(person1.friends == person2.friends); // false
+        alert(person1.sayName == person2.sayName); // true
+
+        
+    </script>
+</body>
+</html>

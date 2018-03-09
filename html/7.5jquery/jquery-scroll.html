@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-scroll属性</title>
+    <script src="../../js/jquery.min.js"></script>
+    <style>
+        .demo {
+            width: 50px;
+            height: 100px;
+            border: 1px solid red;
+            overflow: scroll;
+            /* text-align: center; */
+        }
+        /* 设置滚动条为不可见状态 */
+        /* ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }  */
+    </style>
+</head>
+<body>
+    <!-- scrollTop([val]) 获取匹配元素相对滚动条顶部的偏移。 此方法对可见和隐藏元素均有效。 -->
+
+    <!-- 无参数描述: 获取第一段相对滚动条顶部的偏移  -->
+
+    <p>Hello</p>
+    <p>2nd Paragraph</p>
+
+    <!-- 参数val 描述: 设置相对滚动条顶部的偏移   -->
+    <div class="demo">
+        <p>111</p>
+        <p>222</p>
+        <p>333</p>
+        <p>444</p>
+        <p>555</p>
+        <p>666</p>
+        <p>777</p>
+        <p>888</p>
+        <p>999</p>
+        <p>00000000000000000000000</p>
+        <p>aaa</p>
+    </div>
+
+
+
+
+
+    <!-- scrollLeft([val]) 获取匹配元素相对滚动条左侧的偏移。 此方法对可见和隐藏元素均有效。 -->
+
+    <!-- 使用scrollLeft的前提条件是元素要有横向滚动条，即内容宽度大于网页宽度，否则设置scrollLeft无效，值为0 -->
+                   
+
+
+    <script>
+        //  无参数描述: 获取第一段相对滚动条顶部的偏移  
+        // var p = $("p:first");
+        // $("p:last").text("scrollTop:" + p.scrollTop());
+        // var p = $("p:first");
+        // $("p:last").text("scrollLeft:" + p.scrollLeft());
+
+        // 参数val 描述: 设置相对滚动条顶部的偏移
+        // $("div.demo").scrollTop(100);
+
+        // 无参数描述:获取第一段相对滚动条左侧的偏移
+        // var p = $("p:first");
+        // $("p:last").text("scrollLeft:" + p.scrollLeft());
+
+
+        // 参数val 描述:设置相对滚动条左侧的偏移
+        $("div.demo").scrollLeft(10);
+    </script>
+</body>
+</html>

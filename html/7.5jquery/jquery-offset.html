@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-offset属性</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+<body>
+    <!-- jquery的offset属性 -->
+    <!-- 获取匹配元素在当前视口的相对偏移。 返回的对象包含两个整型属性：top 和 left，以像素计。此方法只对可见元素有效。 -->
+
+
+    <!-- <p>Hello</p>
+    <p>2nd Paragraph</p> -->
+
+
+    <!-- jquery的position属性 -->
+    <!-- 获取匹配元素相对父元素的偏移。 返回的对象包含两个整型属性：top 和 left。为精确计算结果，请在补白、边框和填充属性上使用像素单位。此方法只对可见元素有效。 -->
+
+
+
+    <p>Hello</p>
+    <p>2nd Paragraph</p>
+
+    <script>
+        // jquery的offset属性
+        // var p = $("p:last");
+        // var offset = p.offset();
+        // p.html("left: " + offset.left + ", top: " + offset.top);
+        // $("p:last").offset({ top: 100, left: 30 });
+
+
+        // jquery的position属性
+
+        var pFirst = $("p:first");
+        var pFirstPosition = pFirst.position();
+        $("p:first").html("left: " + pFirstPosition.left + ", top: " + pFirstPosition.top);
+        var pLast = $("p:last");
+        var pLastPosition = pLast.position();
+        $("p:last").html("left: " + pLastPosition.left + ", top: " + pLastPosition.top);
+    </script>
+</body>
+</html>

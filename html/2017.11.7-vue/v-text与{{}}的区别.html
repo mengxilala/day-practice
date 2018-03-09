@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-text与{{}}的区别</title>
+</head>
+<body>
+    <!-- Vue中的v-text等同于文本插值{{}}方法，也类似于JavaScript中的textContent。 -->
+    <div id="app">
+        <h2>{{}}的方式获取数据</h2>
+        <ul>
+            <li v-for="(value,key) in person">{{key}}:{{value}}</li>
+        </ul>
+        <br>
+        <h2>v-text的方式获取数据</h2>
+        <ul>
+            <li v-for="(value,key) in person" v-text="key+':'+value"></li>
+        </ul>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                person: {
+                    name: 'zhangmengxi',
+                    age: 20,
+                    gender: 'girl'
+                }
+            }
+        })
+
+        // 向id=app的元素中添加元素、
+        var h1Element = document.createElement('li');
+        h1Element.classList.add('active');
+        h1Element.textContent = '我们'
+        document.getElementById('app').appendChild(h1Element);
+    </script>
+</body>
+</html>

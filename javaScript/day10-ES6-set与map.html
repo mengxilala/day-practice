@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day10-set与map</title>
+</head>
+<body>
+    <script>
+
+        // 1.ES5 中的 Set 与 Map
+        // 在 ES5 中，开发者使用对象属性来模拟 Set 与 Map ，就像这样：
+        let set = Object.create(null);
+        set.foo = true;
+        // 检查属性的存在性
+        if (set.foo) {
+
+            // 一些操作
+        }
+        // 本例中的 set 变量是一个原型为 null 的对象，确保在此对象上没有继承属性。使用对象的属性来检测唯一性，在 ES5 中是很常用的方法。
+        // 当一个属性被添加到 set 对象时，它的值也被设为 true ，因此条件判断语句（例如本例中的 if 语句）就可以简单判断出该值是否存在。
+
+        // 使用对象模拟 Set 与模拟 Map 之间唯一实质区别是所存储的值。例如，以下例子将对象作为 Map 使用：
+        let map = Object.create(null);
+
+        map.foo = "bar";
+
+        // 提取一个值
+        let value = map.foo;
+
+        console.log(value);         // "bar"
+        // 此代码将字符串值 "bar" 存储在 foo 键上。与 Set 仅检查键的存在性不同， Map 多数被用来提取数据。
+
+        // 2.变通方法的问题
+        // 尽管在简单情况下将对象作为 Set 与 Map 来使用都是可行的，但一旦接触到对象属性的局限性，此方式就会碰壁。
+        // 例如，由于对象属性的类型必须为字符串，你就必须保证任意两个键不能被转换为相同的字符串。研究以下代码：
+        let map = Object.create(null);
+
+        map[5] = "foo";
+
+        console.log(map["5"]);      // "foo"
+        // 本例将字符串值 "foo" 赋值到数值类型的键 5 上，而数值类型的键会在内部被转换为字符串，因此 map["5"] 与 map[5] 实际上引用了同一个属性。
+        // 若需要将数值与字符串同时作为键来使用，这种内部转换就会引起问题。而若使用对象作为键，会出现另一个问题，例如：
+        let map = Object.create(null),
+            key1 = {},
+            key2 = {};
+
+        map[key1] = "foo";
+
+        console.log(map[key2]);     // "foo"
+        // 此处的 map[key2] 与 map[key1] 引用了同一个值。由于对象的属性只能是字符串， key1 与 key2 对象就必须被转换为字符串来使用，
+        // 它们会被转换为同一个字符串，也就是对象默认的字符串表示 "[object Object]" ，从而指向了同一个属性。
+        // 这种错误可能不太显眼，因为貌似合乎逻辑的假设是：如果在键上使用了不同对象，它们就应当指向不同的键。
+        // 由于对象会被转换为默认的字符串表现形式，它就难以被当作 Map 的键来使用，此问题同样存在于将对象作为 Set 来使用的尝试上。
+
+        // 当键的值为假值时， Map 也会遇到自身的特殊问题。在需要布尔值的位置（例如在 if 语句内），任何假值都会被自动转换为 false 。
+        // 这种转换单独说来并不是问题，但需要对值的用法足够小心。例如，查看以下代码：
+        let map = Object.create(null);
+
+        map.count = 1;
+
+        // 是想检查 "count" 属性的存在性，还是想检查非零值？
+        if (map.count) {
+            // ...
+        }
+        // 此例中 map.count 的用法存在歧义。此处的 if 语句是想检查 map.count 属性的存在性，还是想检查非零值？
+        // 该 if 语句内的代码会被执行是因为 1 是真值。然而若 map.count 的值为 0 ，或者该属性不存在，则 if 语句内的代码都不会被执行。
+        // 在大型应用中，这类问题都是难以确认、难以调试的，这也是 ES6 新增 Set 与 Map 类型的首要原因
+
+
+
+        // 3.ES6中的set
+        // ES6 新增了 Set 类型，这是一种无重复值的有序列表。允许对 Set 包含的数据进行快速访问，从而能更有效地追踪离散值。
+
+        // a.创建 Set 并添加项目
+        // Set 使用 new Set() 来创建，而调用 add() 方法就能向 Set 中添加项目，检查 size 属性还能查看其中包含有多少项：
+        let set = new Set();
+        set.add(5);
+        set.add("5");
+
+        console.log(set.size);    // 2
+
+        // Set 不会使用强制类型转换来判断值是否重复。这意味着 Set 可以同时包含数值 5 与 字符串 "5" ，
+        // 将它们都作为相对独立的项（在 Set 内部的比较使用了第四章讨论过的 Object.is() 方法，来判断两个值是否相等，
+        // 唯一的例外是 + 0 与 - 0 在 Set 中被判断为是相等的）。你还可以向 Set 添加多个对象，它们不会被合并为同一项：
+        let set = new Set(),
+            key1 = {},
+            key2 = {};
+
+        set.add(key1);
+        set.add(key2);
+
+        console.log(set.size);    // 2
+        // 由于 key1 与 key2 并不会被转换为字符串，所以它们在这个 Set 内部被认为是两个不同的项（记住：如果它们被转换为字符串，那么都会等于 "[object Object]" ）。
+        // 如果 add() 方法用相同值进行了多次调用，那么在第一次之后的调用实际上会被忽略：
+        let set = new Set();
+        set.add(5);
+        set.add("5");
+        set.add(5);     // 重复了，该调用被忽略
+
+        console.log(set.size);    // 2
+        // 你可以使用数组来初始化一个 Set ，并且 Set 构造器会确保不重复地使用这些值。例如：
+        let set = new Set([1, 2, 3, 4, 5, 5, 5, 5]);
+        console.log(set.size);    // 5
+        // 在此例中，带有重复值的数组被用来初始化这个 Set 。虽然数值 5 在数组中出现了四次，但 Set 中却只有一个 5 。
+        // 若要把已存在的代码或 JSON 结构转换为 Set 来使用，这种特性会让转换更轻松。
+
+        // 你可以使用 has() 方法来测试某个值是否存在于 Set 中，就像这样：
+        let set = new Set();
+        set.add(5);
+        set.add("5");
+
+        console.log(set.has(5));    // true
+        console.log(set.has(6));    // false
+        // 此处的 Set 不包含 6 这个值，因此 set.has(6) 会返回 false 。
+
+
+        // b.移除值
+        // 也可以从 Set 中将值移除。使用 delete () 方法可移除单个值，而调用 clear() 方法可清除 Set 中所有值。以下代码展示了二者的作用：
+        let set = new Set();
+        set.add(5);
+        set.add("5");
+
+        console.log(set.has(5));    // true
+
+        set.delete(5);
+
+        console.log(set.has(5));    // false
+        console.log(set.size);      // 1
+
+        set.clear();
+
+        console.log(set.has("5"));  // false
+        console.log(set.size);      // 0
+        // 在调用 delete () 之后，只有 5 被移走；而执行 clear() 方法后， set 就被清空了。
+        // 所有这些方法都提供了一个非常简单的机制来追踪有序的唯一值。不过，在给 Set 添加项目之后，要如何对每个项执行操作呢？此时 forEcah() 方法就派上用场了。
+
+        // c.Set 上的 forEach() 方法
+        
+
+    </script>
+</body>
+</html>

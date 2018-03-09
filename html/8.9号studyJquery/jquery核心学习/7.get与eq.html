@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- get([index])
+    取得其中一个匹配的元素。 num表示取得第几个匹配的元素。从0开始，返回的是DOM对象，类似的有eq(index),不过eq(index)返回的是jQuery对象。
+    这能够让你选择一个实际的DOM 元素并且对他直接操作，而不是通过 jQuery 函数。$(this).get(0)与$(this)[0]等价。 -->
+
+    <!-- [index] 取得第 index 个位置上的元素 -->
+    <!-- get()取得所有匹配的 DOM 元素集合。 -->
+    <p>111</p>
+    <p>222</p>
+    <p>333</p>
+    <p>444</p>
+    <p>555</p>
+    <p>666</p>
+    <p>777</p>
+    <p>888</p>
+    <p>999</p>
+
+    <script>
+        // 获得第一个元素
+        console.log($('p').get(0));   //    <p>111</p> 返回的是dom对象
+        console.log($('p')[0]);       //    <p>111</p>
+        console.log($('p').eq(0));    //    返回的是jquery对象
+
+
+    // 描述:选择文档中所有图像作为元素数组，并用数组内建的 reverse 方法将数组反向。
+    console.log($('p').get().reverse());  //将元素顺序调换
+    
+    // -index参数表示从后往前获取元素
+    console.log($('p').eq(-2));     //获取的是jquery对象
+    console.log($('p').get(-2));    //<p>888</p>
+    </script>
+    
+</body>
+</html>

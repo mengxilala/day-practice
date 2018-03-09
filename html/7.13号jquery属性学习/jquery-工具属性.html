@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-工具属性</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        // 1.jQuery.support
+        // jQuery.support主要包括以下测试：
+        // boxModel: 如果这个页面和浏览器是以W3C CSS盒式模型来渲染的，则等于true。通常在IE 6和IE 7的怪癖模式中这个值是false。在document准备就绪前，这个值是null。
+        // cssFloat: 如果用cssFloat来访问CSS的float的值，则返回true。目前在IE中会返回false, 他用styleFloat代替。
+        // hrefNormalized: 如果浏览器从getAttribute("href")返回的是原封不动的结果，则返回true。在IE中会返回false，因为他的URLs已经常规化了。
+        // htmlSerialize: 如果浏览器通过innerHTML插入链接元素的时候会序列化这些链接，则返回true，目前IE中返回false。
+        // leadingWhitespace: 如果在使用innerHTML的时候浏览器会保持前导空白字符，则返回true，目前在IE 6- 8中返回false。
+        // noCloneEvent: 如果浏览器在克隆元素的时候不会连同事件处理函数一起复制，则返回true，目前在IE中返回false。
+        // objectAll: 如果在某个元素对象上执行getElementsByTagName("*")会返回所有子孙元素，则为true，目前在IE 7中为false。
+        // opacity: 如果浏览器能适当解释透明度样式属性，则返回true，目前在IE中返回false，因为他用alpha滤镜代替。
+        // scriptEval: 使用 appendChild/ createTextNode 方法插入脚本代码时，浏览器是否执行脚本，目前在IE中返回false，IE使用.text 方法插入脚本代码以执行。
+        // style: 如果getAttribute("style")返回元素的行内样式，则为true。目前IE中为false，因为他用cssText代替。
+        // tbody: 如果浏览器允许table元素不包含tbody元素，则返回true。目前在IE中会返回false，他会自动插入缺失的tbody。
+        console.log($.support.boxModel); //true
+
+
+        // 2.jQuery.browser.version
+        // 在jQuery 1.3中不建议使用。浏览器渲染引擎版本号。
+        // 典型结果: Internet Explorer: 6.0, 7.0
+        // Mozilla / Firefox / Flock / Camino: 1.7.12, 1.8.1.3
+        // Opera: 9.20
+        // Safari / Webkit: 312.8, 418.9
+        // 描述: 显示当前 IE 浏览器版本号。
+        if ($.browser.webkit)
+            alert($.browser.version); //537.36 当前版本号
+
+
+        // 3.jQuery.each(object, [callback])通用遍历方法，可用于遍历对象和数组。不同于遍历 jQuery 对象的 $().each() 方法，此方法可用于遍历任何对象。
+        // 回调函数拥有两个参数：第一个为对象的成员或数组的索引，第二个为对应变量或内容。如果需要退出 each 循环可使回调函数返回 false，其它返回值将被忽略。
+        // 遍历数组，同时使用元素索引和内容。
+        $.each([0, 1, 2], function (i, n) {
+            alert("Item #" + i + ": " + n);
+        });
+
+        // 描述:例遍对象，同时使用成员名称和变量内容。
+        $.each({ name: "John", lang: "JS" }, function (i, n) {
+            alert("Name: " + i + ", Value: " + n);
+        });
+
+
+        // 4.jQuery.extend([deep], target, object1, [objectN]) 用一个或多个其他对象来扩展一个对象，返回被扩展的对象。
+        // 如果不指定target，则给jQuery命名空间本身进行扩展。这有助于插件作者为jQuery增加新方法。
+        // 如果第一个参数设置为true，则jQuery返回一个深层次的副本，递归地复制找到的任何对象。
+        // 否则的话，副本会与原对象共享结构。 未定义的属性将不会被复制，然而从对象的原型继承的属性将会被复制。
+
+        // target, [object1], [objectN]
+        // target: 一个对象，如果附加的对象被传递给这个方法那么它将接收新的属性，如果它是唯一的参数将扩展jQuery的命名空间。
+        // object1: 待合并到第一个对象的对象。
+        // objectN: 待合并到第一个对象的对象。
+        // 描述:合并 settings 和 options，修改并返回 settings。
+        var settings = { validate: false, limit: 5, name: "foo" };
+        var options = { validate: true, name: "bar" };
+        jQuery.extend(settings, options);
+        // 结果：
+        settings == { validate: true, limit: 5, name: "bar" }
+
+        // [deep],target,object1,[objectN]
+        // deep: 如果设为true，则递归合并。
+        // target: 待修改对象。
+        // object1: 待合并到第一个对象的对象。
+        // objectN: 待合并到第一个对象的对象。
+        // 描述:合并 defaults 和 options, 不修改 defaults。
+        var empty = {};
+        var defaults = { validate: false, limit: 5, name: "foo" };
+        var options = { validate: true, name: "bar" };
+        var settings = jQuery.extend(empty, defaults, options);
+        // 结果：
+        settings == { validate: true, limit: 5, name: "bar" }
+        empty == { validate: true, limit: 5, name: "bar" }
+
+
+        // 5.jQuery.grep(array, callback, [invert])使用过滤函数过滤数组元素。
+        // 此函数至少传递两个参数：待过滤数组和过滤函数。过滤函数必须返回 true 以保留元素或 false 以删除元素。
+        // array: 待过滤数组。
+        // callback: 此函数将处理数组每个元素。第一个参数为当前元素，第二个参数为元素索引值。此函数应返回一个布尔值。
+        // invert: 如果 "invert" 为 false ，则函数返回数组中由过滤函数返回 true 的元素，当"invert" 为 true，则返回过滤函数中返回 false 的元素集。
+        // 描述:过滤数组中小于 0 的元素。
+        $.grep([0, 1, 2], function (n, i) {
+            return n > 0;
+        });
+        // 结果：
+        [1, 2]
+
+        // 描述: 排除数组中大于 0 的元素，使用第三个参数进行排除。
+        $.grep([0, 1, 2], function (n, i) {
+            return n > 0;
+        }, true);
+        // 结果：
+        [0]
+
+
+        // 6.jQuery.map(arr | obj, callback)将一个数组中的元素转换到另一个数组中。
+        // 作为参数的转换函数会为每个数组元素调用，而且会给这个转换函数传递一个表示被转换的元素作为参数。
+        // 转换函数可以返回转换后的值、null（删除数组中的项目）或一个包含值的数组，并扩展至原始数组中。
+        // 描述: 将原数组中每个元素加 4 转换为一个新数组。
+        $.map([0, 1, 2], function (n) {
+            return n + 4;
+        });
+        // 描述: 原数组中大于 0 的元素加 1 ，否则删除。
+        $.map([0, 1, 2], function (n) {
+            return n > 0 ? n + 1 : null;
+        });
+
+        // 描述: 原数组中每个元素扩展为一个包含其本身和其值加 1 的数组，并转换为一个新数组。
+        $.map([0, 1, 2], function (n) {
+            return [n, n + 1];
+        });
+
+
+        // 7.jQuery.inArray(value,array,[fromIndex])确定第一个参数在数组中的位置，从0开始计数(如果没有找到则返回 -1 )。
+        // 描述:查看对应元素的位置
+        var arr = [4, "Pete", 8, "John"];
+        jQuery.inArray("John", arr);  // 3
+        jQuery.inArray(4, arr);  // 0
+        jQuery.inArray("David", arr);  //-1
+        jQuery.inArray("Pete", arr, 2);  //-1
+
+
+        // 8.jQuery.toArray()把jQuery集合中所有DOM元素恢复成一个数组
+        // 描述: 得到所有li的元素数组
+        alert($('li').toArray());
+
+
+        // 9.jQuery.merge(first, second)合并两个数组
+        // 返回的结果会修改第一个数组的内容——第一个数组的元素后面跟着第二个数组的元素。
+        // first: 第一个待处理数组，会改变其中的元素。
+        // second: 第二个待处理数组，不会改变其中的元素。
+        // 描述: 合并两个数组到第一个数组上。
+        $.merge([0, 1, 2], [2, 3, 4])
+
+        // 补充：数组去重
+        // 思路：
+        // 1.创建一个新的数组存放结果
+        // 2.创建一个空对象
+        // 3.for循环时，每次取出一个元素与对象进行对比，如果这个元素不重复，则把它存放到结果数组中，
+        // 同时把这个元素的内容作为对象的一个属性，并赋值为1，存入到第2步建立的对象中。
+        var arr = [112, 112, 34, '你好', 112, 112, 34, '你好', 'str', 'str1'];
+        Array.prototype.unique3 = function () {
+            var res = [];
+            var json = {};
+            for (var i = 0; i < this.length; i++) {
+                if (!json[this[i]]) {
+                    res.push(this[i]);
+                    json[this[i]] = 1;
+                }
+            }
+            return res;
+        }
+
+
+        // 10.jQuery.contains(container,contained) 一个DOM节点是否包含另一个DOM节点。
+        // container: DOM元素作为容器，可以包含其他元素
+        // contained: DOM节点，可能被其他元素所包含
+        // 描述:检测一个元素是否包含另一个元素
+        // < div id= "div" >
+        //     谢娜张继科
+        //     < p id= "p" > 科娜粉</p >
+        // </div >
+        // var div = $('#div');
+        // var p = $('#p');
+        // console.log($.contains(div, p)); //true
+        // console.log($.contains(p, div)); //true
+
+
+        // 11. $.type(obj)检测obj的数据类型。
+        // 描述:以下obj的类型如下：
+        $.type(true) === "boolean"
+        $.type(3) === "number"
+        $.type("test") === "string"
+        $.type(function () { }) === "function"
+        $.type([]) === "array"
+        $.type(new Date()) === "date"
+        $.type(/test/) === "regexp"
+
+
+        // 12. $.isArray(obj) 测试对象是否为数组。
+        // 描述: 检测是否为数组
+        console.log($.isArray([])); // true
+
+        // 13. $.isFunction(obj) 测试对象是否为函数。
+        console.log($.isFunction(function stub() { })); // true
+
+
+        // 14. $.isEmptyObject(obj)测试对象是否是空对象（不包含任何属性）。
+        // 描述: 测试是否为空对象
+        $.isEmptyObject({}) // true
+        $.isEmptyObject({ foo: "bar" }) // false
+
+
+        // 15.$.isPlainObject(obj)测试对象是否是纯粹的对象（通过 "{}" 或者 "new Object" 创建的）。
+        // 描述:测试是否为纯粹的对象
+        $.isPlainObject({}) // true
+        $.isPlainObject("test") // false
+
+
+        // 16. $.isWindow(obj)测试对象是否是窗口（有可能是Frame）。
+        // 描述:测试是否为窗口
+        $.isWindow(window);
+
+        // 17.jQuery.isNumeric(value)确定它的参数是否是一个数字。
+        // $.isNumeric() 方法检查它的参数是否代表一个数值。如果是这样，它返回 true。否则，它返回false。该参数可以是任何类型的
+        $.isNumeric("-10");  // true
+        $.isNumeric(16);     // true
+        $.isNumeric(0xFF);   // true
+        $.isNumeric("0xFF"); // true
+        $.isNumeric("8e5");  // true (exponential notation string)
+        $.isNumeric(3.1415); // true
+        $.isNumeric(+10);    // true
+        $.isNumeric(0144);   // true (octal integer literal)
+        $.isNumeric("");     // false
+        $.isNumeric({});     // false (empty object)
+        $.isNumeric(NaN);    // false
+        $.isNumeric(null);   // false
+        $.isNumeric(true);   // false
+        $.isNumeric(Infinity); // false
+        $.isNumeric(undefined); // false
+
+
+        // 18.$.trim(str)去掉字符串起始和结尾的空格。
+        // 描述:去掉字符串起始和结尾的空格。
+        $.trim("  hello, how are you?  ");
+
+
+        // 19. $.param(obj,[traditional])将表单元素数组或者对象序列化。是.serialize()的核心方法。
+        // 描述:按照key/value对序列化普通对象。
+
+        var params = { width: 1680, height: 1050 };
+        var str = $.param(params);
+        $("#results").text(str);
+        // 结果:
+        // width = 1680 & height = 1050;
+
+
+        // 20. $.error(message)接受一个字符串，并且直接抛出一个包含这个字符串的异常。
+        // 这个方法的主要目的是提供给插件开发人员，让他们可以重载这个方法，并以更好的方式显示错误，或者提供更多信息。
+        // 描述:重载jQuery.error，以便可以在Firebug里显示
+        jQuery.error = console.error;
+        
+        $("img").error(function () {
+            $("img").replaceWith("Missing image!");
+        });
+
+
+        // 21.$.fn.jquery代表 jQuery 版本号的字符串。
+        // .jquery 属性是通过 jQuery 原型赋值的，通过使用它的别名 $.fn 进行引用。它是一个含有 jQuery 版本号的字符串，例如 "1.5.0" 或 "1.4.4".
+        // 描述:取得页面上当前使用的 jQuery 的版本号。
+        alert('You are running jQuery version: ' + $.fn.jquery);
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型和原型链</title>
+</head>
+<body>
+    <script>
+        // 原型是一个对象，其他对象可以通过它实现属性继承
+        // constructor”属性，这个属性对应创建所有指向该原型的实例的构造函数
+
+        // 1.prototype和__proto__的区别
+        // prototype是函数才有的属性,__proto__是每个对象都有的属性
+
+        var a = {};
+        console.log(a.prototype); //undefined
+        console.log(a.__proto__)  // Object {}
+
+        var b = function () { };
+        console.log(b.prototype);  //b {}
+        console.log(b.__proto__);  //function() {}
+
+
+        // 2.__proto__属性指向谁,取决于对象创建时的实现方式
+
+        // 大多数情况下，__proto_可以理解为构造器的原型，__proto__===constructor.prototype,但是通过object.create()创建的对象不适用此等式
+
+        // a.字面量方式
+        var a = {};
+        console.log(a.__proto__);  // Object {}
+        console.log(a.__proto__ === a.constructor.prototype); //true
+
+        // b.构造器方式
+        var A = function () { };
+        var a = new A();
+        console.log(a.__proto__); //A{}
+        console.log(a.__proto__ === a.constructor.prototype); //true
+
+        // c.Object.create()方式
+        var a = { a: 1 };
+        var b = Object.create(a);
+        console.log(a2.__proto__); //Object {a: 1}
+        console.log(a.__proto__ === a.constructor.prototype); //false
+
+
+        // 3.什么是原型链
+        var A = function () { };
+        var a = new A();
+        console.log(a.__proto__); //A {}（即构造器function A 的原型对象）
+        console.log(a.__proto__.__proto__); //Object {}（即构造器function Object 的原型对象）
+        console.log(a.__proto__.__proto__.__proto__); //null
+
+
+        var animal = function () { };
+        var dog = function () { };
+
+        animal.price = 2000;
+        dog.prototype = animal;
+        var tidy = new dog();
+        console.log(dog.price) //undefined
+        console.log(tidy.price) // 2000
+
+
+
+        var dog = function () { };
+        dog.prototype.price = 2000;
+        var tidy = new dog();
+        console.log(tidy.price); // 2000
+        console.log(dog.price); //undefined
+
+
+        var dog = function () { };
+        var tidy = new dog();
+        tidy.price = 2000;
+        console.log(dog.price); //undefined
+
+        // 实例（tidy）和 原型对象（dog.prototype）存在一个连接。
+        // 不过，要明确的真正重要的一点就是，这个连接存在于实例（tidy）与构造函数的原型对象（dog.prototype）之间，而不是存在于实例（tidy）与构造函数（dog）之间。
+
+        
+
+
+    </script>
+</body>
+</html>

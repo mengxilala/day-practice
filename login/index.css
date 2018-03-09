@@ -1,0 +1,250 @@
+body {
+    font-family: login;
+    margin: 0;
+}
+input {
+    border: 0;
+    padding: 0;
+}
+body > section {
+    background-color: red;
+    width:648px;
+    height: 318px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+.body .img{
+    width:228px;
+    height:318px;
+    background:url(img/start.png) no-repeat;
+}
+.body .login-tabs {
+    position:absolute;
+    bottom: 3vh;
+    left:29vh;
+}
+
+.login-tabs .error {
+    background: url(img/warn.png) 0 / auto no-repeat;
+    color: hsl(0, 98%, 63%);
+    overflow: hidden;
+    padding-left: 28px;
+    visibility: hidden;
+    white-space: pre;
+}
+
+.login-tabs .error.show {
+    visibility: initial;
+}
+
+.scan {
+    overflow: hidden;
+}
+
+.scan > .waiting > .box {
+    border-radius: 5px;
+    box-shadow: inset 0 0 20px 0px hsl(217, 100%, 80%);
+    height: 230px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    width: 230px;
+}
+
+.waiting .background {
+    background-color: white;
+    height: 210px;
+    margin: 10px 0 0 10px;
+    width: 210px;
+}
+
+.waiting canvas {
+    left: 22px;
+    position: absolute;
+    top: 22px;
+}
+
+.waiting .mask {
+    background-color: hsla(0, 0%, 100%, .93);
+    cursor: pointer;
+    height: 210px;
+    left: 10px;
+    position: absolute;
+    text-align: center;
+    top: 10px;
+    width: 210px;
+}
+
+.waiting .mask > :first-child {
+    font-size: 24px;
+    margin-top: 70px;
+}
+
+.waiting .mask > :last-child {
+    color: hsl(217, 100%, 50%);
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.waiting > .text {
+    color: white;
+    font-size: 21px;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.waiting > .error {
+    box-sizing: border-box;
+    margin: auto;
+    width: 230px;
+}
+
+.scan > .succeed {
+    text-align: center;
+}
+
+.scan > .succeed > .icon {
+    background: center / contain no-repeat padding-box;
+    border: 2px solid hsla(0, 0%, 100%, .5);
+    border-radius: 65px;
+    height: 130px;
+    margin: auto;
+    width: 130px;
+}
+
+.scan > .succeed > .text1 {
+    background: url(img/correct.png) 0 / 30px no-repeat;
+    color: white;
+    font-size: 30px;
+    line-height: 80px;
+    margin: 18px auto 0 auto;
+    padding-left: 40px;
+    width: 130px;
+}
+
+.scan > .succeed > .text2 {
+    color: hsl(217, 100%, 90%);
+    font-size: 23px;
+}
+
+.account {
+    color: hsl(217, 100%, 80%);
+    margin: auto;
+    width: 300px;
+}
+
+.account > input {
+    background-color: initial;
+    border-bottom: 1px solid hsl(217, 100%, 80%);
+    color: white;
+    font-size: 17px;
+    line-height: 39px;
+    outline: 0;
+    width: 100%;
+}
+
+.account > input:focus {
+    border-bottom-color: white;
+}
+
+.account > .user-text,
+.account > .pass-text {
+    font-size: 17px;
+    line-height: 30px;
+    pointer-events: none;
+    position: relative;
+    top: 30px;
+    transition: .2s ease;
+    transition-property: font-size, top;
+}
+
+.account > .pass {
+    letter-spacing: 10px;
+}
+
+.account.u > .user-text,
+.account.p > .pass-text {
+    font-size: 13px;
+    top: 0;
+}
+
+.account > .pass-text {
+    margin-top: 30px;
+}
+
+.account > .error {
+    margin: 10px 0 30px 0;
+}
+
+.account > .button {
+    background-image: linear-gradient(to right, hsl(213, 97%, 63%), hsl(214, 96%, 60%), hsl(213, 97%, 63%)) ;
+    border-radius: 3px;
+    color: hsl(217, 100%, 80%);
+    cursor: pointer;
+    font-size: 17px;
+    line-height: 45px;
+    text-align: center;
+    width: 140px;
+    position:absolute;
+    right:10px;
+}
+.account > .forgetBtn {
+    color: hsl(217, 100%, 80%);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 45px;
+    text-align: center;
+    width: 140px;
+}
+/* body > section > .login-tab-buttons {
+    bottom: 9.7vh;
+    text-align: center;
+}
+
+.login-tab-buttons > * {
+    background: center / contain no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    height: 50px;
+    vertical-align: top;
+    width: 50px;
+}
+
+.login-tab-buttons > .scan {
+    background-image: url(img/scan.png);
+    margin-right: 35px;
+}
+
+.login-tab-buttons > .scan.checked {
+    background-image: url(img/scan-checked.png);
+}
+
+.login-tab-buttons > .normal {
+    background-image: url(img/people.png);
+}
+
+.login-tab-buttons > .normal.checked {
+    background-image: url(img/people-checked.png);
+}
+
+body > section > .power {
+    background: url(img/power.png) no-repeat;
+    bottom: 1.85vh;
+    cursor: pointer;
+    height: 30px;
+    left: 25px;
+    width: 30px;
+}
+
+@media (height: 1080px) {
+    body > section > .logo { top: 250px; }
+    body > section > .login-tabs { bottom: 250px; }
+    body > section > .login-tab-buttons { bottom: 105px; }
+    body > section > .power { bottom: 20px; }
+} */

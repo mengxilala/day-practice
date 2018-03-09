@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- data([key],[value]) 
+     在元素上存放或读取数据,返回jQuery对象。
+     当参数只有一个key的时候，为读取该jQuery对象对应DOM中存储的key对应的值，值得注意的是，如果浏览器支持HTML5，同样可以读取该DOM中使用 data-[key] = [value] 所存储的值。
+     当参数为两个时，为像该jQuery对象对应的DOM中存储key-value键值对的数据。
+     如果jQuery集合指向多个元素，那将在所有元素上设置对应数据。 这个函数不用建立一个新的expando，就能在一个元素上存放任何格式的数据，而不仅仅是字符串。
+     V1.4.3 新增用法, data(obj) 可传入key-value形式的数据。 -->
+
+    <!-- key:存储的数据名
+     value:将要存储的任意数据 -->
+
+    <div>111</div>
+    <div id="div" data-test="this is test"></div>
+    <script>
+        // 描述:在一个div上存取数据
+        console.log($('div').data('lala')); // undefined
+        $('div').data('lala', 'beautiful');  // lala设置为beautiful
+        console.log($('div').data('lala')); // beautiful
+
+        $('div').data('lala', 'perfect');  // lala设置为perfect
+        console.log($('div').data('lala')); // perfect
+
+        $('div').removeData('lala');     // 移除lala
+        console.log($('div').data('lala')); // undefined
+
+
+
+        // 描述:在一个div上存取名/值 多对数据
+        $('div').data('lala', { 'age': 20, 'gender': 'girl' });
+        console.log($('div').data('lala'));  // 两条数据
+        console.log($('div').data('lala').age);  //20
+        $('div').removeData('lala');
+        $('div' ).data({ baz: [ 1, 2, 3 ],foo:{ 'age': 20, 'gender': 'girl' } });
+        console.log($('div').data());  //打印所有添加的属性
+        
+        // 描述:在HTML5规范中div中读取预存的data-[key]值
+        console.log($("#div").data("test"));  // this is test
+
+       
+    </script>
+
+</body>
+</html>

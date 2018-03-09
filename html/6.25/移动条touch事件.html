@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type"
+        content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        #selectStuBox {
+            position: relative;
+            width: 200px;
+            height: 50px;
+            margin: 50px auto 0;
+        }
+
+        #selectStuBoxBg {
+            height: 4px;
+            background-color: #cccccc;
+            overflow: hidden;
+        }
+
+        #selectStuBoxBgcolor {
+            background: #24afff;
+            width: 0;
+            height: 4px;
+        }
+
+        #selectStuBoxBt {
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            box-shadow: 0px 0px 8px 5px #c3f5e7;
+            border-radius: 8px;
+            overflow: hidden;
+            position: absolute;
+            left: 0px;
+            margin-left: -16px;
+            top: -5px;
+            cursor: pointer;
+        }
+
+        #selectStuBoxText {
+            width: 64px;
+            height: 33px;
+            background-color: #24afff;
+            position: relative;
+            border-radius: 16px;
+        }
+
+        #selectStuBoxText:after {
+            width: 0;
+            height: 0;
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #24afff;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            margin-left: -6px;
+        }
+    </style>
+    <script type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+    <div id="selectStuBox">
+        <div id="selectStuBoxBg">
+            <div id="selectStuBoxBgcolor"></div>
+        </div>
+        <div id="selectStuBoxBt"></div>
+    </div>
+    <div id="selectStuBoxText"></div>
+    <script type="text/javascript">
+        var selectStuBox = $('#selectStuBox');
+        var selectStuBoxBg = $('#selectStuBoxBg');
+        var selectStuBoxBgcolor = $('#selectStuBoxBgcolor');
+        var selectStuBoxBt = $('#selectStuBoxBt');
+        var selectStuBoxText = $('#selectStuBoxText');
+        var statu = false;
+        var ox = 0;
+        var lx = 0;
+        var left = 0;
+        var bgleft = 0;
+        var startX=0;
+        var endX=0;
+        var distanceX=0;
+        var left=0
+        var width=0;
+        selectStuBoxBt.on('touchstart',function(e){
+            console.log(e)
+            startX = e.originalEvent.changedTouches[0].clientX;
+            console.log(width)
+             width=selectStuBoxBt.css('left')
+             left=parseFloat(width)
+        })
+        selectStuBoxBt.on("touchend",function(e){
+            endX= e.originalEvent.changedTouches[0].clientX;
+        });
+        selectStuBoxBt.on('touchmove',function(e){
+            console.log(startX)
+            // 手指滑动的距离就是ul左右滑动的距离。
+            // 当手指放开的时候如果滑动的距离大于宽度的1/3就跳到下一张，如果没有就回到当前的位置。
+            moveX= e.originalEvent.changedTouches[0].clientX;
+            console.log(left)
+            distanceX=moveX-startX+left;
+            if (distanceX < 0) {
+                distanceX = 0;
+            }
+            if (distanceX > 200) {
+                distanceX = 200;
+            }
+            selectStuBoxBt.css('left', distanceX);
+            selectStuBoxBgcolor.width(distanceX);
+            selectStuBoxText.html(parseInt(distanceX / 2) + '%');
+        })
+
+    </script>
+
+</body>
+
+</html>
+</span>

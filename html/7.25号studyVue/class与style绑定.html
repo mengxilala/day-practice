@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>class与style绑定</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+        .active {
+            color: red;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app1" v-bind:class="{active:isActive}">
+        我们都是好孩子
+    </div>
+
+
+
+    <!-- 绑定内联样式 -->
+    <div id="app2" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+        最最天真的孩子
+    </div>
+
+
+
+    <!-- 直接绑定到一个样式对象通常更好，让模板更清晰： -->
+    <div id="app3" v-bind:style="styleObject">
+        忘记了那些忧愁
+    </div>
+
+    <!-- v-bind:style 的数组语法可以将多个样式对象应用到一个元素上： -->
+    <div id="app4" v-bind:style="[baseStyles, overridingStyles]">
+        这首歌只唱给你听，用我最美好的心灵
+    </div>
+
+    <script>
+        var app1 = new Vue({
+            el: '#app1',
+            data: {
+                isActive: true
+            }
+        })
+
+
+
+
+        // 绑定内联样式
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                activeColor: 'yellowGreen',
+                fontSize: 30
+            }
+        })
+
+
+        // 直接绑定到一个样式对象通常更好，让模板更清晰
+
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                styleObject: {
+                    color: 'blue',
+                    fontSize: '16px',
+                    opacity: 0.3
+                }
+            }
+        })
+
+
+        // v-bind:style 的数组语法可以将多个样式对象应用到一个元素上
+        var app4=new Vue({
+            el:'#app4',
+            data:{
+                baseStyles:{
+                    color:'skyblue',
+                    fontSize:'30px'
+                } ,
+                overridingStyles:{
+                    border:'1px solid #000'
+                }
+            }
+        })
+
+
+    </script>
+</body>
+</html>

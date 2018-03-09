@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在Vue中何时使用方法、计算属性或观察者</title>
+    <style>
+        body {
+            background: lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 30%);
+            background-image: linear-gradient(40deg, transparentize(desaturate(hsla(350, 100%, 25%, 1), 90%), 0.95), transparentize(hsla(350, 100%, 25%, 1), 0.95)),
+            linear-gradient(135deg,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 18%) 0%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 18%) 10%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 25%) 11%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 25%) 40%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 35%) 41%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 35%) 50%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 18%) 51%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 18%) 60%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 25%) 61%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 25%) 90%,
+            lighten(desaturate(hsla(350, 100%, 25%, 1), 90%), 35%) 91%);
+            background-size: 7px 7px, 4px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+        }
+
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #app,
+        #app2,
+        #app3 {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-right: 30px;
+        }
+
+        h1 {
+            margin: 0 0 25px;
+            display: inline-block;
+            border-bottom: 2px solid #69f;
+            padding-bottom: 5px;
+            color: #69f;
+            text-shadow: 1px 1px 0 rgba(#000, .4);
+        }
+
+        .control {
+            margin-bottom: 20px;
+        }
+
+        .control label,
+        .control span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .control input {
+            height: 40px;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            border-radius: 3px;
+            border: 1px solid rgba(#000, .5);
+            box-shadow: 0 0 3px rgba(#000, .15);
+        }
+
+        .control input:focus,
+        .control input:active {
+            outline: none 0;
+            box-shadow: 0 0 4px rgba(0, 169, 244, .9);
+            border-color: rgba(0, 169, 244, 1);
+        }
+
+        button {
+            padding: 0px 20px;
+            background: #ff0030;
+            color: #fff;
+            height: 32px;
+            display: inline-block;
+            font-size: 16px;
+            border: 2px dashed #fff;
+            border-radius: 3px;
+            box-shadow: 0 0 0 4px #ff0030, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+            text-shadow: -1px -1px #aa3030;
+            font-weight: normal;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+        ul {
+            list-style: none outside none;
+            text-align: left;
+            margin: 0 0 20px;
+            padding: 0 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 3px double rgba(#000, .8);
+        }
+
+        li {
+            line-height: 30px;
+            flex: 0 0 33.3333%
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 利用methods实现想要的功能 -->
+    <div id="app">
+        <h1>初中一年级学生考试分数统计</h1>
+        <div class="control">
+            <label for="studentName">学生:</label>
+            <input type="text" v-model="newTest.studentName" id="studentName">
+            <label for="studentScore">成绩:</label>
+            <input type="text" v-model="newTest.studentScore" id="studentScore">
+            <button v-on:click="addTestScore">添加</button>
+        </div>
+        <ul>
+            <li v-for="test in tests">{{test.studentName}}:{{test.studentScore}}</li>
+        </ul>
+        <div class="total">
+            <span>总分:{{totalScore()}}分</span>
+            <span>平均分:{{averageScore()}}分</span>
+        </div>
+    </div>
+
+
+    <!-- 利用computed实现想要的功能  -->
+    <div id="app2">
+        <h1>初中一年级学生考试分数统计</h1>
+        <div class="control">
+            <label for="studentName">学生：</label>
+            <input type="text" v-model="newTest.studentName" id="studentName" />
+            <label for="score">分数：</label>
+            <input type="text" v-model="newTest.score" id="score" />
+            <button @click="addTestScore">添加</button>
+        </div>
+        <ul>
+            <li v-for="test in tests">{{ test.studentName }}: {{test.score}}</li>
+        </ul>
+        <div class="total">
+            <span>总分：{{ totalScore }} 分</span>
+            <span>平均分：{{ averageScore }} 分</span>
+        </div>
+    </div>
+
+
+    <!-- 利用Watchers实现想要的功能 -->
+
+    <div id="app3">
+        <h1>初中一年级学生考试分数统计</h1>
+        <div class="control">
+            <label for="studentName">学生：</label>
+            <input type="text" v-model="newTest.studentName" id="studentName" />
+            <label for="score">分数：</label>
+            <input type="text" v-model="newTest.score" id="score" />
+            <button v-on:click="addTestScore">添加</button>
+        </div>
+        <ul>
+            <li v-for="test in tests">{{ test.studentName }}: {{test.score}}</li>
+        </ul>
+        <div class="total">
+            <span>总分：{{ totalScore }} 分</span>
+            <span>平均分：{{ averageScore }} 分</span>
+        </div>
+    </div>
+
+
+    <script src="../../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;   //屏蔽广告
+
+        // 利用methods实现想要的功能
+        let app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    newTest: {
+                        studentName: 'Jack',
+                        studentScore: 0,
+                        total: 0,
+                        average: 0
+                    },
+                    tests: [
+                        {
+                            studentName: 'Bill',
+                            studentScore: 85
+                        },
+                        {
+                            studentName: 'Rose',
+                            studentScore: 88
+                        },
+                        {
+                            studentName: 'willian',
+                            studentScore: 90
+                        },
+                        {
+                            studentName: 'Mary',
+                            studentScore: 98
+                        },
+                        {
+                            studentName: 'Suzy',
+                            studentScore: 99
+                        },
+                        {
+                            studentName: 'Emma',
+                            studentScore: 70
+                        },
+                    ]
+                }
+            },
+            methods: {
+                addTestScore: function () {
+                    this.tests.push({
+                        studentName: this.newTest.studentName,
+                        studentScore: this.newTest.studentScore
+                    })
+                    this.newTest.studentName = 'Jack';
+                    this.newTest.score = 0;
+                },
+                totalScore: function () {
+                    let totalArray = [];
+                    for (let i = 0; i < this.tests.length; i++) {
+                        totalArray.push(parseInt(this.tests[i].studentScore));
+                    }
+                    this.newTest.total = totalArray.reduce((x, y) => {
+                        return x + y;
+                    })
+                    return this.newTest.total;
+                },
+                averageScore: function () {
+                    let totalArray = [];
+                    for (let i = 0; i < this.tests.length; i++) {
+                        totalArray.push(parseInt(this.tests[i].studentScore))
+                    }
+
+                    this.newTest.total = totalArray.reduce((x, y) => {
+                        return x + y;
+                    })
+
+                    return this.newTest.average = parseFloat(this.newTest.total / totalArray.length).toFixed(2);
+                }
+            }
+        })
+
+
+
+        // 补充reduce的方法运用
+        // reduce() 方法对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值。
+        // var total = [0, 1, 2, 3].reduce(function (sum, value) {
+        //     return sum + value;
+        // }, 0);
+        // total is 6
+
+        // var flattened = [[0, 1], [2, 3], [4, 5]].reduce(function (a, b) {
+        //     return a.concat(b);
+        // }, []);
+        // flattened is [0, 1, 2, 3, 4, 5]
+
+
+
+
+        // 补充 toFixed()的用法
+
+        // toFixed() 方法可把 Number 四舍五入为指定小数位数的数字
+        // 语法 NumberObject.toFixed(num)
+        // 参数	描述
+        // num	必需。规定小数的位数，是 0 ~ 20 之间的值，包括 0 和 20，有些实现可以支持更大的数值范围。如果省略了该参数，将用 0 代替。
+
+        // var num = new Number(13.37);
+        // alert(num.toFixed(1));  13.4
+
+
+
+        //  利用computed实现想要的功能 
+
+        let app2 = new Vue({
+            el: '#app2',
+            data() {
+                return {
+                    newTest: {
+                        studentName: 'Jack',
+                        score: 0
+                    },
+                    tests: [
+                        {
+                            studentName: 'Billy',
+                            score: 76
+                        },
+                        {
+                            studentName: 'Suzy',
+                            score: 85
+                        },
+                        {
+                            studentName: 'Emma',
+                            score: 93
+                        }
+                    ]
+                }
+            },
+            computed: {
+                totalScore: function () {
+                    let totalArray = this.tests.reduce((acc, test) => {
+                        return acc + parseInt(test.score)
+                    }, 0)
+                    return totalArray;
+                },
+                averageScore: function () {
+                    let totalArray = this.tests.reduce((acc, test) => {
+                        return acc + parseInt(test.score);
+                    }, 0)
+
+                    return parseFloat(totalArray / this.tests.length).toFixed(2);
+                }
+            },
+            methods: {
+                addTestScore: function () {
+                    this.tests.push({
+                        studentName: this.newTest.studentName,
+                        score: this.newTest.score
+                    })
+                    this.newTest.studentName = 'Jack';
+                    this.newTest.score = 0;
+                }
+            }
+        })
+
+
+        // 利用Watchers实现想要的功能  
+        let app3 = new Vue({
+            el: "#app3",
+            data() {
+                return {
+                    newTest: {
+                        studentName: 'Jack',
+                        score: 0
+                    },
+                    tests: [
+                        {
+                            studentName: 'Billy',
+                            score: 76
+                        },
+                        {
+                            studentName: 'Suzy',
+                            score: 85
+                        },
+                        {
+                            studentName: 'Emma',
+                            score: 93
+                        }
+                    ]
+                }
+            },
+            watch: {
+                averageScore: function () {
+                    this.autoSave();
+                }
+            },
+            computed: {
+                totalScore: function () {
+                    let totalArray = this.tests.reduce((acc, test) => {
+                        return acc + parseInt(test.score);
+                    }, 0)
+                    return totalArray;
+                },
+                averageScore: function () {
+                    let totalArray = this.tests.reduce((acc, test) => {
+                        return acc + parseInt(test.score);
+                    }, 0)
+                    return parseFloat(totalArray / this.tests.length).toFixed(2);
+                }
+            },
+            methods: {
+                addTestScore: function () {
+                    this.tests.push({
+                        studentName: this.newTest.studentName,
+                        score: this.newTest.score
+                    })
+                    this.newTest.studentName = 'Jack';
+                    this.newTest.score = 0;
+                },
+                autoSave: function () {
+                    // 假设我们正在调用我们的后端来保存数据
+                    console.log('Calling Api, Saving data');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

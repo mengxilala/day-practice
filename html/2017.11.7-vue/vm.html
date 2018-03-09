@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <style>
+        .component-1 {
+            font-size: 2em;
+            text-align: center;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+    <div v-on:click=f1 id="exam">
+        <p>{{message}}</p>
+        <component-1></component-1>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            data: {
+                message: 'hello'
+            },
+            components: {
+                // 需要 webpack 解释 require
+                // component1: require("../9.22vue练习/单文件组件.vue").default
+
+                "component-1": {
+                    data: function () {
+                        return {
+                            greeting: 'greeting'
+                        }
+                    },
+                    template: "<p class=component-1>{{greeting}} world！</p>"
+                }
+            },
+            el: '#exam',
+            methods: {
+                f1: function () { console.log("f1"); },
+                f2: function () { console.log("f2"); },
+                f3: function () { console.log("f3"); }
+            },
+            mounted
+            // , template: "<aside v-on:click=f2>{{message}}</aside>"
+        });
+
+        console.log("1111111111");
+        vm.$mount("#exam");
+
+        function mounted() {
+            console.log("mounted");
+        }
+    </script>
+</body>
+</html>

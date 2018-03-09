@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day7</title>
+</head>
+<body>
+    <script>
+        // 创建对象实例的其他方式
+
+        // 1.Object构造函数
+
+        // 首先, 您能使用Object()构造函数来创建一个新对象。 是的， 一般对象都有构造函数，它创建了一个空的对象。
+        var person1 = new Object();
+
+        // 这样就在person1变量中存储了一个空对象。然后, 可以根据需要, 使用点或括号表示法向此对象添加属性和方法;
+        person1.name = 'Chris'; person1['age'] = 38; person1.greeting = function () { alert('Hi! I\'m ' + this.name + '.'); }
+
+        // 还可以将对象文本传递给Object() 构造函数作为参数， 以便用属性 / 方法填充它。请尝试以下操作：
+        var person1 = new Object({
+            name: 'Chris',
+            age: 38,
+            greeting: function () {
+                alert('Hi! I\'m ' + this.name + '.');
+            }
+        });
+
+
+        // 2.使用create()方法
+
+        // JavaScript有个内嵌的方法create(), 它允许您基于现有对象创建新的对象实例。
+        var person2 = Object.create(person1);   // person2是基于person1创建的， 它们具有相同的属性和方法
+        // person2.name    Chris
+        // person2.greeting()   弹出 Hi! I\'m Chris.
+
+    </script> 
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>清除浮动</title>
+    <style>
+        .outer {
+            border: 1px solid #ccc;
+            background: #fc9;
+            color: #fff;
+            margin: 50px auto;
+            padding: 50px;
+        }
+
+        .div1 {
+            width: 80px;
+            height: 80px;
+            background: red;
+            float: left;
+        }
+
+        .div2 {
+            width: 80px;
+            height: 80px;
+            background: blue;
+            float: left;
+        }
+
+        .div3 {
+            width: 80px;
+            height: 80px;
+            background: sienna;
+            float: left;
+        }
+
+        /* .clear{
+            clear:both;
+            height:0;
+            line-height: 0;
+            font-size:0;
+        } */
+
+        /* .over-flow {
+            overflow: auto;
+            zoom: 1; zoom: 1; 是在处理兼容性问题
+        } */
+
+        /* .outer {
+            zoom: 1;
+        }
+
+       .outer:after {
+            clear: both;
+            content: '.'; 其中content（）可以取值也可以为空
+            display: block; 对于FF/chrome/opera/IE8不能缺少
+            width: 0;
+            height: 0;
+            visibility: hidden;visibility:hidden;的作用是允许浏览器渲染它，但是不显示出来，这样才能实现清楚浮动。
+        } */
+    </style>
+</head>
+<body>
+    <!-- <div class="outer over-flow"> -->
+    <div class="outer">
+        <div class="div1">div1</div>
+        <div class="div2">div2</div>
+        <div class="div3">div3</div>
+        <!-- <div class="clear">clear</div> -->
+    </div>
+
+
+    <!-- 清除浮动: -->
+    <!-- 方法一：添加新的元素,应用clear:both -->
+    <!-- 方法二:父级div定义overflow:auto; -->
+    <!-- 方法三::after方法 作用于浮动元素的父级 -->
+</body>
+</html>

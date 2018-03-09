@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-数组和对象操作</title>
+           
+    <style>
+        button {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <button>筛选</button>
+    <script>
+        // 1.jquery each方法（迭代）  可以遍历对象或数组
+
+        // 遍历数组
+        $.each(["a", "b", "c"], function (i, n) {
+            // console.log("Item #" + i + ": " + n);//可以获取到i值 i代表索引 n代表对应的值
+            if (i > 1) {
+                return false;
+            }
+        });
+
+        // 遍历对象
+
+        $.each({ name: "ziqiu.zhang", sex: "male", status: "single" }, function (i, n) {
+            // console.log("Item #" + i + ": " + n); //第一个参数i表示属性的key(object), n表示属性值
+            if (i > 1) {
+                return false;
+            }
+        });
+
+        var obj = { name: "ziqiu.zhang", sex: "male" };
+        // console.log(obj);
+
+
+
+        //  each将是我们最常使用的函数, 特别注意each虽然迭代每一个元素或属性,
+        //  但是在迭代函数中并不会改变当前元素的值, 也就是无法改变返回后的对象.
+        //  如果需要改变数组中的每一个元素并且将结果返回, 可以使用jQuery.map( array, callback )函数.
+
+        // 2.jquery .map 转换
+
+        var arr = ["a", "b", "c", "d", "e"]
+        // console.log('第一次未转换', arr);   // ["a", "b", "c", "d", "e"]
+
+        arr = jQuery.map(arr, function (n, i) {
+            return (n.toUpperCase() + i);
+        });
+        //console.log('第二次转换', arr)  //["A0", "B1", "C2", "D3", "E4"]
+
+
+        arr = jQuery.map(arr, function (a) { return a + a; });
+        //  console.log('第三次转换', arr)  // ["A0A0", "B1B1", "C2C2", "D3D3", "E4E4"]
+
+
+        // 3. jQuery.grep( array, callback, [invert] ) 筛选 
+
+        // 返回值: Array  使用过滤函数过滤数组元素。此函数至少传递两个参数：待过滤数组和过滤函数。过滤函数必须返回 true 以保留元素或 false 以删除元素。
+        // 默认invert为false, 即过滤函数返回true为保留元素. 如果设置invert为true, 则过滤函数返回true为删除元素.
+
+        var arr = [-1, 0, 1, 2, 3];
+        var aaa = $.grep(arr, function (n, i) {
+            return n > 0;
+        });
+
+        // console.log(aaa) [1,2,3]
+
+
+        // 4. 合并
+
+        // jQuery.extend( [deep], target, object1, [objectN] )
+        var settings = { validate: false, limit: 5, name: "foo" };
+        var options = { validate: true, name: "bar" };
+        jQuery.extend(settings, options);
+
+        //  console.log(settings); // { validate: true, limit: 5, name: "bar" }  被修改
+        //  console.log(options);  // { validate: true, name: "bar" }
+
+
+        // jQuery.inArray( value, array )
+
+        var arr = [4, "Pete", 8, "John"];
+      //  console.log(jQuery.inArray("John", arr));  //3
+      //  console.log(jQuery.inArray(4, arr));  //0
+      //  console.log(jQuery.inArray("David", arr));  //-1
+
+
+       // jQuery.merge( first, second )
+
+       var aaa=[-1,0,1];
+       var bbb=[1,2,3];
+       $.merge( aaa, bbb ) ;
+       console.log(aaa); // [-1, 0, 1, 1, 2, 3]
+       console.log(bbb); // [1,2,3]
+
+     
+
+    </script>
+</body>
+
+</html>

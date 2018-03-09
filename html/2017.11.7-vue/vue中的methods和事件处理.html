@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue中的methods和事件处理</title>
+    <style>
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        #app,
+        #example,
+        #app1,
+        #app2,
+        #app3 {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 15px 60px;
+            outline: none;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 9px #95a5a6;
+            display: block;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        button:active {
+            background-color: #2ecc71;
+            box-shadow: 0 5px #95a5a6;
+            transform: translateY(4px);
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .outer {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+
+        .middle {
+            width: 150px;
+            height: 150px;
+            background-color: yellowgreen;
+        }
+
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        #app4 button {
+            color: #454545;
+            background: transparent;
+            border: 2px solid #454545;
+            position: relative;
+            margin: 1em;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 0.5em 1em;
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            font-family: comfortaa;
+            font-weight: bold;
+            position: relative;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 120px;
+            height: 80px;
+        }
+
+        #app4 button:before,
+        #app4 button:after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-color: #454545;
+            box-sizing: border-box;
+            border-style: solid;
+            width: 1em;
+            height: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #app4 button:before {
+            top: -6px;
+            left: -6px;
+            border-width: 2px 0 0 2px;
+            z-index: 5;
+        }
+
+        #app4 button:after {
+            bottom: -6px;
+            right: -6px;
+            border-width: 0 2px 2px 0;
+        }
+
+        #app4 button:hover:before,
+        #app4 button:hover:after {
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
+            border-color: #fff;
+        }
+
+        #app4 button:hover {
+            color: #353535;
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        #app4 button:active,
+        #app4 button:focus {
+            outline: none;
+        }
+
+        #app4 span {
+            font-size: 2rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="changeMsg(message,$event)">点击我^_^</button>
+        <p>{{message}}</p>
+    </div>
+
+
+    <!-- 事件修饰符 -->
+    <!-- .stop：等同于JavaScript中的event.stopPropagation()，防止事件冒泡
+    .prevent：等同于JavaScript中的event.preventDefault()，防止执行预设的行为（如果事件可取消，则取消该事件，而不停止事件的进一步传播）
+    .capture：与事件冒泡的方向相反，事件捕获由外到内
+    .self：只会触发自己范围内的事件，不包含子元素
+    .once：只会触发一次 -->
+
+    <!-- .stop事件 -->
+
+    <div id="example">
+        <div class="outer" v-on:click="outer">
+            <div class="middle" v-on:click="middle">
+                <!-- 当点击按钮“点击我”时，不但会触发绑定在按钮上inner方法，还会触发绑定在其容器div的middle和outer方法。 -->
+                <!-- <button v-on:click="inner">点击我^_^</button> -->
+
+                <!-- 修改 阻止冒泡事件  此时只会触发inner方法-->
+                <button v-on:click.stop="inner">点击我^_^</button>
+            </div>
+        </div>
+        <p>{{message}}</p>
+    </div>
+
+    <!-- .prevent事件 -->
+    <!-- .prevent等同于JavaScript的event.preventDefault()，用于取消默认事件。 比如页面的
+    <a href="#">标签，当用户点击时，通常在浏览器的网址列出# 在JavaScript中，常常使用event.preventDefault()来防止浏览器的网址中出现#。
+    在Vue中，可以使用事件修饰符.prevent来取消默认事件.这个时候，点击链接之后，浏览器的网址中再也不会出现#。 -->
+    <div id="app1">
+        <!-- <a href="#" v-on:click="prompt">点击我(^_^)</a> -->
+
+        <!-- 修改 取消默认行为  但是这样写依然会出现# 不太明白 -->
+        <a href="#" v-on:click.prevent="prompt">点击我(^_^)</a>
+        <p>{{ message }}</p>
+    </div>
+
+
+    <!-- .capture事件 -->
+    <!-- .capture修饰符和.stop刚好相反。.stop是防止事件冒泡，而.capture类似JavaScript的事件捕获，是由外到内的 -->
+    <div id="app2">
+        <div class="outer" v-on:click.capture="outer">
+            <div class="middle" v-on:click.capture="middle">
+                <button v-on:click.capture="inner">点击我(^_^)</button>
+            </div>
+        </div>
+        <p>{{ message }}</p>
+    </div>
+
+    <!-- .self事件 -->
+    <!-- 修饰符.self只会触发自己范围内的事件，不会包含子元素。 -->
+    <div id="app3">
+        <div class="outer" v-on:click.self="outer">
+            <div class="middle" v-on:click.self="middle">
+                <button v-on:click="inner">点击我(^_^)</button>
+            </div>
+        </div>
+        <p>{{ message }}</p>
+    </div>
+
+    <!-- .once事件 -->
+    <div id="app4">
+        <button v-on:click="increase">+</button>
+        <span>{{ count }}</span>
+        <button v-on:click="decrease">-</button>
+
+        <!-- 如果我们在@click事件上添加.once修饰符，只要点击按钮只会执行一次。 -->
+        <!-- <button v-on:click.once="increase">+</button>
+        <span>{{ count }}</span>
+        <button v-on:click.once="decrease">-</button> -->
+    </div>
+
+
+    <!-- 在JavaScript事件中除了前面所说的事件，还有键盘事件，也经常需要监测常见的键值。
+    在Vue中允许v-on在监听键盘事件时添加关键修饰符。记住所有的keyCode比较困难，所以Vue为最常用的键盘事件提供了别名：
+    
+    .enter：回车键
+    .tab：制表键
+    .delete：含delete和backspace键
+    .esc：返回键
+    .space: 空格键
+    .up：向上键
+    .down：向下键
+    .left：向左键
+    .right：向左键 -->
+
+    <div id="app5">
+        <button @keyup.enter="enter" @keyup.tab="tab" @keyup.delete="delete1" @keyup.esc="esc" @keyup.space="space" @keyup.up="up" @keyup.down="down" @keyup.left="left" @keyup.right="right">{{ message }}</button>
+        <p>{{ message }}</p>
+    </div>
+
+    <!-- 
+    自定义按键修饰符别名
+    在Vue中可以通过config.keyCodes自定义按键修饰符别名。
+    例如，由于预先定义了keycode 116（即F5）的别名为f5，因此在文字输入框中按下F5，会触发prompt方法，出现alert。 -->
+    <div id="app6">
+        <input type="text" v-on:keydown.f5="prompt()">
+    </div>
+
+    <script src="../../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;   //屏蔽广告
+        let app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    message: '没有有效信息'
+                }
+            },
+            methods: {
+                changeMsg(message, $event) {
+                    if (event) {
+                        console.log(event);
+                        event.preventDefault();
+                    }
+                    this.message = "你猜会有什么重要的事情发生呢？"
+                }
+            }
+        })
+
+        let example = new Vue({
+            el: "#example",
+            data: {
+                message: '测试冒泡事件'
+            },
+            methods: {
+                outer() {
+                    console.log('这是最外层的方法');
+                },
+                middle() {
+                    console.log('这是中间层的方法');
+                },
+                inner() {
+                    console.log('这是最里层的方法');
+                }
+            }
+        })
+
+        let app1 = new Vue({
+            el: '#app1',
+            data() {
+                return {
+                    message: '我是一个文本信息'
+                }
+            },
+            methods: {
+                prompt: function (e) {
+                    this.message = location.href;
+                    console.log(this.message);
+                }
+            }
+        })
+
+        let app2 = new Vue({
+            el: "#app2",
+            data: {
+                message: '测试捕获事件'
+            },
+            methods: {
+                outer() {
+                    console.log('这是最外层的方法');
+                },
+                middle() {
+                    console.log('这是中间层的方法');
+                },
+                inner() {
+                    console.log('这是最里层的方法');
+                }
+            }
+        })
+
+        let app3 = new Vue({
+            el: "#app3",
+            data: {
+                message: '测试self事件'
+            },
+            methods: {
+                outer() {
+                    console.log('这是最外层的方法');
+                },
+                middle() {
+                    console.log('这是中间层的方法');
+                },
+                inner() {
+                    console.log('这是最里层的方法');
+                }
+            }
+        })
+
+        let app4 = new Vue({
+            el: '#app4',
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                increase: function () {
+                    return this.count++
+                },
+                decrease: function () {
+                    if (this.count > 0) {
+                        return this.count--
+                    } else {
+                        this.count = 0;
+                    }
+                }
+            }
+        })
+
+        let app5 = new Vue({
+            el: '#app5',
+            data() {
+                return {
+                    message: '将光标置于按钮上后，按下键盘上不同的按键，会有不同的效果'
+                }
+            },
+            methods: {
+                enter: function () {
+                    this.message = '你按了回车键：enter'
+                },
+                tab: function () {
+                    this.message = '你按了tab键: tab'
+                },
+                delete1: function () {
+                    this.message = '你按了删除键: delete'
+                },
+                esc: function () {
+                    this.message = '你按了取消键: esc'
+                },
+                space: function () {
+                    this.message = '你按了空格键：space'
+                },
+                up: function () {
+                    this.message = '你按了向上键：up'
+                },
+                down: function () {
+                    this.message = '你按了向下键：down'
+                },
+                left: function () {
+                    this.message = '你按了向左键：left'
+                },
+                right: function () {
+                    this.message = '你按了向右键：right'
+                }
+            }
+        })
+
+
+        Vue.config.keyCodes.f5 = 116;
+        let app6 = new Vue({
+            el: '#app6',
+            methods: {
+                prompt: function () {
+                    alert('我是 F5！');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

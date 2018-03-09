@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day3</title>
+    <style>
+        html {
+            width: 100%;
+            height: inherit;
+            background: #ddd;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        button {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <button>Update</button>
+    <canvas></canvas>
+
+
+    <script>
+        var btn = document.querySelector('button'),
+            canvas = document.querySelector('canvas'),
+            ctx = canvas.getContext('2d'),
+            WIDTH = document.documentElement.clientWidth,
+            HEIGHT = document.documentElement.clientHeight;
+
+        canvas.width = WIDTH;
+        canvas.height = HEIGHT;
+
+        function random(number) {
+            return Math.floor(Math.random() * number);
+        }
+
+
+        function draw() {
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            for (var i = 0; i < 100; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(255,0,0,0.5)';
+                ctx.arc(random(WIDTH), random(HEIGHT), random(50), 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+
+        btn.addEventListener('click', draw);
+    </script>
+</body>
+</html>

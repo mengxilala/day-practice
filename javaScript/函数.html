@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数</title>
+</head>
+<body>
+    <script>
+        var factorial = function fac(n) { return n < 2 ? 1 : n * fac(n - 1) };
+
+        var x = 0;
+        while (x < 10) { // "x < 10" 是循环条件
+            // do stuff
+            x++;
+        }
+        // 可以被转化成一个递归函数和对其的调用：
+
+        function loop(x) {
+            if (x >= 10) // "x >= 10" 是退出条件（等同于 "!(x < 10)"）
+                return;
+            // 做些什么
+            loop(x + 1); // 递归调用
+        }
+        loop(0);
+
+
+
+
+        // 默认参数
+        function multiply(a, b) {
+            b = typeof b !== 'undefined' ? b : 1;
+
+            return a * b;
+        }
+
+        multiply(5); // 5
+
+
+        // 使用默认参数，在函数体的检查就不再需要了。现在，你可以在函数头简单地把1设定为b的默认值：
+
+        function multiply(a, b = 1) {
+            return a * b;
+        }
+
+        multiply(5); // 5
+        multiply(5, 2); //10
+
+
+        // 箭头函数
+        var a = [
+            "Hydrogen",
+            "Helium",
+            "Lithium",
+            "Beryllium"
+        ];
+
+        var a2 = a.map(function (s) { return s.length });
+
+        console.log(a2); //  [ 8, 6, 7, 9 ]
+
+        var a3 = a.map(s => s.length);
+
+        console.log(a3); //  [ 8, 6, 7, 9 ]
+
+        // JSClock()函数返回了用数字时钟格式的时间
+        function JSClock() {
+            var time = new Date();
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var second = time.getSeconds();
+            var temp = "" + ((hour > 12) ? hour - 12 : hour);
+            if (hour == 0)
+                temp = "12";
+            temp += ((minute < 10) ? ":0" : ":") + minute;
+            temp += ((second < 10) ? ":0" : ":") + second;
+            temp += (hour >= 12) ? " P.M." : " A.M.";
+            return temp;
+        }
+
+        JSClock();
+    </script>
+</body>
+</html>

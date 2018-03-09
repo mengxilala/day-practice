@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单控件绑定</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <!-- 1.基础用法 -->
+    <!-- a.文本 -->
+    <div id="example-1">
+        <input v-model="message" placeholder="edit me">
+        <p>Message is :{{message}}</p>
+    </div>
+
+    <!-- b.多行文本 -->
+    <div id="example-2">
+        <span>Multiline message is:</span>
+        <p style="white-space:pre-line;">{{message}}</p>
+        <br>
+        <textarea v-model="message" placeholder="edit multiline message"></textarea>
+    </div>
+
+    <!-- white-space 属性设置如何处理元素内的空白。
+    这个属性声明建立布局过程中如何处理元素中的空白符。
+    默认值：	normal
+    继承性：	yes
+    JavaScript 语法：	object.style.whiteSpace="pre"
+    可能的值
+    normal	默认。空白会被浏览器忽略。
+    pre	空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。
+    nowrap	文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+    pre-wrap	保留空白符序列，但是正常地进行换行。
+    pre-line	合并空白符序列，但是保留换行符。
+    inherit	规定应该从父元素继承 white-space 属性的值。 -->
+
+
+    <!-- c.复选框 -->
+    <!-- 单个勾选框，逻辑值 -->
+    <div id="example-3">
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{checked}}</label>
+    </div>
+    <!-- 多个勾选框，绑定到同一个数组 -->
+    <div id="example-4">
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <br>
+        <span>checkedNames:{{checkedNames}}</span>
+    </div>
+
+    <!-- d.单选按钮 -->
+    <div id="example-5">
+        <input type="radio" id="one" value="one" v-model="picked">
+        <label for="one">One</label>
+        <input type="radio" id="two" value="two" v-model="picked">
+        <label for="two">Two</label>
+    </div>
+
+    <!-- f.选择列表 -->
+    <!-- 单选列表 -->
+    <div id="example-6">
+        <select v-model="selected">
+            <option disabled>Please select one</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected:{{selected}}</span>
+    </div>
+    <!-- 单选列表（绑定到一个数组）： -->
+    <div id="example-7">
+        <select multiple>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected:{{selected}}</span>
+    </div>
+    <script>
+        // 1.基础用法
+        // a.文本
+        new Vue({
+            el: "#example-1",
+            data: {
+                message: ''
+            }
+        })
+        // b.多行文本
+        new Vue({
+            el: "#example-2",
+            data: {
+                message: ''
+            }
+        })
+        // c.复选框
+        // 单个勾选框，逻辑值
+        new Vue({
+            el: "#example-3",
+            data: {
+                checked: false
+            }
+        })
+        // 多个勾选框，绑定到同一个数组
+        new Vue({
+            el: "#example-4",
+            data: {
+                checkedNames: []
+            }
+        })
+        // d.单选按钮
+        new Vue({
+            el: '#example-5',
+            data: {
+                picked: ''
+            }
+        })
+        // f.选择列表
+        // 单选列表
+        new Vue({
+            el: '#example-6',
+            data: {
+                selected: ''
+            }
+        })
+
+        // 单选列表（绑定到一个数组）：
+        new Vue({
+            el: '#example-7',
+            data: {
+                selected: ''
+            }
+        })
+    </script>
+</body>
+</html>

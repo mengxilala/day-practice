@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day5</title>
+</head>
+<body>
+    <form>
+        <div>
+            <label for="firstName">First name:</label>
+            <input id="firstName" type="text">
+        </div>
+
+        <div>
+            <label for="lastName">Last name:</label>
+            <input id="lastName" type="text">
+        </div>
+
+        <div>
+            <input id="submit" type="submit">
+        </div>
+    </form>
+    <p></p>
+
+    <script>
+        var form = document.querySelector('form'),
+            firstName = document.getElementById('firstName'),
+            lastName = document.getElementById('lastName'),
+            submit = document.getElementById('submit'),
+            para = document.querySelector('p');
+
+        form.onsubmit = function (e) {
+            if (firstName.value === '' || lastName.value === '') {
+                e.preventDefault();    //阻止默认行为
+                para.textContent = 'You need to fill in both names!';
+            }
+        }
+    </script>
+</body>
+</html>

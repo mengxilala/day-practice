@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-outerWidth/outerHeight属性</title>
+    <script src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <!-- outerHeight([options]) 获取第一个匹配元素外部高度（默认包括补白和边框）。 此方法对可见和隐藏元素均有效。 -->
+
+    <!-- options的格式  Boolean 默认值:'false'  设置为 true 时，计算边距在内。 -->
+
+    <!-- 获取第一段落外部高度。 -->
+    <p>Hello</p>
+    <p>2nd Paragraph</p>
+
+
+
+
+    <!-- outerWidth([options]) 获取第一个匹配元素外部宽度（默认包括补白和边框）。 此方法对可见和隐藏元素均有效。 -->
+
+    <!-- 用法同outerHeight -->
+
+    <script>
+        // 获取第一段落外部高度
+
+        var p = $("p:first");
+        $("p:last").text("outerHeight:" + p.outerHeight() + " , outerHeight(true):" + p.outerHeight(true));
+
+        //  p.outerHeight() 21
+        // p.outerHeight(true) 53  p元素默认上下margin16px   21+16+16=53
+    </script>
+</body>
+</html>

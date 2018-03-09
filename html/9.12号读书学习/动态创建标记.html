@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态创建标记</title>
+</head>
+<body>
+
+    <div id="testDiv">
+        <p>this is<em>my</em> content</p>
+    </div>
+    <!-- 1.document.write方法 -->
+    <script>
+        // var testDiv = document.getElementById("testDiv");
+        // alert(testDiv.innerHTML);
+        document.write('<p>这是一个p标签</p>');
+
+
+        function insertParagraph(text) {
+            var str = "<p>";
+            str += text;
+            str += "</p>";
+            document.write(str);
+        }
+
+        insertParagraph("我是一个粉刷匠");
+
+
+        window.onload=function(){
+            var testDiv = document.getElementById("testDiv");
+            testDiv.innerHTML="<p>I inserted <em>this</em> content</p>"
+        }
+    </script>
+
+</body>
+</html>

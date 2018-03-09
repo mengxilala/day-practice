@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端监控</title>
+    <link rel="console" href="www.zmx.com">
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <script>
+
+        // 初期若不考虑记录调用堆栈这样复杂的信息，可以直接简单粗暴地让前端页面把报错信息作为 URL 参数，去 GET 一个固定且不存在（404 Not Found）的 URL，
+        // 然后就可以直接在服务器用命令行过滤 HTTP 服务程序（Apache、LightHTTPd、IIS、Nginx 等）的 Access Log 来分析 Web 前端日志 —— 简单、高效、可靠~
+
+
+        (function (BOM, $) {
+
+            var Console_URL = $('head link[rel="console"]').attr('href');
+
+            BOM.onerror = function (iMessage, iURL, iLine, iColumn, iError) {
+                BOM.setTimeout(function () {
+                    var iData = {
+                        message: iMessage,
+                        url: iURL,
+                        line: iLine,
+                        column: iColumn || (BOM.event && BOM.event.errorCharacter) || 0
+                    };
+
+                    if (iError && iError.stack)
+                        iData.stack = (iError.stack || iError.stacktrace).toString();
+
+                    if (Console_URL) {
+                        if (iData.stack)
+                            $.post(Console_URL, iData);
+                        else
+                            $.get(Console_URL, iData);
+                    }
+                }, 0);
+
+                return true;
+            };
+
+        })(self, self.jQuery);
+        
+    </script>
+</body>
+</html>

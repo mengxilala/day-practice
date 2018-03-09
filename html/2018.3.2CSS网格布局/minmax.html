@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css网格布局</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: minmax(max-content, 300px) minmax(200px, 1fr) 150px;
+            grid-gap: 5px;
+            box-sizing: border-box;
+            height: 200px;
+            width: 100%;
+            background-color: #8cffa0;
+            padding: 10px;
+        }
+
+        #container>div {
+            background-color: #8ca0ff;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- max-content
+        表示网格的轨道长度自适应内容最大的那个单元格。
+        min-content
+        表示网格的轨道长度自适应内容最小的那个单元格。
+        auto
+        作为最大值时，等价于 max-content。作为最小值时，它表示轨道中单元格最小长宽 (由min-width/min-height)的最大值。 -->
+    <div id="container">
+        <div>
+            Item as wide as the content,
+            <br/> but at most 300 pixels.
+        </div>
+        <div>
+            Item with flexible width but a minimum of 200 pixels.
+        </div>
+        <div>
+            Inflexible item of 150 pixels width.
+        </div>
+    </div>
+</body>
+</html>

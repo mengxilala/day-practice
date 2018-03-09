@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>$watch实例</title>
+    <style>
+        body {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAFfKj/FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF4OXp8PX50NXZBLxR6QAAAEhJREFUeNpiYGJgYGACCCAGMAAIIDiDCSCAGLAAgABCEcbBBAggGIORQhogwNCcwIjddKgQI6ojUbkgWSYMo+BCjKiOR9PLBAAchAAxHFDBbwAAAABJRU5ErkJggg==");
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            color: #454545;
+            background: transparent;
+            border: 2px solid #454545;
+            position: relative;
+            margin: 1em;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 0.5em 1em;
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            font-family: comfortaa;
+            font-weight: bold;
+            position: relative;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        button:before,
+        button:after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-color: #454545;
+            box-sizing: border-box;
+            border-style: solid;
+            width: 1em;
+            height: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:before {
+            top: -6px;
+            left: -6px;
+            border-width: 2px 0 0 2px;
+            z-index: 5;
+        }
+
+        button:after {
+            bottom: -6px;
+            right: -6px;
+            border-width: 0 2px 2px 0;
+        }
+
+        button:hover:before,
+        button:hover:after {
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
+            border-color: #fff;
+        }
+
+        button:hover {
+            color: #353535;
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        button:active,
+        button:focus {
+            outline: none;
+        }
+
+        span {
+            font-size: 2rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- 简单的计数器 -->
+    <!-- <div id="app">
+        <button v-on:click="increase">+</button>
+        <span>{{ count }}</span>
+        <button v-on:click="decrease">-</button>
+    </div> -->
+
+
+    <!-- 现在用$watch改变一下这个实例 -->
+
+    <!-- 我们还可以指定一个关键路径作为表达式，这也意味着我们可以使用点表示法引用嵌套对象中的属性。
+    为了向大家演示这一点，先在下面的示例的data中添加person对象。 -->
+
+
+    <div id="app">
+        <button v-on:click="count++">+</button>
+        <p>Counter:{{count}}</p>
+        <!-- <button v-on:click="person.name.firstName = '大漠'">改变firstName</button> -->
+
+        <!-- 但如果我们想要观察对象的变化而不是对象中特定属性呢？比如我们只希望在name对象中发生变化时得到通知，而不是具体地侦听firstName属性。这个时候，我们可以这样做： -->
+        <!-- <button v-on:click="person.name.firstName= '大漠'">改变firstName</button> -->
+
+
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+
+        // 简单的计数器
+        // let app = new Vue({
+        //     el: "#app",
+        //     data() {
+        //         return {
+        //             count: 0
+        //         }
+        //     },
+        //     methods: {
+        //         increase: function () {
+        //             this.count++;
+        //         },
+        //         decrease: function () {
+        //             if (this.count <= 0) {
+        //                 this.count = 0;
+        //             } else {
+        //                 this.count--;
+        //             }
+        //         }
+        //     }
+        // })
+
+
+        // 现在用$watch改变一下这个实例
+        // $watch的语法
+        // vm.$watch(expOrFn, callback, [options])
+        // 其中vm指的是Vue中的一个实例，就是我们示例中的app。那么$watch接受下面几个参数：
+
+        // {string | Function} expOrFn
+        // {Function | Object} callback
+        // {Object} [options]
+        // 它将会得到一个{Function} unwatch的返回值。
+
+
+
+        // let app = new Vue({
+        //     el: "#app",
+        //     data() {
+        //         return {
+        //             count: 0,
+        //             person: {
+        //                 name: {
+        //                     firstName: 'zhang',
+        //                     lastName: 'Mengxi'
+        //                 }
+        //             }
+
+
+        //         }
+        //     },
+            // 可以这样监视数据变化，也可以使用下面的$watch
+            // watch: {
+            //     count: function (count) {
+            //         console.log(count);
+            //     }
+            // }
+        // })
+
+        // app.$watch('count',
+        //     function (newValue, oldValue) {
+        //         console.log('Count changed from ' + oldValue + ' to ' + newValue + '!');
+        //     }) 
+
+
+        // app.$watch('person.name.firstName',function(newValue,oldValue){
+        //     console.log('firstName changed from ' + oldValue + ' 变成' + newValue + '!');
+        // })
+
+
+        // 但如果我们想要观察对象的变化而不是对象中特定属性呢？比如我们只希望在name对象中发生变化时得到通知，而不是具体地侦听firstName属性。这个时候，我们可以这样做：
+        // app.$watch('person.name', function(newValue, oldValue){
+        //     alert('firstName从 ' + oldValue.firstName + ' 变成 ' + newValue.firstName + '!')
+        // })
+
+        // app.$watch(
+        //     function () {
+        //         return this.person;
+        //     },
+        //     function (newValue, oldValue) {
+        //         alert('firstName从 ' + oldValue.firstName + ' 变成 ' + newValue.firstName + '!')
+        //     }
+        // )
+
+
+        // app.$watch(
+        //     function () {
+        //         return this.count
+        //     },
+        //     function (newValue, oldValue) {
+        //         alert('Count从 ' + oldValue + ' 变成 ' + newValue + '!')
+        //     }
+        // )
+
+        // 前面演示的都是如何动态的添加一个观察者，既然可以动态的添加，同样就可以动态删除。
+        // 接下来咱们就看如何动态删除一个观察者。每当我们使用$watch方法时，它实际上会返回一个函数，然后我们可以调用它来停止观察脚本中后面的更改。
+        // 通过将方法的返回值赋给一个变量来尝试使用这个方法。
+        let app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    count: 0
+                }
+            }
+        })
+
+        let unwatch = app.$watch(
+            function () {
+                return this.count
+            },
+            function (newValue, oldValue) {
+                alert('Count 从 ' + oldValue + ' 变成 ' + newValue + '!')
+            }
+        )
+
+        setTimeout(() => {   //在五秒种后停止观察变化。
+            unwatch()
+        }, 5000)
+
+
+    </script>
+</body>
+</html>

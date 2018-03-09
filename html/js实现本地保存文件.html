@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js实现本地保存文件</title>
+</head>
+<body>
+    <input type="text" onkeyup="isCorrect()">
+    <!-- <button id="button">保存文件</button> -->
+    <script src="../js/jquery.js"></script>
+
+    <script type="text/javascript"> 
+
+        function isCorrect() {
+            if (event.keyCode == 13) {
+                console.log('触发事件，处理事情');
+                openE();
+                return false;
+            }
+        }
+        function openE() {
+            var wsh = new ActiveXObject("WSCript.shell");
+            var src = "/select,E:\\x";
+            wsh.run("explorer.exe " + src);
+        }
+
+        // var btn=document.getElementById('button');
+        // btn.onclick=function(){
+        //     openE();
+        // }
+
+    </script>
+</body>
+</html>

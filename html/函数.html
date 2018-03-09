@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=script, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        +function () {
+            var a = 5;
+            function a() { };
+            console.log(a, 'a'); //5
+            function b() { }
+            b = 6;
+            console.log(b, 'b');//6
+            var c = d = b;
+        }();
+        console.log(d, 'd'); //6
+        console.log(c, 'c'); // c未定义  因为c 为函数内的局部变量 d自动解析为全局变量
+        // 因为赋值是从右向左结合：
+        // var  c = d = b; 等价于 var c = (d = b))); ，其中只有c被声明了，d自动解析为全局变量了
+        // 等同于
+        // d = b
+        // var c = d；
+        // c为局部变量，d为全局变量
+
+        // js 变量声明 （var使用与不使用的区别）
+        // http://blog.csdn.net/gjtyoulanyi/article/details/45530693
+        
+        
+        this.a = 20;
+
+        var test = {
+            a: 40,
+            init: () => {
+                console.log(this.a);  //20
+                function go() {
+                    // this.a = 60;
+                    console.log(this.a);
+                }
+                go.prototype.a = 50;
+                return go;
+            }
+        };
+        // var p=test.init();
+        // p();  //this指向window
+        new (test.init())(); //new关键字可以改变this的指向 this指向test.init
+
+    </script>
+</body>
+</html>

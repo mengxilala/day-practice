@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this的指向问题</title>
+</head>
+<body>
+    <script>
+        var a = "the window";
+        function test1() {
+            var a = "function";
+            console.log(this.a); // the window
+            console.log(this);  // window
+        }
+        test1();
+
+
+        var test2 = {
+            a: "object",
+            fun: function () {
+                console.log(this.a);
+            },
+        }
+        test2.fun(); //object
+        var aaa = test2.fun;
+        aaa(); //undefined
+
+
+        // 多层对象
+        // 情况一：
+        var test = {
+            a: "object",
+            fun: function () {
+                console.log(this.a);
+            }
+        }
+        test.fun();  // object
+        windows.test.fun();  // object
+        // 这也相当于是多层对象，window.test.fun, 此时fun中的this指的是上一级对象，即test。
+
+        // 情况二：
+        var test3 = {
+            a: "object",
+            b: {
+                a: "inner object",
+                fun: function () {
+                    console.log("test3  " + this.a);
+                }
+            },
+        }
+        test3.b.fun();   //  inner object
+        // this在调用的时候被上一级对象调用，所以指向上一次对象，即b。
+
+        // 情况三：
+        var test4 = {
+            a: "object",
+            b: {
+                // a: "inner object",         
+                // fun: function () {             
+                //     console.log("test4  " + this.a);         
+                // }     
+            },
+        }
+        test4.b.fun();   // undefined
+        // 同test3，但是test4.b对象中并没有a变量，所以返回undefined，再次证明当函数被多层对象调用时，函数内的this指向的是它上一次的对象。
+        // 其实，函数的两个特殊变量this和arguments都只会在当前执行环境的变量对象中讯中，并不会在再上一层中寻找。
+
+
+        // 构造函数 
+        function test5() {
+            this.a = "constructor";
+            this.fun = function () {
+                console.log("test5  " + this.a);
+            }
+        }
+        var obj = new test5;
+        obj.fun(); //constructor
+        // new会改变this的指向，使它指向新new出来的对象，在这里是obj，
+        // new一个构造函数，相当于把构造函数中带有“this.”的变量和方法都复制给新对象，所以新new出来的obj中会有a变量和fun方法。
+
+
+
+        // 但如果构造函数是这样的：    
+        function test5() {
+            a = "constructor";
+            this.fun = function () {
+                console.log("test5  " + this.a);   // undefined
+            }
+        }
+        var c = obj.fun;
+        c();
+        // 在这里只是把fun的地址赋值给c，赋值的时候并没有立刻执行，而执行这个地址里的函数的时候其环境变量是全局环境。
+
+        // 理解1:
+        var color = 'green';
+        var test4399 = {
+            color: "blue",
+            getColor: function () {
+                var color = "red";
+                console.log(this.color);
+                console.log(color);
+            }
+        }
+        var getColor = test4399.getColor;
+        getColor();   // green red
+        test4399.getColor();   // blue red
+
+        // 理解2:
+        var name = "The Window";
+        var object = {
+            name: "My Object",
+            getNameFunc: function () {
+                console.log('1.' + this.name);
+                return function () {
+                    return this.name;
+                };
+            }
+        };
+        var func = object.getNameFunc();
+        // console.log(object.getNameFunc()());    1.My Object  
+        // console.log('2.' + func());   2.The Window 
+        // console.log('3.' + func.call(object));   3.My Object
+        // console.log('4.' + func.apply(object));    4.My Object
+        
+    </script>
+</body>
+</html>

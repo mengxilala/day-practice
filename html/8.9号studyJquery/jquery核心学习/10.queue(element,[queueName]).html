@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <style>
+        /* div {
+            margin: 3px;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 0px;
+            top: 30px;
+            background: green;
+            display: none;
+        }
+
+        div.newcolor {
+            background: blue;
+        }
+
+        span {
+            color: red;
+        } */
+    </style>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- queue(element,[queueName]) 显示或操作在匹配元素上执行的函数队列
+    element:检查附加列队的DOM元素
+    queueName:字符串值，包含序列的名称。默认是 fx, 标准的效果序列。 -->
+    <!-- <button id="show">Show Length of Queue</button>
+    <span></span>
+    <div></div> -->
+    <!-- .queue(element,queueName,newQueue)
+    element:检查附加列队的DOM元素
+    queueName:字符串值，包含序列的名称。默认是 fx, 标准的效果序列。
+    newQueue:替换当前函数列队内容的数组 -->
+
+    <!-- .queue(element,queueName,callback())
+    element:检查附加列队的DOM元素
+    queueName:字符串值，包含序列的名称。默认是 fx, 标准的效果序列。
+    callback():要添加进队列的函数 -->
+    <p>queue() 方法显示被选元素上要执行的函数队列。</p>
+    <p>dequeue() 从队列移除下一个函数，然后执行函数。</p>
+    <p>clearQueue() 方法从尚未运行的队列中移除所有项目。</p>
+    <p>
+        <button id="start">开始动画</button>
+        <button id="stop">停止动画</button>
+    </p>
+    <div id="div" style="background:#98bf21;height:100px;width:100px"></div>
+    <script>
+        // var div = $('div');
+        // function showIt() {
+        //     var n = div.queue("fx");
+        //     $("span").text(n.length);
+        //     setTimeout(showIt, 100);
+        // }
+        // function runIt() {
+        //     $("div").show("slow");
+        //     $("div").animate({ left: '+=200' }, 2000);
+        //     $("div").slideToggle(1000);
+        //     $("div").slideToggle("fast");
+        //     $("div").animate({ left: '-=200' }, 1500);
+        //     $("div").hide("slow");
+        //     $("div").show(1200);
+        //     $("div").slideUp("normal", runIt);
+        // }
+        // runIt();
+        // showIt();
+
+
+        // .queue(element,queueName,callback()
+        // 请注意，当通过 .queue() 添加函数时，我们应当确保最终调用了 .dequeue()，这样下一个排队的函数才能执行。
+        $(document).ready(function () {
+            var div = $("#div");
+            $("#start").click(function () {
+                div.animate({ height: 300 }, "slow");
+                div.animate({ width: 300 }, "slow");
+                div.queue(function () {
+                    div.css("background-color", "red");
+                    div.dequeue();
+                });
+                div.animate({ height: 100 }, "slow");
+                div.animate({ width: 100 }, "slow");
+            });
+            $("#stop").click(function () {
+                div.clearQueue();
+            });
+        });
+    </script>
+
+</body>
+</html>

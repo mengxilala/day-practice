@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>repeat</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: repeat(2, 50px 1fr) 100px;
+            grid-gap: 5px;
+            box-sizing: border-box;
+            height: 200px;
+            width: 100%;
+            background-color: #8cffa0;
+            padding: 10px;
+        }
+
+        #container>div {
+            background-color: #8ca0ff;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div>
+            This item is 50 pixels wide.
+        </div>
+        <div>
+            Item with flexible width.
+        </div>
+        <div>
+            This item is 50 pixels wide.
+        </div>
+        <div>
+            Item with flexible width.
+        </div>
+        <div>
+            Inflexible item of 100 pixels width.
+        </div>
+    </div>
+</body>
+</html>

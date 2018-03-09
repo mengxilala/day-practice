@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用js实现动画效果</title>
+    <style>
+        #element {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="element"></div>
+
+    <script>
+        function positionMessage() {
+            if (!document.getElementById) return false;
+            if (!document.getElementById("element")) return false;
+            var elem = document.getElementById("element");
+            elem.style.position = "absolute";
+            elem.style.top = "100px";
+            elem.style.left = "50px";
+            movement = setTimeout("moveMessage()", 5000);
+        }
+        // window.onload = positionMessage;   如果不想这样写 可以用下面的addLoadEvent函数
+
+        function moveMessage() {
+            if (!document.getElementById) return false;
+            if (!document.getElementById("element")) return false;
+            var elem = document.getElementById("element");
+            elem.style.position = "absolute";
+            elem.style.left = "200px";
+        }
+
+
+        //   addLoadEvent函数
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function () {
+                    oldonload();
+                    func();
+                }
+            }
+        }
+
+        addLoadEvent(positionMessage);
+    </script>
+</body>
+</html>

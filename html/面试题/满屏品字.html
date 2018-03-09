@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>满屏品字</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .box1 {
+            width: 50%;
+            height: 50%;
+            background-color: pink;
+            margin: 0 auto;
+        }
+
+        .main {
+            width: 100%;
+            height: 50%;
+            background-color: #ddd;
+        }
+
+        .main .box2,
+        .main .box3 {
+            width: 50%;
+            height: 100%;
+            float: left;
+            background-color: red;
+        }
+
+        .main .box3 {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+    <div class="main">
+        <div class="box2"></div>
+        <div class="box3"></div>
+    </div>
+
+</body>
+</html>

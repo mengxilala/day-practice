@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-innerWidth/innerHeight属性</title>
+    <script src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <!-- innerHeight() 获取第一个匹配元素内部区域高度（包括补白、不包括边框）。 此方法对可见和隐藏元素均有效。 -->
+
+    <!-- 描述: 获取第一段落内部区域高度。 -->
+    <p>Hello</p>
+    <p>2nd Paragraph</p>
+
+
+    <!-- innerWidth() 获取第一个匹配元素内部区域宽度（包括补白、不包括边框）。 此方法对可见和隐藏元素均有效。 -->
+    <!-- 用法同innerHeight -->
+
+    <script>
+        // 描述: 获取第一段落内部区域高度。
+
+        var p = $("p:first");
+        $("p:last").text("innerHeight:" + p.innerHeight()); //21
+    </script>
+</body>
+</html>

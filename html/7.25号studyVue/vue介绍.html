@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>介绍vue</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+
+    <!-- 声明式渲染
+        Vue.js 的核心是一个允许采用简洁的模板语法来声明式的将数据渲染进 DOM： -->
+
+    <div id="app">
+        {{message}}
+    </div>
+
+
+    <!-- 除了文本插值，我们还可以采用这样的方式绑定 DOM 元素属性： -->
+
+    <div id="app2">
+        <span v-bind:title="message">
+            跨界歌王张继科为谁而来?
+        </span>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- 条件与循环 -->
+    <!-- 控制切换一个元素的显示也相当简单： -->
+    <div id="app3">
+        <p v-if="seen">如果seen为true,你就可以看见我，否则就看不见我</p>
+    </div>
+
+
+    <!-- v-for循环 -->
+    <div id="app4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+
+
+
+
+
+    <!-- 处理用户输入 -->
+    <!-- 为了让用户和你的应用进行互动，我们可以用 v-on 指令绑定一个事件监听器，通过它调用我们 Vue 实例中定义的方法： -->
+    <div id="app5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+
+    <!-- Vue 还提供了 v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定。 -->
+    <div id="app6">
+        <p>{{message}}</p>
+        <input v-model='message'>
+    </div>
+
+
+
+
+
+    <!-- 组件化应用构建           目前对于这部分还是不了解  需要后续继续跟进 -->
+    <div id="app7">
+        <ol> 
+            <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+        </ol>
+    </div>
+
+
+
+
+    <script>
+        // 声明式渲染
+
+        // Vue.js 的核心是一个允许采用简洁的模板语法来声明式的将数据渲染进 DOM
+
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: '我就是我'
+            }
+        })
+
+        // 除了文本插值，我们还可以采用这样的方式绑定 DOM 元素属性：
+
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                message: '当然为谢娜而来'
+            }
+        })
+
+
+
+
+
+
+
+        // 条件与循环 
+        // 控制切换一个元素的显示也相当简单：
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                seen: true
+            }
+        })
+
+        // v-for循环
+        var app4 = new Vue({
+            el: '#app4',
+            data: {
+                todos: [
+                    { text: '眼泪' },
+                    { text: '给我感觉' },
+                    { text: '将军令' },
+                    { text: '天下' },
+                    { text: '我变了' },
+                    { text: '突然想爱你' }
+                ]
+            }
+        })
+        // 在控制台里，输入 app4.todos.push({ text: '新项目' })，你会发现列表中添加了一个新项。
+
+
+
+
+
+        // 处理用户输入 
+        // 为了让用户和你的应用进行互动，我们可以用 v-on 指令绑定一个事件监听器，通过它调用我们 Vue 实例中定义的方法：
+        var app5 = new Vue({
+            el: '#app5',
+            data: {
+                message: 'I am lala'
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                },
+
+            }
+        })
+        // Vue 还提供了 v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定。
+        var app6 = new Vue({
+            el: '#app6',
+            data: {
+                message: '我是谢娜张继科的迷妹'
+            }
+        })
+
+
+
+        // 组件化应用构建
+
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        var app7 = new Vue({
+            el: '#app7',
+            data: {
+                groceryList: [
+                    { id: 0, text: '谢娜' },
+                    { id: 1, text: '张杰' },
+                    { id: 2, text: '张继科' }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

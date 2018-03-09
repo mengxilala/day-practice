@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript example</title>
+</head>
+
+<body>
+    <div>
+        <label for="jscode">Enter code:</label>
+        <input type="text" id="jscode">
+        <button>Submit code</button>
+    </div>
+
+    <p></p>
+</body>
+
+<script>
+    var input = document.querySelector('input');
+    var btn = document.querySelector('button');
+    var para = document.querySelector('p');
+    btn.onclick = function () {
+        var code = input.value;
+        para.textContent = eval(code);
+    }
+    var person = {
+        name: {
+            first: 'Bob',
+            last: 'Smith'
+        },
+        age: 32,
+        gender: 'male',
+        interests: ['music', 'skiing'],
+        bio: function () {
+            alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + this.interests[0] + ' and ' + this.interests[1] + '.');
+        },
+        greeting: function () {
+            alert('Hi! I\'m ' + this.name.first + '.');
+        }
+    };
+    var myDataName = 'height';
+    var myDataValue = '1.75m';
+    person[myDataName] = myDataValue;
+
+    //通过访问  person.height   得到 1.75m
+
+
+
+
+// 括号表示法
+// 另外一种访问属性的方式是使用括号表示法，替代这样的代码
+// person.age
+// person.name.first
+// 使用如下所示的代码：
+// person['age']
+// person['name']['first']
+
+
+
+// 设置对象成员
+// 目前我们仅仅看到了如何访问对象的成员，其实也可以设置对象成员的值，通过声明你要设置的成员，像这样：
+// person['eyes'] = 'hazel'
+// person.farewell = function() { alert("Bye everybody!") }
+
+// 现在你可以测试你新创建的成员
+// person['eyes']    hazel
+// person.farewell()  会弹出“Bye everybody!”
+
+</script>
+</html>

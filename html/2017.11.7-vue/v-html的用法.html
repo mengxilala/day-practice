@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-html的用法</title>
+</head>
+<body>
+    <!-- 在Vue中，我们可以使用v-html来操作元素中的HTML标签，事情会变得容易得多 -->
+    <div id="app">
+        <h2>v-html的用法</h2>
+        <div v-html="cat"></div>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                cat: "<img src='../../images/loading.png' />"
+            }
+        })
+
+        // 和v-text一样，如果动态修改数据源中cat的属性值，就会有相应的变化
+        // app.cat = '<h1>^_^换了这张图片^_^</h1>' 此时第二个div中就不再是图片 而是这句话
+
+
+    </script>
+</body>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-筛选属性</title>
+    <script src="../../js/jquery.min.js"></script>
+    <style>
+        /* div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        } */
+
+        .active {
+            border: 1px solid red;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- eq(index|-index) 获取当前链式操作中第N个jQuery对象，返回jQuery对象，
+        当参数大于等于0时为正向选取，比如0代表第一个，1代表第二个。当参数为负数时为反向选取，比如-1为倒数第一个 -->
+    <!-- 参数index描述: 获取匹配的第二个元素 -->
+    <!-- <p> This is just a test.</p> <p> So is this</p> -->
+
+
+    <!-- 参数-index描述:获取匹配的第二个元素 -->
+    <!-- <p> This is just a test.</p> <p> So is this</p> -->
+
+
+
+    <!-- first() 获取第一个元素 -->
+    <!-- 描述:获取匹配的第一个元素 -->
+    <!-- <ul>
+        <li>list item 1</li>
+        <li>list item 2</li>
+        <li>list item 3</li>
+        <li>list item 4</li>
+        <li>list item 5</li>
+    </ul> -->
+
+
+
+
+    <!-- last() 获取最后一个元素 -->
+    <!-- 描述:获取匹配的最后一个元素 -->
+    <!-- <ul>
+        <li>list item 1</li>
+        <li>list item 2</li>
+        <li>list item 3</li>
+        <li>list item 4</li>
+        <li>list item 5</li>
+    </ul> -->
+
+
+
+    <!-- hasClass(class) 检查当前的元素是否含有某个特定的类，如果有，则返回true。这其实就是 is("." + class)。 -->
+    <!-- 描述:给包含有某个类的元素进行一个动画。 -->
+    <!-- <div class="protected"></div>
+    <div></div> -->
+
+
+
+    <!-- filter(expr|obj|ele|fn) 筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式 -->
+    <!-- 参数selector描述:保留带有select类的元素 -->
+    <!-- <p>Hello</p>
+    <p>Hello Again</p>
+    <p class="selected">And Again</p> -->
+
+    <!-- 回调函数 描述: 保留子元素中不含有ol的元素。 -->
+    <!-- <p>
+        <ol>
+            <li>Hello</li>
+        </ol>
+    </p>
+    <p>How are you?</p> -->
+
+
+
+    <!-- is(expr|obj|ele|fn) 根据选择器、DOM元素或 jQuery 对象来检测匹配元素集合，如果其中至少有一个元素符合这个给定的表达式就返回true。
+                        如果没有元素符合，或者表达式无效，都返回'false' -->
+    <!-- 参数expr 描述:由于input元素的父元素是一个表单元素，所以返回true。 -->
+    <!-- <form><input type="checkbox" /></form>  -->
+
+
+    <!-- map(callback)将一组元素转换成其他数组（不论是否是元素数组）
+     你可以用这个函数来建立一个列表，不论是值、属性还是CSS样式，或者其他特别形式。这都可以用'$.map()'来方便的建立。 -->
+
+    <!-- 把form中的每个input元素的值建立一个列表。 -->
+
+    <!-- <p><b>Values: </b></p>
+    <form>
+        <input type="text" name="name" value="John" />
+        <input type="text" name="password" value="password" />
+        <input type="text" name="url" value="http://ejohn.org/" />
+    </form> -->
+
+
+    <!-- has(expr|ele) 保留包含特定后代的元素，去掉那些不含有指定后代的元素。
+    .has()方法将会从给定的jQuery对象中重新创建一组匹配的对象。提供的选择器会一一测试原先那些对象的后代，含有匹配后代的对象将得以保留。 -->
+    <!-- 描述:给含有ul的li加上背景色 -->
+    <!-- <ul>
+        <li>list item 1</li>
+        <li>list item 2
+            <ul>
+                <li>list item 2-a</li>
+                <li>list item 2-b</li>
+            </ul>
+        </li>
+        <li>list item 3</li>
+        <li>list item 4</li>
+    </ul> -->
+
+
+    <!-- not(expr|ele|fn) 从匹配元素的集合中删除与指定表达式匹配的元素 -->
+    <!-- 描述:从p元素中删除带有 select 的ID的元素 -->
+
+    <!-- <p>Hello</p>
+    <p id="selected">Hello Again</p> -->
+
+
+
+    <!-- slice(start, [end])选取一个匹配的子集与原来的slice方法类似
+    start 开始选取子集的位置。第一个元素是0.如果是负数，则可以从集合的尾部开始选起。
+    end 结束选取自己的位置，如果不指定，则就是本身的结尾。 -->
+    <!-- 描述:选择第一个p元素 -->
+    <!-- <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p> -->
+
+
+    <!-- children([expr])取得一个包含匹配的元素集合中每一个元素的所有子元素的元素集合。
+    可以通过可选的表达式来过滤所匹配的子元素。注意：parents()将查找所有祖辈元素，而children()只考虑子元素而不考虑所有后代元素。 -->
+    <!-- 描述:查找DIV中的每个子元素。 -->
+    <!-- <p>Hello</p>
+    <div><span>Hello Again</span></div>
+    <p>And Again</p> -->
+
+
+
+    <!-- closest(expr|object|element)
+    从元素本身开始，逐级向上级元素匹配，并返回最先匹配的元素。。
+    closest会首先检查当前元素是否匹配，如果匹配则直接返回元素本身。如果不匹配则向上查找父元素，一层一层往上，直到找到匹配选择器的元素。
+    如果什么都没找到则返回一个空的jQuery对象。
+    closest和parents的主要区别是：
+    1，前者从当前元素开始匹配寻找，后者从父元素开始匹配寻找；
+    2，前者逐级向上查找，直到发现匹配的元素后就停止了，后者一直向上查找直到根元素，然后把这些元素放进一个临时集合中，再用给定的选择器表达式去过滤；
+    3，前者返回0或1个元素，后者可能包含0个，1个，或者多个元素。
+    closest对于处理事件委托非常有用。 -->
+    <!-- 描述:展示如何使用clostest查找多个元素 -->
+    <!-- <ul>
+        <li></li>
+        <li></li>
+    </ul> -->
+
+
+
+    <!-- find(expr|obj|ele)搜索所有与指定表达式匹配的元素。这个函数是找出正在处理的元素的后代元素的好方法。
+    描述:从所有的段落开始，进一步搜索下面的span元素。与$("p span")相同。 -->
+    <!-- <p><span>Hello</span>, how are you?</p> -->
+
+
+
+    <!-- next([expr]) 取得一个包含匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。
+    这个函数只返回后面那个紧邻的同辈元素，而不是后面所有的同辈元素（可以使用nextAll）。可以用一个可选的表达式进行筛选。 -->
+    <!-- 描述: 找到每个段落的后面紧邻的同辈元素。 -->
+    <!-- <p>Hello</p><p>Hello Again</p><div><span>And Again</span></div> -->
+
+
+
+    <!-- nextAll([expr]) 查找当前元素之后所有的同辈元素。可以用表达式过滤
+    给第一个div之后的所有元素加个类 -->
+    <!-- <div>111</div><span>我是span</span><div>我是第二个div</div><p>我是一个p标签</p> -->
+
+
+    <!-- nextUntil([exp|ele][,fil]) 查找当前元素之后所有的同辈元素，直到遇到匹配的那个元素为止。
+    描述:给#term-2后面直到dt前的元素加上红色背景 -->
+    <!-- <dl>
+        <dt id="term-1">term 1</dt>
+        <dd>definition 1-a</dd>
+        <dd>definition 1-b</dd>
+        <dd>definition 1-c</dd>
+        <dd>definition 1-d</dd>
+
+        <dt id="term-2">term 2</dt>
+        <dd>definition 2-a</dd>
+        <dd>definition 2-b</dd>
+        <dd>definition 2-c</dd>
+
+        <dt id="term-3">term 3</dt>
+        <dd>definition 3-a</dd>
+        <dd>definition 3-b</dd>
+    </dl> -->
+
+
+
+    <!-- 
+    offsetParent() 返回第一个匹配元素用于定位的父节点。
+    这返回父元素中第一个其position设为relative或者absolute的元素。此方法仅对可见元素有效。
+    描述:设置最近的祖先定位元素的背景颜色 -->
+    <!-- <div style="width:70%;position:absolute;left:100px;top:100px">
+        哈哈哈哈哈哈哈
+        <div style="margin:50px;background-color:yellow">
+            <p>点击下面的按钮可以设置本段落的最近的父（祖先）元素的背景色。</p>
+        <div>
+        </div>
+    <button>点击这里</button> -->
+
+
+
+    <!-- parent([expr]) 取得一个包含着所有匹配元素的唯一父元素的元素集合。
+    描述:查找每个段落的父元素 -->
+    <!-- <div><p>Hello</p><p>Hello</p></div> -->
+    <!-- 描述:查找段落的父元素中每个类名为selected的父元素。 -->
+    <!-- <div><p>Hello</p></div><div class="selected"><p>Hello Again</p></div> -->
+
+
+
+
+    <!-- parents([expr]) 取得一个包含着所有匹配元素的祖先元素的元素集合（不包含根元素）。
+    描述:找到每个span元素的所有祖先元素。 -->
+    <!-- <html><body><div><p><span>Hello</span></p><span>Hello Again</span></div></body></html> -->
+
+
+
+    <!-- parentsUntil([expr|element][,filter]) 查找当前元素的所有的父辈元素，直到遇到匹配的那个元素为止。
+    描述:查找item-a的祖先，但不包括level-1 -->
+    <!-- <ul class="level-1">
+        <li class="item-i">I</li>
+        <li class="item-ii">II
+            <ul class="level-2">
+                <li class="item-a">A</li>
+                <li class="item-b">B
+                    <ul class="level-3">
+                        <li class="item-1">1</li>
+                        <li class="item-2">2</li>
+                        <li class="item-3">3</li>
+                    </ul>
+                </li>
+                <li class="item-c">C</li>
+            </ul>
+        </li>
+        <li class="item-iii">III</li>
+    </ul> -->
+
+
+
+    <!-- prev([expr])取得一个包含匹配的元素集合中每一个元素紧邻的前一个同辈元素的元素集合。
+    可以用一个可选的表达式进行筛选。只有紧邻的同辈元素会被匹配到，而不是前面所有的同辈元素。 -->
+    <!-- 描述:找到每个段落紧邻的前一个同辈元素。 -->
+    <!-- <p>Hello</p><div><span>Hello Again</span></div><p>And Again</p> -->
+    <!-- 描述: 找到每个段落紧邻的前一个同辈元素中类名为selected的元素。 -->
+    <!-- <div><span>Hello</span></div><p class="selected">Hello Again</p><p>And Again</p> -->
+
+
+
+    <!-- prevAll([expr]) 查找当前元素之前所有的同辈元素 可以用表达式过滤。
+    描述:给最后一个之前的所有div加上一个类 -->
+    <!-- <div>1111</div><div>222</div><div>333</div><div>444</div> -->
+
+
+    <!-- prevUntil([exp|ele][,fil]) 查找当前元素之前所有的同辈元素，直到遇到匹配的那个元素为止。
+    描述:给#term-2前面直到dt前的元素加上红色背景 -->
+    <!-- <dl>
+        <dt id="term-1">term 1</dt>
+        <dd>definition 1-a</dd>
+        <dd>definition 1-b</dd>
+        <dd>definition 1-c</dd>
+        <dd>definition 1-d</dd>
+
+        <dt id="term-2">term 2</dt>
+        <dd>definition 2-a</dd>
+        <dd>definition 2-b</dd>
+        <dd>definition 2-c</dd>
+
+        <dt id="term-3">term 3</dt>
+        <dd>definition 3-a</dd>
+        <dd>definition 3-b</dd>
+    </dl> -->
+
+
+
+
+    <!-- siblings([expr])取得一个包含匹配的元素集合中每一个元素的所有唯一同辈元素的元素集合。可以用可选的表达式进行筛选。
+    描述:找到每个div的所有同辈元素 -->
+    <!-- <p>Hello</p><div><span>Hello Again</span></div><p>And Again</p> -->
+    <!-- 描述:找到每个div的所有同辈元素中带有类名为selected的元素。 -->
+    <!-- <div><span>Hello</span></div><p class="selected">Hello Again</p><p>And Again</p> -->
+
+
+
+    <!-- add(expr|ele|html|obj[,con])把与表达式匹配的元素添加到jQuery对象中。这个函数可以用于连接分别与两个表达式匹配的元素结果集。
+    描述:动态生成一个元素并添加至匹配的元素中 -->
+    <!-- <p>Hello</p> -->
+
+
+
+
+    <!-- andSelf()加入先前所选的加入当前元素中 对于筛选或查找后的元素，要加入先前所选元素时将会很有用。
+    描述:选取所有div以及内部的p，并加上border类 -->
+    <!-- <div><p>First Paragraph</p><p>Second Paragraph</p></div> -->
+
+
+
+    <!-- end() 回到最近的一个"破坏性"操作之前。即，将匹配的元素列表变为前一次的状态。
+    描述:选取所有的p元素，查找并选取span子元素，然后再回过来选取p元素 -->
+    <p><span>Hello</span>,how are you?</p>
+
+    <script>
+        // eq 参数index描述: 获取匹配的第二个元素
+        // $("p").eq(1);
+
+        // 参数-index描述:获取匹配的倒数第二个元素 
+        // $("p").eq(-2);
+
+
+
+        // first 描述:获取匹配的第一个元素
+        // $('li').first();
+
+        // last 描述:获取匹配的最后一个元素
+        // $('li').last();
+
+
+        //  hasClass 描述:给包含有某个类的元素进行一个动画。
+        // $("div").click(function () {
+        //     if ($(this).hasClass("protected"))
+        //         $(this)
+        //             .animate({ left: -10 })
+        //             .animate({ left: 10 })
+        //             .animate({ left: -10 })
+        //             .animate({ left: 10 })
+        //             .animate({ left: 0 });
+        // });
+
+
+        // filter(expr|obj|ele|fn) 筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式
+
+        // 参数selector   描述1:保留带有select类的元素
+        // console.log($('p').filter('.selected'));
+        // 描述2:保留第一个以及带有select类的元素
+        // $('p').filter('.selected, :first');
+        // 回调函数 描述: 保留子元素中不含有ol的元素。
+        // $("p").filter(function (index) {
+        //     return $("ol", this).length == 0;
+        // });
+
+
+
+
+        //          is(expr|obj|ele|fn) 根据选择器、DOM元素或 jQuery 对象来检测匹配元素集合，如果其中至少有一个元素符合这个给定的表达式就返回true。
+        // 如果没有元素符合，或者表达式无效，都返回'false' 
+        //         参数expr 描述:由于input元素的父元素是一个表单元素 ，所以返回true。
+
+        // $("input[type='checkbox']").parent().is("form") //true
+
+
+        //         map(callback)将一组元素转换成其他数组（不论是否是元素数组）
+        // 你可以用这个函数来建立一个列表，不论是值、属性还是CSS样式，或者其他特别形式。这都可以用'$.map()'来方便的建立。
+        // 把form中的每个input元素的值建立一个列表。
+        // $("p").append($("input").map(function () {
+        //     return $(this).val();
+        // }).get().join(","));
+
+
+
+        // has(expr|ele) 保留包含特定后代的元素，去掉那些不含有指定后代的元素。
+        // 描述:给含有ul的li加上背景色 
+        // $('li').has('ul').css('background-color', 'red');
+
+
+
+        // not(expr|ele|fn) 从匹配元素的集合中删除与指定表达式匹配的元素
+        // 描述:从p元素中删除带有 select 的ID的元素
+        //  $("p").not($("#selected")[0]);  删除id为selected的元素
+
+        // slice(start, [end])选取一个匹配的子集与原来的slice方法类似
+        // start 开始选取子集的位置。第一个元素是0.如果是负数，则可以从集合的尾部开始选起。
+        // end 结束选取自己的位置，如果不指定，则就是本身的结尾。
+        // 描述: 选择第一个p元素
+        // $("p").slice(0, 1);
+
+
+        // children([expr])取得一个包含匹配的元素集合中每一个元素的所有子元素的元素集合。
+        // 可以通过可选的表达式来过滤所匹配的子元素。注意：parents()将查找所有祖辈元素，而children()只考虑子元素而不考虑所有后代元素。 
+        //  描述:查找DIV中的每个子元素。
+        // $("div").children()    结果 [ <span>Hello Again</span> ]
+
+
+        // closest(expr|object|element)
+        // 描述:展示如何使用clostest查找多个元素
+        // $("li:first").closest(["ul", "body"]);  结果:[ul, body]
+
+
+        // find(expr|obj|ele)搜索所有与指定表达式匹配的元素。这个函数是找出正在处理的元素的后代元素的好方法。
+        // 描述:从所有的段落开始，进一步搜索下面的span元素。与$("p span")相同。
+        // $("p").find("span");
+
+
+        // next([expr]) 取得一个包含匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。
+        // 这个函数只返回后面那个紧邻的同辈元素，而不是后面所有的同辈元素（可以使用nextAll）。可以用一个可选的表达式进行筛选。
+        // 描述:找到每个段落的后面紧邻的同辈元素。
+        // $("p").next()
+
+        // 描述:找到每个段落的后面紧邻的同辈元素中类名为selected的元素。
+        // $("p").next(".selected")
+
+
+
+        // nextAll([expr]) 查找当前元素之后所有的同辈元素。可以用表达式过滤
+        // 描述:给第一个div之后的所有元素加个类
+        // $('div:first').nextAll().addClass('active');
+
+
+        // nextUntil([exp|ele][,fil]) 查找当前元素之后所有的同辈元素，直到遇到匹配的那个元素为止。
+        // 描述:给#term-2后面直到dt前的元素加上红色背景
+        // $('#term-2').nextUntil('dt').css('background-color', 'red');
+        // var term3 = document.getElementById("term-3");
+        // $("#term-1").nextUntil(term3, "dd").css("color", "green");
+
+
+
+        // offsetParent() 返回第一个匹配元素用于定位的父节点。
+        // 这返回父元素中第一个其position设为relative或者absolute的元素。此方法仅对可见元素有效。
+        // 描述:设置最近的祖先定位元素的背景颜色
+        // $("button").click(function () {
+        //     $("p").offsetParent().css({"background-color": "red","fontSize":"30px"});
+        // });
+
+
+
+        // parent([expr]) 取得一个包含着所有匹配元素的唯一父元素的元素集合。
+        // 描述:查找每个段落的父元素
+        // $("p").parent();
+        // 描述:查找段落的父元素中每个类名为selected的父元素。
+        // $("p").parent(".selected")
+
+
+
+        // parents([expr]) 取得一个包含着所有匹配元素的祖先元素的元素集合（不包含根元素）。
+        // 描述:找到每个span元素的所有祖先元素。
+        // console.log($("span").parents()); p / div / body /html
+        // 描述:找到每个span的所有是p元素的祖先元素。
+        // console.log($("span").parents('p')); p
+
+
+
+        // parentsUntil([expr|element][,filter]) 查找当前元素的所有的父辈元素，直到遇到匹配的那个元素为止。
+        // 描述:查找item-a的祖先，但不包括level-1
+        // $('li.item-a').parentsUntil('.level-1')
+        //     .css('background-color', 'red');
+
+
+
+        // prev([expr])取得一个包含匹配的元素集合中每一个元素紧邻的前一个同辈元素的元素集合。
+        // 可以用一个可选的表达式进行筛选。只有紧邻的同辈元素会被匹配到，而不是前面所有的同辈元素。
+        // 描述:找到每个段落紧邻的前一个同辈元素。
+        // $("p").prev().css('background-color', 'red');
+        // 描述: 找到每个段落紧邻的前一个同辈元素中类名为selected的元素
+        // $("p").prev('.selected').css('background-color', 'green');
+
+
+        // prevAll([expr]) 查找当前元素之前所有的同辈元素 可以用表达式过滤。
+        // 描述:给最后一个之前的所有div加上一个类
+        // $('div:last').prevAll().addClass('active');
+
+
+
+        // prevUntil([exp|ele][,fil]) 查找当前元素之前所有的同辈元素，直到遇到匹配的那个元素为止。
+        // 描述:给#term-2前面直到dt前的元素加上红色背景
+        // $('#term-2').prevUntil('dt').css('background-color', 'red');
+
+
+        // siblings([expr])取得一个包含匹配的元素集合中每一个元素的所有唯一同辈元素的元素集合。可以用可选的表达式进行筛选。
+        // 描述:找到每个div的所有同辈元素
+        // $("div").siblings().addClass('active');
+        // 描述:找到每个div的所有同辈元素中带有类名为selected的元素。
+        // $("div").siblings('.selected').addClass('active');
+
+
+
+        // add(expr|ele|html|obj[,con])把与表达式匹配的元素添加到jQuery对象中。这个函数可以用于连接分别与两个表达式匹配的元素结果集。
+        //  描述:动态生成一个元素并添加至匹配的元素中。
+        // $("p").add("<span>Again</span>");
+
+
+        // andSelf()加入先前所选的加入当前元素中 对于筛选或查找后的元素，要加入先前所选元素时将会很有用。
+        // 描述:选取所有div以及内部的p，并加上border类
+        // $("div").find("p").andSelf().addClass("active");
+
+
+
+        // end() 回到最近的一个"破坏性"操作之前。即，将匹配的元素列表变为前一次的状态。
+        // 描述:选取所有的p元素，查找并选取span子元素，然后再回过来选取p元素
+        $("p").find("span").end()
+    </script>
+
+</body>
+</html>

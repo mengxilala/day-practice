@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>条件渲染</title>
+    <script src="../../js/vue.js"></script>
+
+</head>
+<body>
+    <!-- v-if / v-else /v-else-if-->
+    <div id="app">
+        <h1 v-if="ok">Yes</h1>
+        <h1 v-else>No</h1>
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+    </div>
+
+
+
+    
+    <script>
+        //   v-if
+        var app = new Vue({
+            el: '#app',
+            data: {
+                ok: true
+            }
+        })
+    </script>
+</body>
+</html>

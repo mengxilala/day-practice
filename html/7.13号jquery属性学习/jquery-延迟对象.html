@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-延迟对象</title>
+</head>
+<body>
+    <script>
+        // 1.deferred.done(doneCallbacks[,doneCallbacks])当延迟成功时调用一个函数或者数组函数.
+        // 该参数可以是一个函数或一个函数的数组。当延迟成功时，doneCallbacks被调用。回调执行是依照他们添加的顺序。
+        // 一旦deferred.done()返回延迟对象，延迟对象的其它方法也可以链接到了这里，包括增加.done()方法。
+        // 当延迟解决，doneCallbacks执行使用参数提供给resolve或resolveWith方法依照添加的顺序调用。 
+        //  描述:一旦jQuery.get方法返回一个来自延迟的对象的jqXHR对象，我们可以附加一个成功回调使用.done方法。
+        $.get("test.php").done(function () {
+            alert("$.get succeeded");
+        });
+
+        // 2.deferred.fail(failCallbacks[,failCallbacks])当延迟失败时调用一个函数或者数组函数.。
+        // 该参数可以是一个函数或一个函数的数组。当延迟失败时，doneCallbacks被调用。回调执行是依照他们添加的顺序。
+        // 一旦deferred.fail()返回延迟对象，延迟对象的其它方法也可以链接到了这里，包括增加.done()方法。
+        // 当延迟解决，doneCallbacks执行使用参数提供给resolve或resolveWith方法依照添加的顺序调用。
+        // 描述:一旦jQuery.get方法返回一个jqXHR对象，这是从一个递延所得，可以附加的成功和失败回调使用deferrred.done()和deferred.fail()方法。
+        $.get("test.php")
+            .done(function () { alert("$.get succeeded"); })//延迟成功
+            .fail(function () { alert("$.get failed!"); });//延迟失败
+
+
+        // 3.deferred.reject(args)拒绝延迟对象，并根据给定的参数调用任何失败的回调函数。
+        // 当延迟被拒绝，任何failCallbacks添加的deferred.then或deferred.fail被调用。回调按他们添加的顺序执行。每个回调传递的args在deferred.reject()中调用。
+        // 之后添加任何failCallbacks递延被拒绝进入状态时，立即执行添加，使用的参数被传递给.reject()调用。
+
+
+        // 4.deferred.rejectWith(context, [args])拒绝延迟的对象，并根据给定的上下文和参数调用任何失败的回调函数。。
+        // 当延迟被拒绝，任何doneCallbacks添加的deferred.then或deferred.fail被调用。回调按他们添加的顺序执行。每个回调传递的args在deferred.reject()中调用。
+        // 之后添加任何failCallbacks递延被拒绝进入状态时，立即执行添加，使用的参数被传递给.reject()调用。
+
+        // 5.deferred.then(doneFilter [, failFilter ] [, progressFilter ])添加处理程序被调用时，递延对象得到解决或者拒绝。
+        // doneFilter: 当Deferred（延迟）对象得到解决时被调用的一个函数。
+        // failFilter: [可选]当Deferred（延迟）对象拒绝时被调用的一个函数。
+        // progressFilter: [可选]当Deferred（延迟）对象生成进度通知时被调用的一个函数。
+
+        // 描述:一旦jQuery.get方法返回一个来自延迟的对象的jqXHR对象，我们可以附加一个成功回调使用.then方法。
+        $.get("test.php").then(
+            function () { alert("$.get succeeded"); },
+            function () { alert("$.get failed!"); }
+        );
+
+
+        // 6.deferred.promise([type], [target])
+        // 返回一个 Promise 对象用来观察当某种类型的所有行动绑定到集合，排队与否还是已经完成。
+        // .promise()方法返回一个动态生成的Promise对象用来观察当某种类型的所有行动绑定到集合，排队与否还是已经完成。
+        // 默认情况下， type是"fx" ，这意味着当选定的元素已完成所有动画是返回的Promise是解决的。
+        // 解决上下文和唯一的参数是哪个集合到.promise()被调用。
+        // 如果target是提供，.promise()将附加到它的方法，然后返回这个对象，而不是创建一个新的。这对在已经存在的对象上附加Promise的行为非常有用。
+                    
+    </script>
+</body>
+</html>

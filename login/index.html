@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width">
+    <title>登录</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <section>
+        <div class="body">
+            <div class="img"></div>
+            <div class=login-tabs>
+                <!-- <div v-show=scan class=scan>
+                    <div v-show=waiting class=waiting>
+                        <div class=box>
+                            <div class=background></div>
+                            <canvas></canvas>
+                            <div v-show=invalidQrcode class=mask v-on:click=onClickMask>
+                                <div>二维码已失效</div>
+                                <div>点击刷新</div>
+                            </div>
+                        </div>
+                        <div class=text>学乐云教学APP 扫码登录</div>
+                        <div class=error></div>
+                    </div>
+                    <div v-show=!waiting class=succeed>
+                        <div class=icon v-bind:style="{ backgroundImage: 'url(' + userIcon + ')' }"></div>
+                        <div class=text1>扫描成功</div>
+                        <div class=text2>请在手机上点击确认以登录</div>
+                    </div>
+                </div> -->
+                <div class=account>
+                    <div class=user-text>学乐号 / 手机号</div>
+                    <input class=user maxlength=11 v-on:focus=focusInput($event) v-on:blur=blurInput($event)>
+                    <div class=pass-text>密码</div>
+                    <input type=password class=pass maxlength=18 v-on:focus=focusInput($event) v-on:blur=blurInput($event)>
+                    <div class=error></div>
+                    <div class=button v-on:click=onClickLogin>登录</div>
+                </div>
+            </div>
+            <!-- <div class=login-tab-buttons v-on:click=clickLoginTabButtons($event)>
+                <div class=scan v-bind:class={checked:scan}></div>
+                <div class=normal v-bind:class={checked:!scan}></div>
+            </div> -->
+        </div>
+    </section>
+
+</body>
+</html>

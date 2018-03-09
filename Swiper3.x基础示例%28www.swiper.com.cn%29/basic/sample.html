@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type"
+	 content="text/html; charset=utf-8" />
+	<title>Swiper中文网基础演示(www.swiper.com.cn)</title>
+	<link rel="stylesheet"
+	 href="css/swiper.min.css">
+	<!--Swiper3.0.4-->
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.swiper-container {
+			width: 500px;
+			height: 500px;
+			border: 1px solid red;
+		}
+		
+		.blue-slide {
+			background: #4390EE;
+		}
+		
+		.red-slide {
+			background: #CA4040;
+		}
+		
+		.orange-slide {
+			background: #FF8604;
+		}
+		
+		.swiper-slide {
+			line-height: 300px;
+			color: #fff;
+			font-size: 36px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide blue-slide">slider1</div>
+			<div class="swiper-slide red-slide">slider2</div>
+			<div class="swiper-slide orange-slide">slider3</div>
+		</div>
+	</div>
+	<script src="js/swiper.min.js"></script>
+	<script type="text/javascript">
+		var mySwiper = new Swiper('.swiper-container', {
+			loop: true,
+			autoplay: 3000, //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换。  
+			//你还可以在某个slide上设置单独的停留时间，例<div class="swiper-slide" data-swiper-autoplay="2000">   类型：number 默认：0
+
+			//反方向自动切换简单示例
+			// var mySwiper = new Swiper('.swiper-container',{
+			// loop : true,
+			// })
+			// setInterval("mySwiper.slidePrev()", 2000);	
+
+			autoplayDisableOnInteraction: false,   //用户操作swiper之后，是否禁止autoplay。  类型：boolean  默认:true(停止)。
+			//如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay。
+			//操作包括触碰，拖动，点击pagination等。
+			autoplayStopOnLast: true,  //如果设置为true，当切换到最后一个slide时停止自动切换。（loop模式下无效）。  类型：boolean  默认：false
+			initialSlide: 1,  //设定初始化时slide的索引。（即当前显示哪个slide块）   类型：number  默认：0
+			direction: 'horizontal', //Slides的滑动方向，可设置水平(horizontal)或垂直(vertical)。  类型：string  默认：horizontal
+			speed: 1000,  //滑动速度，即slider自动滑动开始到结束的时间（单位ms），也是触摸滑动时释放至贴合的时间。   类型：number 默认：300
+			grabCursor: true,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状。（根据浏览器形状有所不同）  类型：boolean    默认：false
+			freeMode: false,   //slide滑动时只滑动一格，并自动贴合wrapper，设置为true则变为free模式，slide会根据惯性滑动且不会贴合。  类型：boolean    默认：false
+			centeredSlides: true, //设定为true时，活动块会居中，而不是默认状态下的居左。  类型：boolean  默认：false
+			slidesPerView: 2,  //设置slider容器能够同时显示的slides数量(carousel模式)。
+			//可以设置为number或者 'auto'则自动根据slides的宽度来设定数量
+			slidesPerGroup:1, //在carousel mode下定义slides的数量多少为一组。(即每一次滑动移动的数量，一次移动多少个)  类型：number  默认：1
+			spaceBetween:20,  //slide之间的距离（单位px）。 类型：number默认：0
+			//slidesPerColumn:1, //多行布局里面每列的slide数量。 类型：number 默认：1 
+			//slidesPerColumnFill:row,  //多行布局中以什么形式填充：'column'（列）  1	3	5     'row'（行） 1 2 3      类型：string  默认：column
+																																//   2 4 6								4 5 6
+			slidesOffsetBefore:0, //设定slide与左边框的预设偏移量（单位px）。  类型：number 默认：0
+			slidesOffsetAfter:0,  //设定slide与右边框的预设偏移量（单位px）。  类型：number 默认：0
+			effect:cube,  //slide的切换效果，默认为"slide"（位移切换），可设置为"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）。 类型：string 默认：slide
+
+
+
+
+		});
+	</script>
+</body>
+
+</html>

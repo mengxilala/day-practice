@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery事件属性</title>
+    <script src="../../js/jquery.js"></script>
+</head>
+<body>
+    <script>
+        // 1.event.currentTarget在事件冒泡阶段中的当前DOM元素  当前操作的元素
+        // 描述: 警报currentTarget的匹配`this`关键字。
+        $("p").click(function (event) {
+            alert(event.currentTarget === this); // true 
+        });
+
+        // 2.event.data当前执行的处理器被绑定的时候，包含可选的数据传递给jQuery.fn.bind。
+        $("a").each(function (i) {
+            $(this).bind('click', { index: i }, function (e) {
+                alert('my index is ' + e.data.index);
+            });
+        });
+
+        // 3.event.delegateTarget当currently - called的jQuery事件处理程序附加元素。
+        // 此属性是最经常有用是通过过.delegate() 或.on()附加委派的事件，事件处理程序附加在正在处理的元素的祖先上。它可用于，例如，指明委派识别和删除事件处理程序。
+        // 对于非授权的事件处理程序，直接连接到一个元素，event.delegateTarget 总是等价于event.currentTarget.
+        $(".box").on("click", function (event) {
+            $(event.delegateTarget).css("background-color", "red");
+        });
+
+
+        // 4.event.preventDefault()阻止默认事件行为的触发。
+        // 例如，在执行这个方法后，如果点击一个锚点，就不会让浏览器跳转到新的 URL 去了。我们可以用 event.isDefaultPrevented() 来确定这个方法是否(在那个事件对象上)调用过了。
+        // 描述:取消点击的默认行为(导航)。。
+
+        // <a href="http://jquery.com">阻止链接跳转</a>
+        // <div id="log"></div>
+        $("a").click(function (event) {
+            event.preventDefault();
+            $('#log').append('default ' + event.type + ' prevented').appendTo('#log');  // default click prevented
+        });
+
+
+        // 5.event.isDefaultPrevented()根据事件对象中是否调用过 event.preventDefault() 方法来返回一个布尔值。
+        // 描述:检测 event.preventDefault() 是否被调用过。   event.preventDefault()取消事件的默认行为
+        $("a").click(function (event) {
+            alert(event.isDefaultPrevented()); // false
+            event.preventDefault();
+            alert(event.isDefaultPrevented()); // true
+        });
+
+
+        // 6. event.stopImmediatePropagation()执行第一个事件处理程序，并阻止剩下的事件处理程序被执行,并且防止事件冒泡到DOM树上。
+        // 除了阻止元素上其它的事件处理函数的执行，这个方法还会通过在内部调用 event.stopPropagation() 来停止事件冒泡。
+        // 如果仅仅想要停止事件冒泡到前辈元素上，而让这个元素上的其它事件处理函数继续执行，我们可以使用event.stopPropagation() 来代替。
+        $("div").click(function (event) {
+            alert("事件句柄 1 被执行");
+            event.stopImmediatePropagation();
+        });
+        $("div").click(function (event) { //不会被执行
+            alert("事件句柄 2 被执行");
+        });
+        $("div").click(function (event) { ////不会被执行
+            alert("事件句柄 3 被执行");
+        });
+
+
+        // 7.event.isImmediatePropagationStopped()根据事件对象中是否调用过 event.stopImmediatePropagation() 方法来返回一个布尔值。
+        // 描述:检测 event.stopImmediatePropagation() 是否被调用过。   用于阻止剩余的事件处理函数的执行，并防止当前事件在DOM树上冒泡。
+        function immediatePropStopped(e) {
+            var msg = "";
+            if (e.isImmediatePropagationStopped()) {
+                msg = "called";
+            } else {
+                msg = "not called";
+            }
+            $("#stop-log").append("<div>" + msg + "</div>");
+        }
+        $("button").click(function (event) {
+            immediatePropStopped(event);
+            event.stopImmediatePropagation();
+            immediatePropStopped(event);
+        });
+
+
+        // 8.event.stopPropagation()防止事件冒泡到DOM树上，也就是不触发的任何前辈元素上的事件处理函数。
+        // 我们可以用 event.isPropagationStopped() 来确定这个方法是否(在那个事件对象上)调用过了。
+        $("p").click(function (event) {
+            event.stopPropagation();
+        });
+
+        // 9.event.isPropagationStopped()根据事件对象中是否调用过 event.stopPropagation() 方法来返回一个布尔值。
+        // 描述:检测 event.stopPropagation() 是否被调用过。 //阻止事件冒泡
+        function propStopped(e) {
+            var msg = "";
+            if (e.isPropagationStopped()) {
+                msg = "called";
+            } else {
+                msg = "not called";
+            }
+            $("#stop-log").append("<div>" + msg + "</div>");
+        }
+        $("button").click(function (event) {
+            propStopped(event);
+            event.stopPropagation();
+            propStopped(event);
+        });
+
+
+        // 10.event.namespace 当事件被触发时此属性包含指定的命名空间。
+        // 描述:确定事件在命名空间中使用
+        $("p").bind("test.something", function (event) {
+            alert(event.namespace);
+        });
+        $("button").click(function (event) {
+            $("p").trigger("test.something");  //点击button的时候 会弹出something的弹框
+        });
+
+        // 11.event.pageX / e.pageY 鼠标相对于文档的左边缘 / 顶部边缘 的位置。
+        // 描述:显示鼠标相对于文件的左侧和顶部边缘的位置（在iframe中）。
+        $(document).bind('mousemove', function (e) {
+            $("#log").text("e.pageX: " + e.pageX + ", e.pageY: " + e.pageY);
+        });
+
+        // 12.event.relatedTarget在事件中涉及的其它任何DOM元素。
+        // 对于 mouseout 事件，它指向被进入的元素；对于 mouseenter 事件，它指向被离开的元素。
+        $("a").mouseout(function (event) {
+            alert(event.relatedTarget.nodeName); // 从a离开首先进入哪个元素，就会弹出那个元素的名字
+        });
+        $("a").mouseenter(function (event) {
+            alert(event.relatedTarget.nodeName); // 从哪个元素离开进入a元素，就会弹出哪个元素的名字
+        });
+
+        // 13.event.result这个属性包含了当前事件最后触发的那个处理函数的返回值，除非值是 undefined 。
+        // 描述:显示前一个事件处理函数的返回值。
+        // <button>display event.result</button>
+        // <p></p>
+
+        $("button").click(function (event) { return "hey"; });
+        $("button").click(function (event) {
+            $("p").html(event.result);  // hey 
+        });
+
+        // 14.event.target最初触发事件的DOM元素。
+        // 这是注册事件时的对象，或者它的子元素。通常用于比较 event.target 和 this 来确定事件是不是由于冒泡而触发的。经常用于事件冒泡时处理事件委托。
+        // 描述:显示点击元素的标签名。
+        // <div id="log"></div>
+        // <div>
+        //     <p> 
+        //         <strong><span>click</span></strong>
+        //     </p>
+        // </div>
+        $("body").click(function (event) {
+            $("#log").html("clicked: " + event.target.nodeName);
+        });
+
+
+        // 15.event.timeStamp这个属性返回事件触发时距离1970年1月1日的毫秒数。
+        // 这可以很方便的检测某个jQuery函数的性能。
+        // 描述:显示两次点击之间的时间。
+        // <div></div>
+
+        var last, diff;
+        $('div').click(function (event) {
+            if (last) {
+                diff = event.timeStamp - last;
+                $('div').append('time since last event: ' + diff + '<br/>');
+            } else {
+                $('div').append('Click again.<br/>');
+            }
+            last = event.timeStamp;
+        });
+
+
+        // 16.event.type
+        // 描述:点击所有锚点后弹出事件类型。
+        $("a").click(function (event) {
+            alert(event.type); // "click"
+        });
+
+        // 17.event.which针对键盘和鼠标事件，这个属性能确定你到底按的是哪个键或按钮。
+        // event.which 将 event.keyCode 和 event.charCode 标准化了。推荐用 event.which 来监视键盘输入。
+        // <input id="whichkey" value="type something">
+        // <div id="log"></div>
+        $('#whichkey').bind('keydown', function (e) {
+            $('#log').html(e.type + ': ' + e.which);
+        });
+    </script>
+
+</body>
+</html>

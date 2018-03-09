@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery选择器的使用</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+
+<body>
+ <!-- 1.id 根据id查找元素
+$("#myDiv");
+
+2.根据标签名查找元素
+$("div");
+
+3.根据给定的class类名匹配元素
+$(".myClass");
+
+4.匹配所有元素
+$("*")
+
+5.同时匹配多个元素  将每一个选择器匹配到的元素合并后一起返回。你可以指定任意多个选择器，并将匹配到的元素合并到一个结果内。
+<div>div</div>
+<p class="myClass">p class="myClass"</p>
+<span>span</span>
+<p class="notMyClass">p class="notMyClass"</p>
+$("div,span,p.myClass")  -->
+
+6.在给定的祖先元素下匹配所有的后代元素
+<form>
+  <label>Name:</label>
+  <input name="name" />
+  <fieldset>
+      <label>Newsletter:</label>
+      <input name="newsletter" />
+ </fieldset>
+</form>
+<input name="none" />
+
+查找代码:$("form input")  
+查找结果: [ <input name="name" />, <input name="newsletter" /> ]
+
+7.parent > child  在给定的父元素下匹配所有的子元素
+<form>
+  <label>Name:</label>
+  <input name="name" />
+  <fieldset>
+      <label>Newsletter:</label>
+      <input name="newsletter" />
+ </fieldset>
+</form>
+<input name="none" />
+
+查找代码:$("form > input")  
+查找结果: [ <input name="name" /> ]
+
+8.prev + next  匹配所有紧接在 prev 元素后的 next 元素
+<form>
+  <label>Name:</label>
+  <input name="name" />
+  <fieldset>
+      <label>Newsletter:</label>
+      <input name="newsletter" />
+ </fieldset>
+</form>
+<input name="none" />
+
+
+查找代码:$("label + input")  
+查找结果: [ <input name="name" />, <input name="newsletter" /> ]
+
+9.prev ~ siblings  匹配 prev 元素之后的所有 siblings 元素
+<form>
+  <label>Name:</label>
+  <input name="name" />
+  <fieldset>
+      <label>Newsletter:</label>
+      <input name="newsletter" />
+ </fieldset>
+</form>
+<input name="none" />
+
+
+查找代码:$("form ~ input") 
+查找结果: [ <input name="none" />]
+
+
+
+10. :first 获取第一个元素
+<ul>
+    <li>list item 1</li>
+    <li>list item 2</li>
+    <li>list item 3</li>
+    <li>list item 4</li>
+    <li>list item 5</li>
+</ul>
+
+查找代码:$('li:first');
+查找结果: [ <li>list item 1</li> ]
+
+
+11. :last 获取最后一个元素
+<ul>
+    <li>list item 1</li>
+    <li>list item 2</li>
+    <li>list item 3</li>
+    <li>list item 4</li>
+    <li>list item 5</li>
+</ul>
+
+查找代码:$('li:last');
+查找结果: [ <li>list item 5</li> ]
+
+12. :not(selector)  去除所有与给定选择器匹配的元素
+<input name="apple" />
+<input name="flower" checked="checked" />
+
+查找代码: $("input:not(:checked)")
+查找结果: [ <input name="apple" /> ]
+
+13. :even  匹配所有索引值为偶数的元素，从 0 开始计数
+<table>
+  <tr><td>Header 1</td></tr>
+  <tr><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+
+查找代码: $("tr:even")
+查找结果: [  <tr><td>Header 1</td></tr> , <tr><td>Value 2</td></tr> ]
+
+14. :odd  匹配所有索引值为奇数的元素，从 0 开始计数
+<table>
+  <tr><td>Header 1</td></tr>
+  <tr><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+查找代码: $("tr:odd")
+查找结果: [<tr><td>Value 1</td></tr> ]
+
+15.eq(index)  匹配一个给定索引值的元素
+<table>
+  <tr><td>Header 1</td></tr>
+  <tr><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+查找代码: $("tr:eq(1)")
+查找结果: [<tr><td>Value 1</td></tr> ]
+
+16. :gt(index) 匹配所有大于给定索引值的元素
+<table>
+  <tr><td>Header 1</td></tr>
+  <tr><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+查找代码: $("tr:gt(0)")
+查找结果: [<tr><td>Value 1</td></tr> , <tr><td>Value 2</td></tr>]
+
+17. :lt(index) 匹配所有小于给定索引值的元素
+<table>
+  <tr><td>Header 1</td></tr>
+  <tr><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+查找代码: $("tr:lt(1)")
+查找结果: [<tr><td>Header 1</td></tr>]
+
+18. :header  匹配如 h1, h2, h3之类的标题元素
+<h1>Header 1</h1>
+<p>Contents 1</p>
+<h2>Header 2</h2>
+<p>Contents 2</p>
+
+查找代码: $(":header").css("background", "#EEE");
+查找结果: [ <h1 style="background:#EEE;">Header 1</h1>, <h2 style="background:#EEE;">Header 2</h2> ]
+
+19. :animated  匹配所有正在执行动画效果的元素
+<button id="run">Run</button>
+<div></div>
+
+查找代码: $("#run").click(function(){
+  $("div:not(:animated)").animate({ left: "+=20" }, 1000);
+});
+查找结果: 只有对不在执行动画效果的元素执行一个动画特效
+
+20. :focus  匹配当前获取焦点的元素。
+eg:添加一个"focused"的类名给那些有focus方法的元素
+
+css 代码:
+.focused {
+    background: #abcdef;
+}
+
+<div id="content">
+    <input tabIndex="1">
+    <input tabIndex="2">
+    <select tabIndex="3">
+        <option>select menu</option>
+    </select>
+    <div tabIndex="4">
+        a div
+    </div>
+</div>
+
+delegate() 方法为指定的元素（属于被选元素的子元素）添加一个或多个事件处理程序，并规定当这些事件发生时运行的函数。
+
+$( "#content" ).delegate( "*", "focus blur", function( event ) {
+    var elem = $( this );
+    setTimeout(function() {
+       elem.toggleClass( "focused", elem.is( ":focus" ) );
+    }, 0);
+});
+
+21. :root  选择该文档的根元素。 在HTML中，文档的根元素，和$(":root")选择的元素一样， 永远是<html>元素。
+设置<html>背景颜色为黄色
+$(":root").css("background-color","yellow");
+
+22. :contains(text) 匹配包含给定文本的元素
+eg: 查找所有包含 "John" 的 div 元素
+<div>John Resig</div>
+<div>George Martin</div>
+<div>Malcom John Sinclair</div>
+<div>J. Ohn
+
+查找代码: $("div:contains('John')")
+查找结果: [ <div>John Resig</div>, <div>Malcom John Sinclair</div> ]  
+
+23. :empty  匹配所有不包含子元素或者文本的空元素
+<table>
+  <tr><td>Value 1</td><td></td></tr>
+  <tr><td>Value 2</td><td></td></tr>
+</table>
+
+查找代码: $("td:empty")
+查找结果:  [ <td></td>, <td></td> ] 
+
+24. :has(selector)  匹配含有选择器所匹配的元素的元素
+<div><p>Hello</p></div>
+<div>Hello again!</div>
+
+查找代码: $("div:has(p)").addClass("test");
+查找结果: [ <div class="test"><p>Hello</p></div> ] 
+
+25. :parent  匹配含有子元素或者文本的元素
+<table>
+  <tr><td>Value 1</td><td></td></tr>
+  <tr><td>Value 2</td><td></td></tr>
+</table>
+
+查找代码: $("td:parent")
+查找结果: [ <td>Value 1</td>, <td>Value 2</td> ]
+
+26. :hidden 匹配所有不可见元素，或者type为hidden的元素
+<table>
+  <tr style="display:none"><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+<form>
+  <input type="text" name="email" />
+  <input type="hidden" name="id" />
+</form>
+
+查找代码: $("tr:hidden")  
+查找结果: [ <tr style="display:none"><td>Value 1</td></tr> ]
+
+查找代码: $("input:hidden")  
+查找结果: [ <input type="hidden" name="id" />]
+
+27.  :visible 匹配所有的可见元素
+<table>
+  <tr style="display:none"><td>Value 1</td></tr>
+  <tr><td>Value 2</td></tr>
+</table>
+
+查找代码: $("tr:visible")  
+查找结果: [ tr><td>Value 2</td></tr> ]
+
+28. [attribute]  匹配包含给定属性的元素。
+<div>
+  <p>Hello!</p>
+</div>
+<div id="test2"></div>
+
+查找代码: $("div[id]")  
+查找结果: [ <div id="test2"></div> ]
+
+29. [attribute=value]  匹配给定的属性是某个特定值的元素
+<input  name="newsletter" value="Hot Fuzz" />
+<input  name="newsletter" value="Cold Fusion" />
+<input type="checkbox" name="accept" value="Evil Plans" />
+
+查找代码: $("input[name='newsletter']").attr("checked", true);  
+查找结果: [ <input  name="newsletter" value="Hot Fuzz" checked="true" />, <input  name="newsletter" value="Cold Fusion" checked="true" /> ]
+
+30. [attribute!=value] 匹配所有不含有指定的属性，或者属性不等于特定值的元素
+                       此选择器等价于 :not([attr=value]) 要匹配含有特定属性但不等于特定值的元素，请使用[attr]:not([attr=value])
+<input type="checkbox" name="newsletter" value="Hot Fuzz" />
+<input type="checkbox" name="newsletter" value="Cold Fusion" />
+<input type="checkbox" name="accept" value="Evil Plans" />
+
+查找代码: $("input[name!='newsletter']").attr("checked", true);
+查找结果: [ <input type="checkbox" name="accept" value="Evil Plans"  checked="true"/> ]
+
+31. [attribute^=value] 匹配给定的属性是以某些值开始的元素
+<input name="newsletter" />
+<input name="milkman" />
+<input name="newsboy" />
+
+查找代码: $("input[name^='news']") 
+查找结果: [ <input name="newsletter" /> , <input name="newsboy" /> ]
+
+32. [attribute$=value]  匹配给定的属性是以某些值结尾的元素
+<input name="newsletter" />
+<input name="milkman" />
+<input name="jobletter" />
+
+查找代码: $("input[name$='letter']")
+查找结果: [ <input name="newsletter" /> , <input name="jobletter" /> ]
+
+33. [attribute*=value]  匹配给定的属性是以包含某些值的元素
+<input name="man-news" />
+<input name="milkman" />
+<input name="letterman2" />
+<input name="newmilk" />
+
+查找代码: $("input[name*='man']")
+查找结果: [ <input name="man-news" /> , <input name="milkman" /> , <input name="letterman2" /> ]
+
+
+34. [selector1][selector2][selectorN]  复合属性选择器，需要同时满足多个条件时使用。
+<input id="man-news" name="man-news" />
+<input name="milkman" />
+<input id="letterman" name="new-letterman" />
+<input name="newmilk" />
+
+查找代码: $("input[id][name$='man']")
+查找结果: [ <input id="letterman" name="new-letterman" /> ]
+
+35. :first-child 匹配所给选择器( :之前的选择器)的第一个子元素
+    类似的:first匹配第一个元素，但是:first-child选择器可以匹配多个：即为每个父级元素匹配第一个子元素。这相当于:nth-child(1)
+<ul>
+  <li>John</li>
+  <li>Karl</li>
+  <li>Brandon</li>
+</ul>
+<ul>
+  <li>Glen</li>
+  <li>Tane</li>
+  <li>Ralph</li>
+</ul>
+
+查找代码: $("ul li:first-child")
+查找结果: [ <li>John</li> , <li>Glen</li> ]
+
+36. :last-child 匹配所给选择器( :之前的选择器)的最后一个子元素
+<ul>
+  <li>John</li>
+  <li>Karl</li>
+  <li>Brandon</li>
+</ul>
+<ul>
+  <li>Glen</li>
+  <li>Tane</li>
+  <li>Ralph</li>
+</ul>
+
+查找代码: $("ul li:last-child")
+查找结果: [ <li>Brandon</li> , <li>Ralph</li> ]
+
+37. :first-of-type 结构化伪类，匹配E的父元素的第一个E类型的孩子。等价于:nth-of-type(1) 选择器。  与之对应的 :last-of-type
+<div id="n1">
+    <div id="n2" class="abc">
+        <label id="n3">label1</label>
+        <span id="n4">span1</span>
+        <span id="n5" class="abc">span2</span>
+        <span id="n6">span3</span>
+    </div>
+    <div id="n7">
+        <span id="n8" class="abc">span1</span>
+        <span id="n9">span2</span>
+    </div>
+  </div>
+  
+查找代码: $("span:first-of-type");
+查找结果: [ <span id="n4">span1</span> , <span id="n8" class="abc">span1</span>]
+
+查找代码: $(".abc:first-of-type");
+查找结果: [<div id="n2" class="abc">,<span id="n8" class="abc">span1</span>]
+.abc可以匹配id分别为n2、n5、n8的3个元素，n2是n1所有div类型子元素中的第一个，n8是n7所有span类型子元素中的第一个，但n5不是n2所有span类型子元素中的第一个，因此不能匹配n5。
+
+38. :nth-child 匹配其父元素下的第N个子或奇偶元素
+<ul>
+  <li>John</li>
+  <li>Karl</li>
+  <li>Brandon</li>
+</ul>
+<ul>
+  <li>Glen</li>
+  <li>Tane</li>
+  <li>Ralph</li>
+</ul>
+
+查找代码: $("ul li:nth-child(2)")
+查找结果: [ <li>Karl</li> , <li>Tane</li>]
+
+39. :nth-last-child(n|even|odd|formula) 选择所有他们父元素的第n个子元素。计数从最后一个元素开始到第一个。
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+</ul>
+
+查找代码: $("ul li:nth-last-child(2)");
+查找结果: [ <li>3</li>]
+
+40. :nth-last-of-type(n|even|odd|formula)
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+</ul>
+
+查找代码: $("ul li:nth-last-of-type(2)");
+查找结果: [ <li>3</li>]
+
+41. :nth-of-type(n|even|odd|formula)
+<div>
+  <span>John</span>
+  <b>Kim</b>
+  <span>Adam</span>
+  <b>Rafael</b>
+  <span>Oleg</span>
+</div>
+<div>
+  <b>Dave</b>
+  <span>Ann</span>
+</div>
+<div>
+  <i><span>Maurice</span></i>
+  <span>Richard</span>
+  <span>Ralph</span>
+  <span>Jason</span>
+</div>
+
+查找代码: $("span:nth-of-type(2)");
+查找结果: [ <span>Adam</span> , <span>Ralph</span>]
+
+42. :only-child  如果某个元素是父元素中唯一的子元素，那将会被匹配  如果父元素中含有其他元素，那将不会被匹配。
+    （注：这里的其他元素并不包含文本节点，如：<p><img/>图片</p>，用$('p img:only-child')是可以匹配）
+<ul>
+  <li>John</li>
+  <li>Karl</li>
+  <li>Brandon</li>
+</ul>
+<ul>
+  <li>Glen</li>
+</ul>
+
+查找代码: $("ul li:only-child");
+查找结果: [  <li>Glen</li>]
+
+43. :only-of-type  选择所有没有兄弟元素，且具有相同的元素名称的元素。 如果父元素有相同的元素名称的其他子元素，那么没有元素会被匹配。
+<div>
+  <p>This is a paragraph1.</p>
+</div>
+<div>
+  <p>This is a paragraph2.</p>
+  <p>This is a paragraph3.</p>
+</div>
+<div>
+  <p>This is a test.</p>
+</div>
+
+查找代码: $("div p:only-of-type);
+查找结果: [  <p>This is a paragraph1.</p> , <p>This is a test.</p> ]
+
+44. :input  匹配所有 input, textarea, select 和 button 元素
+<form>
+    <input type="button" value="Input Button"/>
+    <input type="checkbox" />
+
+    <input type="file" />
+    <input type="hidden" />
+    <input type="image" />
+
+    <input type="password" />
+    <input type="radio" />
+    <input type="reset" />
+
+    <input type="submit" />
+    <input type="text" />
+    <select><option>Option</option></select>
+
+    <textarea></textarea>
+    <button>Button</button>
+
+  </form>
+
+  
+查找代码:  $(":input");
+查找结果: 所有的input, textarea, select 和 button 元素都能匹配到
+
+45. :text 匹配所有的单行文本框
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":text");
+查找结果: [ <input type="text" /> ]
+
+46.:password  匹配所有密码框
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":password");
+查找结果: [  <input type="password" /> ]
+
+47. :radio  匹配所有单选按钮
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":radio");
+查找结果: [ <input type="radio" /> ]
+
+48. :checkbox  匹配所有复选框
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":checkbox");
+查找结果: [ <input type="checkbox" /> ]
+
+49. :submit 匹配所有提交按钮
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":submit");
+查找结果: [ <input type="submit" /> ]
+ 
+50. :image 匹配所有图像域
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":image");
+查找结果: [ <input type="image" /> ]
+
+51. :reset 匹配所有重置按钮
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":reset");
+查找结果: [ <input type="reset" /> ]
+
+52. :button 匹配所有按钮
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":button");
+查找结果: [ <input type="button" /> , <button></button> ]
+
+53. :file 匹配所有文件域
+<form>
+  <input type="text" />
+  <input type="checkbox" />
+  <input type="radio" />
+  <input type="image" />
+  <input type="file" />
+  <input type="submit" />
+  <input type="reset" />
+  <input type="password" />
+  <input type="button" />
+  <select><option/></select>
+  <textarea></textarea>
+  <button></button>
+</form>
+
+查找代码:  $(":file");
+查找结果: [ <input type="file" /> ]
+
+54. :enabled  匹配所有可用元素
+<form>
+  <input name="email" disabled="disabled" />
+  <input name="id" />
+</form>
+
+查找代码:  $("input:enabled");
+查找结果: [ <input name="id" /> ]
+
+55. :disabled 匹配所有不可用元素
+<form>
+  <input name="email" disabled="disabled" />
+  <input name="id" />
+</form>
+
+查找代码:  $("input:disabled");
+查找结果: [ <input name="email" disabled="disabled" /> ]
+
+56. :checked 匹配所有选中的被选中元素(复选框、单选框等，select中的option)，对于select元素来说，获取选中推荐使用 :selected
+<form>
+  <input type="checkbox"  checked="checked" value="Daily" />
+  <input type="checkbox" name="newsletter" value="Weekly" />
+  <input type="checkbox"  checked="checked" value="Monthly" />
+</form>
+
+查找代码:  $("input:checked");
+查找结果: [ <input type="checkbox"  checked="checked" value="Daily" />, <input type="checkbox"  checked="checked" value="Monthly" /> ]
+
+57. :selected 匹配所有选中的option元素
+<select>
+  <option value="1">Flowers</option>
+  <option value="2" selected="selected">Gardens</option>
+  <option value="3">Trees</option>
+</select>
+
+查找代码:  $("select option:selected");
+查找结果: [  <option value="2" selected="selected">Gardens</option> ]
+
+58. $.escapeSelector(selector)
+    这个方法通常被用在类选择器或者ID选择器中包含一些CSS特殊字符的时候，这个方法基本上与CSS中CSS.escape()方法类似，唯一的区别是jquery中的这个方法支持所有浏览器。
+
+<div class="notMe">div class="notMe"</div>
+<div class=".box myClass">div class=".box myClass"</div>
+<div class=".box">span class=".box"</div>
+
+查找代码:  $( "div" ).find( "." + $.escapeSelector( ".box" ) );
+查找结果: [ <div class=".box myClass">div class=".box myClass"</div>,<div class=".box">span class=".box"</div> ]
+
+59.
+</body>
+
+</html>

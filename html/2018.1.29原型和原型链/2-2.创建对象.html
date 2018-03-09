@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建对象</title>
+</head>
+<body>
+    <script>
+        // 1.工厂模式
+        function createPerson(name, age, job) {
+            var o = new Object();
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function () {
+                alert(this.name);
+            }
+            return o;
+        }
+        var person1 = createPerson("zmx", 20, "boss");
+        var person2 = createPerson("lyl", 20, "ceo");
+
+
+        // 2.构造函数模式
+        function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName = function () {
+                alert(this.name);
+            }
+        }
+
+        var person3 = new Person("zmx", 20, "boss");
+        var person4 = new Person("lyl", 20, "ceo");
+        alert(person3.sayName == person4.sayName);  //false
+        // instanceof 检测对象类型
+        alert(person3 instanceof Object); // true
+        alert(person3 instanceof Person); // true
+        alert(person4 instanceof Object); // true
+        alert(person4 instanceof Person); // true
+
+
+        // 3.原型模式
+        function Person() {
+
+        }
+        Person.prototype.name = "zmx";
+        Person.prototype.age = 20;
+        Person.prototype.job = "boss";
+        Person.prototype.sayName = function () {
+            alert(this.name);
+        }
+        var person1 = new Person();
+        person1.sayName(); // zmx
+        var person2 = new Person();
+        person2.sayName(); // zmx
+        alert(person1.sayName == person2.sayName); // true
+        alert(Person.prototype.isPrototypeOf(person1)); // true
+        alert(Person.prototype.isPrototypeOf(person2)); // true
+
+        // getPrototypeOf() 获取一个对象的原型
+        alert(Object.getPrototypeOf(person1) == Person.prototype); // true
+        alert(Object.getPrototypeOf(person1).name); // zmx
+
+
+        // 可以通过对象实例访问保存在原型中的值,但却不能通过对象实例重写原型中的值
+        function Person() {
+
+        }
+        Person.prototype.name = "zmx";
+        Person.prototype.age = 20;
+        Person.prototype.job = "boss";
+        Person.prototype.sayName = function () {
+            alert(this.name);
+        }
+        var person1 = new Person();
+        var person2 = new Person();
+        person1.name = "lyl";
+        alert(person1.name); // lyl 来自实例
+        alert(person2.name); // zmx 来自原型
+        delete person1.name;
+        alert(person1.name); // zmx
+
+
+        // hasOwnProperty() 检测一个属性存在于实例还是存在于原型中 给定属性存在于对象实例中，会返回true
+        function Person() {
+
+        }
+        Person.prototype.name = "zmx";
+        Person.prototype.age = 20;
+        Person.prototype.job = "boss";
+        Person.prototype.sayName = function () {
+            alert(this.name);
+        }
+        var person1 = new Person();
+        var person2 = new Person();
+        alert(person1.hasOwnProperty("name")); // false
+
+        person1.name = "lyl";
+        alert(person1.name); // lyl 来自实例
+        alert(person1.hasOwnProperty("name")); // true
+
+        alert(person2.name); // zmx 来自原型
+        alert(person2.hasOwnProperty("name")); // false
+
+        delete person1.name;
+        alert(person1.name); // zmx
+        alert(person1.hasOwnProperty("name")); // false
+
+
+        // 原型与in操作符
+        // in操作符会在通过对象能够访问给定属性时返回true，无论该属性存在于实例还是原型中
+
+        function Person() {
+
+        }
+        Person.prototype.name = "zmx";
+        Person.prototype.age = 20;
+        Person.prototype.job = "boss";
+        Person.prototype.sayName = function () {
+            alert(this.name);
+        }
+        var person1 = new Person();
+        var person2 = new Person();
+        alert(person1.hasOwnProperty("name")); // false
+        alert("name" in person1); // true
+
+        person1.name = "lyl";
+        alert(person1.name); // lyl 来自实例
+        alert(person1.hasOwnProperty("name")); // true
+        alert("name" in person1); // true
+
+        alert(person2.name); // zmx 来自原型
+        alert(person2.hasOwnProperty("name")); // false
+        alert("name" in person2); // true
+
+        delete person1.name;
+        alert(person1.name); // zmx
+        alert(person1.hasOwnProperty("name")); // false
+        alert("name" in person1); // true
+
+        // 同时使用hasOwnProperty()和in操作符 就可以确定该属性存在于对象还是存在于原型中
+        function hasPrototypeProperty(object, name) {
+            return !object.hasOwnProperty(name) && (name in object);
+        }
+
+
+        function Person() {
+
+        }
+        Person.prototype.name = "zmx";
+        Person.prototype.age = 20;
+        Person.prototype.job = "boss";
+        Person.prototype.sayName = function () {
+            alert(this.name);
+        }
+        var person1 = new Person();
+        alert(hasPrototypeProperty(person1, "name")); // true  存在于原型中，返回true
+        person1.name = "lyl";
+        alert(hasPrototypeProperty(person1, "name")); // false 存在于实例中,返回false
+
+
+        // 更简单的原型语法
+        function Person() {
+
+        }
+        Person.prototype = {
+            name: "zmx",
+            age: 20,
+            job: "Soft Engineer",
+            sayName: function () {
+                alert(this.name);
+            }
+        }
+        // 此时,constructor属性不再指向Person了,而是指向Object构造函数
+        var friend = new Person();
+        alert(friend instanceof Object); //true
+        alert(friend instanceof Person); //true
+        alert(friend.constructor == Person); //false
+        alert(friend.constructor == Object); //true
+
+        // 也可以将constructor设置回Person值
+        function Person() {
+
+        }
+        Person.prototype = {
+            constructor:Person,
+            name: "zmx",
+            age: 20,
+            job: "Soft Engineer",
+            sayName: function () {
+                alert(this.name);
+            }
+        }
+    </script>
+</body>
+</html>

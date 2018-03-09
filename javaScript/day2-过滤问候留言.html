@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day2</title>
+
+</head>
+<body>
+    <div class="output">
+        <ul></ul>
+    </div>
+    <script>
+        // var list = document.querySelector('.output ul');
+        // list.innerHTML = '';
+        // var greetings = [
+        //     'Happy Birthday!',
+        //     'Merry Christmas my love',
+        //     'A happy Christmas to all the family',
+        //     'You\'re all I want for Christmas',
+        //     'Get well soon'
+        // ]
+
+        // for (var i = 0; i < greetings.length; i++) {
+        //     var input = greetings[i];
+        //     if (greetings[i].indexOf('Christmas') !== -1) {
+        //         var result = input;
+        //         var listItem = document.createElement('li');
+        //         listItem.textContent = result;
+        //         list.appendChild(listItem);
+        //     }
+        // }
+
+
+
+
+        // 提取三个字母的站代码并将其存储在一个新的变量中。
+        // 查找分号的字符索引号。
+        // 使用分号字符索引号作为参考点提取人可读的站名，并将其存储在新变量中。
+        // 连接两个新的变量和一个字符串文字，使最终的字符串。
+        // 将结果变量的值更改为等于最终的字符串，而不是输入。
+
+        var list = document.querySelector('.output ul');
+        list.innerHTML = '';
+        var stations = ['MAN675847583748sjt567654;Manchester Piccadilly',
+            'GNF576746573fhdg4737dh4;Greenfield',
+            'LIV5hg65hd737456236dch46dg4;Liverpool Lime Street',
+            'SYB4f65hf75f736463;Stalybridge',
+            'HUD5767ghtyfyr4536dh45dg45dg3;Huddersfield'];
+        for (var i = 0; i < stations.length; i++) {
+            var input = stations[i],
+                code = input.slice(0, 3),
+                semiC = input.indexOf(';'),
+                name = input.slice(semiC + 1),
+                final = code + ':' + name,
+                result = final;
+            var listItem = document.createElement('li');
+            listItem.textContent = result;
+            list.appendChild(listItem);
+        }   
+
+
+        // split的用法
+
+        var myData = 'Manchester,London,Liverpool,Birmingham,Leeds,Carlisle';
+        var myArray = myData.split(',');    //字符串转数组
+        myArray;  // ["Manchester", "London", "Liverpool", "Birmingham", "Leeds", "Carlisle"]
+
+        var myNewString = myArray.join(',');  //数组转字符串
+        myNewString;   // "Manchester,London,Liverpool,Birmingham,Leeds,Carlisle"
+
+        // 将数组转换为字符串的另一种方法是使用toString()方法。 
+        // toString（）可以比join（）更简单，因为它不需要一个参数，但更有限制。
+        // 使用join（）可以指定不同的分隔符
+        var dogNames = ["Rocket","Flash","Bella","Slugger"];
+        dogNames.toString(); // "Rocket,Flash,Bella,Slugger"
+    </script>
+</body>
+</html>

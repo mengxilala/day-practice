@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>classList【html5中新增的属性】</title>
+    <style>
+        .myTest {
+            width: 400px;
+            height: 300px;
+            border: 2px solid #ff0000;
+        }
+
+        .opacity {
+            opacity: .75;
+            filter: Alpha(opacity=75);
+            background-color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div id="list" class="myTest">
+        我的classList，来进行各种处理
+    </div>
+    <script>
+        window.onload = function () {
+            var list = document.getElementById("list");
+            var cList = classList(list);
+            var isContain = cList.contains("myTest");
+            if (isContain) {
+                console.log("该类存在");
+            } else {
+                console.log("该类不存在！！");
+            }
+            cList.add("opacity");
+
+            //        cList.add("test");
+            //        cList.remove("test");
+            //        cList.add("test");
+            cList.toggle("test");
+            console.log("该元素所包含的className属性：" + cList);//此处调用的toString方法
+            console.log("该元素所包含的className属性中的类名：" + cList.toArray());
+        };
+        function classList(e) {
+             if (e.classList) {
+                return e.classList;//如果存在，就返回
+            } else {
+                return new CssClassList(e);//如果不存在，就创建一个
+            }
+        }
+        function CssClassList(e) {
+            this.e = e;
+        }
+        //是否包括该类class
+        CssClassList.prototype.contains = function (c) {
+            console.log(c.length);
+            console.log(c.indexOf(" "));//不能存在空格
+            if (c.length === 0 || c.indexOf(" ") != -1) {
+                throw new Error("非法的class名称：" + c);
+            } else {
+                var classes = this.e.className;//得到元素的class属性的值【所有的className】
+                if (!classes) {//完全不存在
+                    return false;
+                }
+                if (classes === c) {//完全匹配
+                    return true;
+                }
+                return classes.search("\\b" + c + "\\b") != -1;//\b:匹配一个单词边界
+            }
+        };
+        //如果一个类名c不存在，则添加到e.className
+        CssClassList.prototype.add = function (c) {
+            if (this.contains(c)) {
+                return;
+            }
+            var classes = this.e.className;
+            var hasSpace = (classes[classes.length - 1] == " ");
+            console.log("是否className的右边存在空格：[true:存在]" + hasSpace);
+            if (classes && !hasSpace) {//存在className，并且className的右边界不是以空格结束【则在新增classname之前，添加空格】
+                c = " " + c;
+            }
+            this.e.className = classes + c;
+        };
+        //如果类存在的话，则删除
+        CssClassList.prototype.remove = function (c) {
+            if (c.length === 0 || c.indexOf(" ") != -1) {
+                throw new Error("非法的class名称：" + c);
+            }
+            var pattern = new RegExp("\\b" + c + "\\b\\s*", "g");
+            var classes = this.e.className;
+            this.e.className = classes.replace(pattern, "");
+        };
+        //如果存在c则删除，返回false;如果不存在c则添加，并返回false
+        CssClassList.prototype.toggle = function (c) {
+            if (c.length === 0 || c.indexOf(" ") != -1) {
+                throw new Error("非法的class名称：" + c);
+            }
+            if (this.contains(c)) {
+                this.remove(c);
+                return false;
+            } else {
+                this.add(c);
+                return true;
+            }
+        };
+        //返回className本身
+        CssClassList.prototype.toString = function () {
+            return this.e.className;
+        };
+        //返回className的类名
+        CssClassList.prototype.toArray = function () {
+            return this.e.className.match(/\b\w+\b/g || []);//将匹配的项都返回，如果没有匹配的项，就返回空.
+        }
+    </script>
+</body>
+</html>

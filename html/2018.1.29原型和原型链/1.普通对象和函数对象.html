@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>普通对象和函数对象</title>
+</head>
+<body>
+  <script>
+
+
+    var o1 = {};
+    var o2 = new Object();
+    var o3 = new f1();
+
+    function f1() { };
+    var f2 = function () { };
+    var f3 = new Function('str', 'console.log(str)');
+
+    console.log(typeof Object);  //function
+    console.log(typeof Function);  //function
+
+    console.log(typeof f1);  // function
+    console.log(typeof f2);  // function
+    console.log(typeof f3);  // function
+
+    console.log(typeof o1);  // Object
+    console.log(typeof o2);  // Object
+    console.log(typeof o3);  // Object       
+
+
+    // 在上面的例子中 o1 o2 o3 为普通对象，f1 f2 f3 为函数对象。
+    // 凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。
+    // f1,f2,归根结底都是通过 new Function()的方式进行创建的。
+    // Function Object 也都是通过 New Function()创建的。
+
+
+    // 一.函数对象
+
+    // 所有函数对象的proto都指向Function.prototype，它是一个空函数（Empty function）
+    Number.__proto__ === Function.prototype
+    Number.constructor == Function
+
+    Boolean.__proto__ === Function.prototype
+    Boolean.constructor == Function
+
+    String.__proto__ === Function.prototype
+    String.constructor == Function
+
+    // 所有的构造器都来自于Function.prototype，甚至包括根构造器Object及Function自身
+    Object.__proto__ === Function.prototype
+    Object.constructor == Function
+
+    // 所有的构造器都来自于Function.prototype，甚至包括根构造器Object及Function自身
+    Function.__proto__ === Function.prototype
+    Function.constructor == Function
+
+    Array.__proto__ === Function.prototype
+    Array.constructor == Function
+
+    RegExp.__proto__ === Function.prototype
+    RegExp.constructor == Function
+
+    Error.__proto__ === Function.prototype
+    Error.constructor == Function
+
+    Date.__proto__ === Function.prototype
+    Date.constructor == Function
+
+    // Math，JSON是以对象形式存在的，无需new。它们的proto是Object.prototype。
+    Math.__proto__ === Object.prototype  // true
+    Math.construrctor == Object // true
+
+    JSON.__proto__ === Object.prototype  // true
+    JSON.construrctor == Object //true
+
+    // Function.prototype也是唯一一个typeof XXX.prototype为 function的prototype。其它的构造器的prototype都是一个对象
+    console.log(typeof Function.prototype) // function
+    console.log(typeof Object.prototype)   // object
+    console.log(typeof Number.prototype)   // object
+    console.log(typeof Boolean.prototype)  // object
+    console.log(typeof String.prototype)   // object
+    console.log(typeof Array.prototype)    // object
+    console.log(typeof RegExp.prototype)   // object
+    console.log(typeof Error.prototype)    // object
+    console.log(typeof Date.prototype)     // object
+    console.log(typeof Object.prototype)   // object
+
+    //  所有构造器（含内置及自定义）的__proto__都是Function.prototype，那Function.prototype的__proto__是谁呢？
+    console.log(Function.prototype.__proto__ === Object.prototype) // true
+    // 这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加 / 删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。
+    
+
+  </script>
+</body>
+</html>

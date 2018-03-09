@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render函数</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        // 使用render函数
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "show the message"
+            },
+            methods: {
+                hello() {
+                    alert('this is the message')
+                }
+            },
+            render(createElement) {
+                return createElement('span', {
+                    class: { 'myClass': true },
+                    on: {
+                        click: this.hello
+                    }
+                },
+                    [this.msg]
+                );
+            }
+        })
+
+
+       // 使用JSX
+        var app1 = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Show the message.'
+            },
+            methods: {
+                hello() {
+                    alert('This is the message.')
+                }
+            },
+            render(h) {
+                return (<span class={{ 'my-class': true }} on-click={this.hello} > {this.msg} </span>)
+            }
+        });
+
+
+
+    </script>
+</body>
+</html>

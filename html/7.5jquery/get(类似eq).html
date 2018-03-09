@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>get与eq比较</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="box1">我是box1</div>
+    <div class="box2">我是box2</div>
+
+    <script>
+        // 取得其中一个匹配的元素。 num表示取得第几个匹配的元素。从0开始，返回的是DOM对象，类似的有eq(index),不过eq(index)返回的是jQuery对象。
+        // 这能够让你选择一个实际的DOM 元素并且对他直接操作，而不是通过 jQuery 函数。$(this).get(0)与$(this)[0]等价。
+
+        console.log($("div").get(0));    //<div class="box1">我是box1</div>
+
+        console.log($("div").get());     // 取得所有匹配的 DOM 元素集合。
+
+        console.log($("div").eq(0));     // 返回的是jquery对象
+
+    </script>
+</body>
+
+</html>

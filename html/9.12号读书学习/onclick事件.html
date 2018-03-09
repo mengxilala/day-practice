@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>onclick事件</title>
+</head>
+<body>
+    <ul id="gallery">
+        <li>
+            <a href="../../images/loading.png" title="这是一个loading图片">loading</a>
+        </li>
+        <li>
+            <a href="../../images/zhuan.png" title="这是一个zhuan图片">zhuan</a>
+        </li>
+        <li>
+            <a href="../../images/upload.png" title="这是一个upload图片">upload</a>
+        </li>
+        <li>
+            <a href="../../images/selected.png" title="这是一个selected图片">selected</a>
+        </li>
+        <img id="placeholder" src="../../images/加载中.gif" alt="a placeholder">
+        <p id="description">Choose an image</p>
+    </ul>
+
+    <script>
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function () {
+                    oldonload();
+                    func();
+                }
+            }
+        }
+
+        function showPic(whichPic) {
+            if (!document.getElementById('placeholder')) return false;
+            var source = whichPic.getAttribute('href');
+            if (whichPic.getAttribute('href')) {
+                var titileText = whichPic.getAttribute('title');
+            } else {
+                var titileText = "";
+            }
+            var placeholder = document.getElementById('placeholder');
+            if (document.getElementById('placeholder')) {
+                var description = document.getElementById('description');
+                placeholder.setAttribute('src', source);
+                description.firstChild.nodeValue = titileText;
+            }
+            return true;
+        }
+
+
+        function prepareGallery() {
+            if (!document.getElementsByTagName) return false;
+            if (!document.getElementById) return false;
+            if (!document.getElementById('gallery')) return false;
+            var gallery = document.getElementById('gallery');
+            var links = gallery.getElementsByTagName('a');
+            for (var i = 0; i < links.length; i++) {
+                links[i].onclick = function () {
+                    return !showPic(this);
+                }
+            }
+        }
+
+        addLoadEvent(prepareGallery);
+    </script>
+</body>
+</html>

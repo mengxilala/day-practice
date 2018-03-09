@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: hiragino sans gb w3,hiragino sans gb, 'Microsoft YaHei',arial;
+    font-size: 20px;
+    color:#fff;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+}

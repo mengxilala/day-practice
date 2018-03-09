@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>插入图片</title>
+    <style>
+        .placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>图片插入</h1>
+    <ul>
+        <li><a onclick="showPic(this); return false" href="../../images/loading.png" title="这是一个loading图片">loading</a></li>
+        <li><a onclick="showPic(this); return false" href="../../images/refresh.png" title="这是一个refresh图片">refresh</a></li>
+        <li><a onclick="showPic(this); return false" href="../../images/zhuan.png" title="这是一个zhuan图片">zhuan</a></li>
+        <img id="placeholder" src="../../images/加载中.gif" alt="a placeholder">
+        <p id="description">Choose an image</p>
+    </ul>
+
+
+
+    <!-- 点击链接时，让图片在本页显示，而不是重新打开一个页面 -->
+
+    <script>
+        // return false阻止默认行为 阻止浏览器新打开页面查看图片
+
+        function showPic(whichPic) {
+            var source = whichPic.getAttribute('href');
+            var titileText = whichPic.getAttribute('title');
+            var placeholder = document.getElementById('placeholder');
+            var description = document.getElementById('description');
+            placeholder.setAttribute('src', source);
+            description.firstChild.nodeValue = titileText;
+            // 计算body元素有多少个子元素   childNodes返回的节点包含所有类型的节点，而不仅仅是元素节点
+            // var bodyElement = document.getElementsByTagName('body')[0].childNodes;
+            // console.log(bodyElement.length)
+
+            // nodeType属性
+            // nodeType的值是数字 1.元素节点 2.属性节点 3.文本节点
+
+            // nodeValue属性 用来改变一个文本节点的值  
+            // 用nodeValue获取一个对象的值时，得到的并不是包含在这个段落里的文本,而是一个null,因为p元素本身的nodeValue属性是一个空值，而我们要获取的是p元素所包含的文本的值
+            // 例如：获取id为description的文本值
+            // var description = document.getElementById('description');
+            // alert(description.nodeValue);    null
+
+            // 包含在p元素里面的文本是另一种节点，他是p元素的第一个子节点 ,这样获取才是我们要的文本
+            // alert(description.childNodes[0].nodeValue); // Choose an image 
+            // childNodes[0] 就是 firstChild
+        }
+    </script>
+</body>
+</html>

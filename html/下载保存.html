@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <title>保存文本文件到本地</title>
+    <link href="http://ucren.com/static/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container-fluid {
+            margin-top: 30px;
+            margin-left: 120px;
+            margin-right: 150px;
+        }
+
+        /*#file-name{display: none;}*/
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="form-group">
+                <label>请输入保存的内容：</label>
+                <textarea class="form-control" rows="15" id="content"></textarea>
+            </div>
+
+            <div class="form-group">
+                <!--<label>文件名：</label>-->
+                <input type="text" class="form-control" value="我是张梦溪" id="file-name">
+            </div>
+
+
+            <a id="save-btn" class="btn btn-default" download="test.txt" role="button">保存</a>
+
+        </div>
+    </div>
+
+    <script>
+        void function () {
+            var content, fileName, saveBtn;
+
+
+            content = document.querySelector('#content');        //文本域
+            fileName = document.querySelector('#file-name');         //文件名
+            saveBtn = document.querySelector('#save-btn');       //保存按钮
+
+
+            content.addEventListener('change', function self() {
+                saveBtn.setAttribute('href', 'data:text/paint; utf-8,' + content.value);
+                return self;
+            }());
+
+
+            fileName.addEventListener('change', function self() {
+                saveBtn.setAttribute('download', fileName.value);
+                return self;
+            }());
+        }();
+    </script>
+</body>
+</html>

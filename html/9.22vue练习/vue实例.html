@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue实例</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script>
+        // data 对象
+        var data = { a: 1 }
+        // 此对象将会添加到 Vue 实例上
+        var vm = new Vue({
+            data: data
+        })
+        // 这里引用了同一个对象！
+        console.log(vm.a === data.a); // => true
+
+        // 设置实例上的属性，也会影响原始数据
+        vm.a = 2
+        console.log(data.a); // => 2
+
+        // ... 反之亦然
+        data.a = 3
+        console.log(vm.a);// => 3
+
+
+
+
+        // 除了 data 属性， Vue 实例还暴露了一些有用的实例属性和方法。这些属性与方法都具有前缀 $，以便与用户定义(user - defined)的属性有所区分。例如：
+        var data = { a: 1 }
+        var vm = new Vue({
+            el: '#example',
+            data: data
+        })
+        vm.$data === data // => true
+        console.log(vm.$el);
+        vm.$el === document.getElementById('example') // => true
+        // $watch 是一个实例方法
+        vm.$watch('a', function (newValue, oldValue) {
+            // 此回调函数将在 `vm.a` 改变后调用
+        })
+    </script>
+</body>
+</html>

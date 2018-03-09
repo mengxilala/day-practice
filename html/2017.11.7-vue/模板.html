@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板</title>
+</head>
+<body>
+    <!-- 文本插值绑定数据的方式，只要age发生变化，那么页面渲染出来的数据就会发生变化。
+        但也可以通过v-once指令，让文本插值只执行一次，使用了这个指令，当数据改变时，插值处的内容并不会更新。 -->
+
+    <div id="app">
+        <p>不使用v-once指令{{message}}</p>
+        <p v-once>使用v-once指令{{message}}</p>
+        <h1>{{name.split(' ')}}</h1>
+
+        <!-- 获取对应的字母 -->
+        <h2>{{name.split(' ')[0]}}</h2> 
+        
+        <!-- v-text和{{}}起到的效果是一样的。同样的，动态修改对象name的值时，渲染的结果也会有对应的变化 -->
+        <h1 v-text="'用户名:'+name"></h1>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    message: "Hello",
+                    name:"zhang meng xi"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

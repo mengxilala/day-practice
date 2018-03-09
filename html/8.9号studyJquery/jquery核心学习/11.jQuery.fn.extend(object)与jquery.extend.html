@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- jQuery.fn.extend(object)  扩展 jQuery 元素集来提供新的方法（通常用来制作插件）。 -->
+    <!-- <input type="radio">
+    <input type="checkbox"> -->
+    <div>jquery扩展插件</div>
+    <script>
+        //  描述:增加两个插件方法。
+        // jQuery.fn.extend({
+        //     check: function () {
+        //         // return this.each(function () { this.checked = true; });
+        //         return alert('这是添加的方法')
+        //     },
+        //     uncheck: function () {
+        //         return this.each(function () { this.checked = false; });
+        //     }
+        // });
+
+        // $("input[type=checkbox]").check();
+        // $("input[type=radio]").uncheck();
+
+
+        $.fn.extend({
+            lala: function () {
+                alert('这是为div添加的lala方法')
+            }
+        })
+        $('div').lala();
+
+
+        // http://www.cnblogs.com/xuxiuyu/p/5989743.html  jquery.extend 和 jquery.fn.extend 的区别
+
+
+        // jQuery插件开发分为两种： 1.类级别 jquery.extend   2.对象级别 jquery.fn.extend
+
+        // 1 类级别 
+        // 类级别你可以理解为拓展jquery类，最明显的例子是$.ajax(...), 相当于静态方法。 开发扩展其方法时使用$.extend方法，即jQuery.extend(object);
+        console.log($.add);  //undefined
+        $.extend({
+            add: function (a, b) {
+                return a + b;
+            },
+            minus: function (a, b) {
+                return a - b;
+            }
+        })
+        console.log($.add);  //此时打印的是add的方法
+        // 调用：
+        var s1 = $.add(1, 2);
+        var s2 = $.minus(4, 3);
+
+        //扩展
+        console.log($.xy.add); //undefined
+        $.xy = {
+            add: function (a, b) {
+                return a + b;
+            },
+            minus: function (a, b) {
+                return a - b;
+            },
+            voidMethod: function () {
+                alert("void");
+            }
+        }
+
+        // 调用：
+
+        var s1 = $.xy.add(1, 2);
+        var s2 = $.xy.minus(4, 3);
+        var s3 = $.xy.voidMethod();
+
+
+        // 2 对象级别 
+        // 对象级别则可以理解为基于对象的拓展，如$("#table").changeColor(...); 这里这个changeColor呢，就是基于对象的拓展了。
+        // 开发扩展其方法时使用$.fn.extend方法，即jQuery.fn.extend(object);
+        $('input[type=checkbox]').check();  //报错  $.check() is not a function
+        $('input[type=checkbox]').uncheck(); //报错  $.check() is not a function
+        $.fn.extend({
+            check: function () {
+                return this.each(function () { this.checked = true; });
+            },
+            uncheck: function () {
+                return this.each(function () { this.checked = false; });
+            }
+        });
+
+        // 调用：
+        $('input[type=checkbox]').check();   //正常调用check方法
+        $('input[type=checkbox]').uncheck(); //正常调用uncheck方法
+    </script>
+
+</body>
+</html>

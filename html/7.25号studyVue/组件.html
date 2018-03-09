@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 使用组件 -->
+    <!-- 注册 -->
+    <!-- 组件在注册之后，便可以在父实例的模块中以自定义元素 <my-component></my-component> 的形式使用。要确保在初始化根实例之前注册了组件： -->
+    <div id="app1">
+        <my-component></my-component>
+    </div>
+
+
+    <script>
+        //  之前说过，我们可以通过以下方式创建一个 Vue 实例： 
+        new Vue({
+            el: '',
+        })
+
+        // 要注册一个全局组件，你可以使用 Vue.component(tagName, options)。例如：
+        Vue.component('my-component', {
+            template: '<div>A custom component!</div>'
+        })
+        new Vue({
+            el:'#app1',
+
+        })
+
+
+
+        // 局部注册
+        // 不必在全局注册每个组件。通过使用组件实例选项注册，可以使组件仅在另一个实例/组件的作用域中可用：
+        var child={
+            template:'<div>这是局部注册的组件</div>'
+        }
+        new Vue({
+            el:'',
+            components:{
+                'my-component':child
+            }
+        })
+    </script>
+</body>
+</html>

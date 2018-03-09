@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day6</title>
+</head>
+<body>
+    <input type="checkbox" id="SelectAll">全选
+    <input type="checkbox" class="subcheck">1
+    <input type="checkbox" class="subcheck">2
+    <input type="checkbox" class="subcheck">3
+    <input type="checkbox" class="subcheck">4
+
+    <script src="../js/jquery.js"></script>
+    <script>
+        // 复选框事件
+        // 全选、取消全选的事件
+        //
+        // <input type=checkbox checked> 的 checked 特性决定选择框的初始状态，之后再勾选不影响该特性
+        // :checkbox 是 jquery 选择器，等于 [type=checkbox]
+        // 监听 change 而不是 click
+
+        $("#SelectAll").on('change', function () {
+            if (this.checked) {
+                $(".subcheck:checkbox").prop("checked", true);
+            } else {
+                $(".subcheck:checkbox").prop("checked", false);
+            }
+        });
+
+        // 子复选框的事件
+        $(".subcheck").on('change', function () {
+            var chsub = $("input.subcheck").length, // 获取subcheck的个数  
+                checkedsub = $("input.subcheck:checked").length; // 获取选中的subcheck的个数
+
+            $("#SelectAll").prop("checked", checkedsub == chsub);
+        });
+    </script>
+</body>
+</html>

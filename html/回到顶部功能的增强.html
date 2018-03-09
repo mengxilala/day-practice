@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回到顶部功能的增强</title>
+    <style>
+        /* 【1】显示增强
+            使用CSS画图，将“回到顶部”变成可视化的图形
+            使用CSS伪元素及伪类hover效果，当鼠标移动到该元素上时，显示回到顶部的文字，移出时不显示*/
+
+        .box {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            height: 30px;
+            width: 50px;
+            text-align: center;
+            padding-top: 20px;
+            background-color: lightblue;
+            border-radius: 20%;
+            overflow: hidden;
+        }
+
+        .box:hover:before {
+            top: 50%
+        }
+
+        .box:hover .box-in {
+            visibility: hidden;
+        }
+
+        .box:before {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            content: '回到顶部';
+            width: 40px;
+            color: peru;
+            font-weight: bold;
+
+        }
+
+        .box-in {
+            visibility: visible;
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            border: 3px solid black;
+            border-color: white transparent transparent white;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body style="height:2000px">
+    <div id="box" class="box">
+        <div class="box-in"></div>
+    </div>
+
+    <script>
+        // 【2】动画增强
+        //     为回到顶部增加动画效果，滚动条以一定的速度回滚到顶部
+        //     动画有两种：一种是CSS动画，需要有样式变化配合transition；一种是javascript动画，使用定时器来实现　　
+        //     scrollTop、scrollTo()和scrollBy()方法可以增加动画，且由于无样式变化，只能增加javascript动画
+        //     定时器又有setInterval、setTimeout和requestAnimationFrame这三种可以使用，下面使用性能最好的定时器requestAnimationFrame来实现
+        //     1、增加scrollTop的动画效果
+        //     使用定时器，将scrollTop的值每次减少50，直到减少到0，则动画完毕
+        // var box = document.getElementById('box'),
+        //     timer = null;
+        // box.onclick = function () {
+        //     cancelAnimationFrame(timer);
+        //     timer = requestAnimationFrame(function fn() {
+        //         var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        //         if (oTop > 0) {
+        //             document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+        //             timer = requestAnimationFrame(fn);
+        //         } else {
+        //             cancelAnimationFrame(timer);
+        //         }
+        //     });
+        // }
+
+        //    2、增加scrollTo()动画效果
+        //    将scrollTo(x,y)中的y参数通过scrollTop值获取，每次减少50，直到减少到0，则动画完毕
+
+        // var box = document.getElementById('box'),
+        //     timer = null;
+        // box.onclick = function () {
+        //     cancelAnimationFrame(timer);
+        //     timer = requestAnimationFrame(function fn() {
+        //         var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        //         if (oTop > 0) {
+        //             scrollTo(0, oTop - 50);
+        //             timer = requestAnimationFrame(fn);
+        //         } else {
+        //             cancelAnimationFrame(timer);
+        //         }
+        //     });
+        // }
+
+
+        // 3、增加scrollBy()动画效果
+        //    将scrollBy(x,y)中的y参数设置为-50，直到scrollTop为0，则回滚停止
+        var box = document.getElementById('box'),
+            timer = null;
+        box.onclick = function () {
+            cancelAnimationFrame(timer);
+            timer = requestAnimationFrame(function fn() {
+                var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+                if (oTop > 0) {
+                    scrollBy(0, -50);
+                    timer = requestAnimationFrame(fn);
+                } else {
+                    cancelAnimationFrame(timer);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

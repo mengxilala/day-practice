@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>appendChild+for循环</title>
+</head>
+<body>
+    <div class="out">
+        <ul></ul>
+    </div>
+    <script>
+        var list = document.querySelector('.out ul');
+        list.innerHTML = 'hello';
+        var greetings = ['Happy Birthday!',
+            'Merry Christmas to you',
+            'A happy Christmas to all the family',
+            'You\'re so nice',
+            'Get well soon']
+        for (var i = 0; i < greetings.length; i++) {
+            var input = greetings[i];
+            if (greetings[i]) {
+                var result = input;
+                var listItem = document.createElement('li');
+                listItem.textContent = result;
+                list.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>

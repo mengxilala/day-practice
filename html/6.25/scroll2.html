@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!--<div id="test" style="width: 100px;height: 100px;padding: 10px;margin: 10px;border: 1px solid black;"></div>
+
+<script>
+
+console.log(test.scrollHeight,test.scrollWidth); //120 120
+
+console.log(test.clientHeight,test.clientWidth); //120 120
+</script>-->
+
+
+
+
+    <div id="test" style="width: 100px;height: 100px;padding: 10px;margin: 10px;border: 1px solid black;overflow:scroll;font-size:20px;">
+        <!--内容<br>内容<br>-->
+    </div>
+    <script>
+        //103(120-17) 103(120-17)
+        console.log(test.scrollHeight, test.scrollWidth);
+        //103(120-17) 103(120-17)
+        console.log(test.clientHeight, test.clientWidth);
+    </script>
+</body>
+</html>

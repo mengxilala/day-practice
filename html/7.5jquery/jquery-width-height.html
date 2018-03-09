@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-width/height属性</title>
+    <script src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <!-- height([val|fn]) 取得匹配元素当前计算的高度值（px）。 在 jQuery 1.2 以后可以用来获取 window 和 document 的高 -->
+
+    <!-- 无参数描述:获取第一段的高 -->
+    <p>add吃v你先吃吧技术基础v那些哪些
+        <br> 哈哈哈哈哈哈哈哈哈哈啊哈哈哈
+    </p>
+
+    <button>按钮</button> 
+    
+    <!-- width([val|fn]) 取得第一个匹配元素当前计算的宽度值（px）。 在 jQuery 1.2 以后可以用来获取 window 和 document 的宽 -->
+     <!-- 使用方法同height  无参数/有参数/函数 -->
+
+    <script>
+        //    无参数描述
+        // 获取第一段的高 
+        console.log($("p").height());  //42
+
+
+        // 参数val 描述
+        // 把所有段落的高设为 20
+        $("p").height(20);
+        console.log($("p").height()); //20
+
+        // 参数function(index, height) 返回用于设置高度的一个函数。接收元素的索引位置和元素旧的高度值作为参数。   
+        // 描述:以 10 像素的幅度增加 p 元素的高度
+        $("button").click(function () {
+            $("p").height(function (n, c) {
+                return c + 10;
+            });
+            console.log($("p").height());  //以10像素的幅度增加
+        });
+    </script>
+</body>
+</html>

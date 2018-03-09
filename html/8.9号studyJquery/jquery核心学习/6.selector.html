@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+    <!-- selector 
+    返回传给jQuery()的原始选择器。换句话说，就是返回你用什么选择器来找到这个元素的。可以与context一起使用，用于精确检测选择器查询情况。 -->
+
+
+
+    <!-- http://www.w3school.com.cn/cssref/css_selectors.asp   css选择器-->
+    <ul>
+        <li></li>
+    </ul>
+    <div id="foo"></div>
+    <script>
+        //   描述:确定查询的选择器
+        $("ul")
+            .append("<li>" + $("ul").selector + "</li>")
+            .append("<li>" + $("ul li").selector + "</li>")
+            .append("<li>" + $("div#foo ul:not([class])").selector + "</li>");
+
+
+
+        // [target] 	选择带有 target 属性所有元素。
+        // 1.实例 为带有 target 属性的 <a> 元素设置样式：
+        // <a href="http://www.w3school.com.cn">w3school.com.cn</a>
+        // <a href="http://www.disney.com" target="_blank">disney.com</a>  改变颜色
+        // <a href="http://www.wikipedia.org" target="_top">wikipedia.org</a>  改变颜色
+
+        // a[target]{
+        //     background - color:yellow;
+        // }
+
+        // 2.[target=_blank]	选择 target="_blank" 的所有元素。
+        // <a href="http://www.w3school.com.cn">w3school.com.cn</a>
+        // <a href="http://www.disney.com" target="_blank">disney.com</a>  改变颜色
+        // <a href="http://www.wikipedia.org" target="_top">wikipedia.org</a>  
+
+        // a[target="_blank"]{
+        //     background - color:yellow;
+        // }
+
+
+        // 3.[title~=flower]	选择 title 属性包含单词 "flower" 的所有元素。
+        // 实例 选择 titile 属性包含单词 "flower" 的元素，并设置其样式：
+        // <img src="/i/eg_tulip.jpg" title="tulip flower" />    被选中
+        // <img src="/i/shanghai_lupu_bridge.jpg" title="lupu bridge" />
+        // [title~=flower]{
+        //     border:5px solid yellow;
+        // }
+
+        // 4.[lang|=en]	选择 lang 属性值以 "en" 开头的所有元素
+        // 实例 选择 lang 属性值以 "en" 开头的元素，并设置其样式：
+        // <p lang="en">Hello!</p>      被选中
+        // <p lang="en-us">Hi!</p>      被选中
+        // <p lang="en-gb">Ello!</p>    被选中
+        // <p lang="us">Hi!</p>
+        // <p lang="zh">nihao!</p>
+
+        // [lang|=en]{
+        //     background:yellow;
+        // }
+
+
+        // :lang(en){
+        //     background:yellow;  与上面的结果一样
+        // }
+
+        // 5. :link	选择所有未被访问的链接。
+        // 实例 选择未被访问的链接，并设置其样式：
+        // <a href="http://www.w3school.com.cn">W3Sschool</a>   被选中
+        // <a href="http://www.google.com">Google</a>   被选中
+        // <a href="http://www.wikipedia.org">Wikipedia</a> 被选中
+
+        // a:link{
+        //     background-color:yellow;
+        // }
+
+        // 6.:visited	选择所有已被访问的链接。 同link的用法
+
+        // 7.:active	选择活动链接  同link的用法  效果为点击链接时改变样式
+
+        // 8.:hover	选择鼠标指针位于其上的链接。同link的用法 鼠标位于链接上时改变样式
+
+
+        // 9.input:focus	选择获得焦点的 input 元素。  
+        // <form>
+        //     First name: <input type="text" name="firstname" /><br>
+        //     Last name: <input type="text" name="lastname" />
+        // </form>
+        // input:focus{
+        //     background-color:yellow;     效果为input框获取焦点的时候改变背景颜色
+        // }
+
+        // 10.:first-letter	选择每个元素的首字母。
+
+        // <h1>Welcome to My Homepage</h1>
+        // <p>My name is Donald.</p>
+        // <p>I live in Duckburg.</p>
+        // <p>My best friend is Mickey.</p>
+
+        // :firse-letter{
+        //     font-size:200%;          选中所有元素的首字母
+        //     color:#8A2BE2;
+        // }
+
+         // p:firse-letter{
+        //     font-size:200%;          选中所有p元素的首字母
+        //     color:#8A2BE2;
+        // }
+
+        // 11.:first-line 	选择每个元素的首行。
+        // <h1>WWF's Mission Statement</h1>
+        // <p>To stop the degradation of the planet's natural environment and to build a future in which humans live in harmony with nature, 
+        // by; conserving the world's biological diversity, ensuring that the use of renewable natural resources is sustainable, 
+        // and promoting the reduction of pollution and wasteful consumption.</p>
+
+        // p:firse-line{
+        //     font-size:200%;          选中所有p元素的首行
+        //     color:#8A2BE2;
+        // }
+
+        // :firse-line{
+        //     font-size:200%;          选中所有元素的首行
+        //     color:#8A2BE2;
+        // }
+
+        // 12.:first-child	选择属于父元素的第一个子元素。
+        // <p>这个段落是其父元素（body）的首个子元素。</p>  被选中  是body的首个元素
+
+        // <h1>欢迎访问我的主页</h1>
+        // <p>这个段落不是其父元素的首个子元素。</p>
+
+        // <div>
+        //     <p>这个段落是其父元素（div）的首个子元素。</p>   被选中  是div的首个元素
+        //     <p>这个段落不是其父元素的首个子元素。</p>
+        // </div>
+
+        // <ul>
+        //     <p>我也是首个元素</p>   被选中  是ul的首个元素
+        // </ul>
+
+        // p:first-child{
+        //     background-color:yellow;
+        // }
+
+        // 13.:before	在每个元素的内容之前插入内容
+        // <p>我是唐老鸭。</p>
+        // <p>我住在 Duckburg。</p>
+        // p:before{                  在每个p元素之前插入"台词:"
+        //     content:"台词：";
+        // }
+
+        // 14.:after 在每个元素的内容之后插入内容   用法同:before
+
+        // 15.element1~element2		选择前面有 element1 元素的每个 element2 元素。 
+        // 即找到所有相同的父元素中位于 element1 元素之后的所有 element2 元素
+
+        // 实例：p~ul	选择前面有 <p> 元素的每个 <ul> 元素。   两个元素必须是同一父元素 
+            // <div>一个 div 元素。</div>
+            // <ul>
+            //     <li>咖啡</li>
+            //     <li>牛奶</li>
+            //     <li>茶</li>
+            // </ul>
+            // <div>
+            //     <p>第一段。</p>
+            //     <ul>
+            //       <li>咖啡</li>
+            //       <li>牛奶</li>        这个ul被选中
+            //       <li>茶</li>
+            //     </ul>
+            // </div>
+            // <h2>另一个列表</h2>
+            // <ul>
+            //   <li>咖啡</li>
+            //   <li>牛奶</li>
+            //   <li>茶</li>
+            // </ul>
+
+            // p~ul{
+            //     background:#ff0000;
+            // }
+
+
+            // 16.[attribute^=value]  选择其 attribute 属性值以 value 开头的每个元素。
+            // 实例：设置 class 属性值以 "test" 开头的所有 div 元素的背景色：
+            // div[class^="test"]{
+            //     background-color:red;
+            // }
+
+            // 17.[attribute$=value] 选择其 attribute 属性值以 value 结尾的每个元素  用法同16
+
+            // 18.[attribute*=value] 选择其attribute属性值包含value的所有元素：  用法同16
+
+            // 19.:first-of-type 选择属于其父元素的首个元素的每个元素。   选择器匹配属于其父元素的特定类型的首个子元素的每个元素。
+            //   等同于 :nth-of-type(1)
+            // 实例：指定父元素的首个 p 元素的背景色：
+
+            // <h1>这是标题</h1>
+
+            // <p>这是第一个段落。</p>  被选中
+            // <p>这是第二个段落。</p>
+            // <p>这是第三个段落。</p>
+            // <p>这是第四个段落。</p>
+            // <div>
+            //     <p>这是div中的p元素</p>  被选中
+            // </div>
+
+            // p:first-of-type{
+            //     background:#ff0000;
+            // }
+
+            // 20.:last-of-type 选择器匹配属于其父元素的特定类型的最后一个子元素的每个元素。
+            //    ：等同于 :nth-last-of-type(1)。   用法同19
+
+            // 21.:only-of-type 选择器匹配属于其父元素的特定类型的唯一子元素的每个元素。
+            // <div>
+            //     <p>这是一个段落。</p>   被选中
+            // </div>
+            // <div>
+            //     <p>这是一个段落。</p>
+            //     <p>这是一个段落。</p>
+            // </div>
+            // p:only-of-type{
+            //     background:#ff0000;
+            // }
+
+            // 22.:only-child 选择器匹配属于其父元素的唯一子元素的每个元素
+            // <div>
+            //     <p>这是一个段落。</p>   被选中
+            // </div>
+            // <div>
+            //     <p>这是一个段落。</p>
+            //     <p>这是一个段落。</p>
+            // </div>
+
+            // p:only-child{
+            //     background:#ff0000;
+            // }
+
+            // 23.:nth-child(n) 选择器匹配属于其父元素的第 N 个子元素，不论元素的类型。n 可以是数字、关键词或公式。
+            //     提示：请参阅 :nth-of-type() 选择器，该选择器选取父元素的第 N 个指定类型的子元素。
+
+            // 实例 odd 和 even 是可用于匹配下标是奇数或偶数的子元素的关键词（第一个子元素的下标是 1）。 odd 奇数  even偶数
+            // 在这里，我们为奇数和偶数 p 元素指定两种不同的背景色：
+            // p:nth-child(odd)
+            // {
+            // background:red;
+            // }
+            // p:nth-child(even)
+            // {
+            // background:blue;
+            // }
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>  blue
+            // <p>第二个段落。</p>  red
+            // <p>第三个段落。</p>  blue
+            // <p>第四个段落。</p>  red
+            // <p>第五个段落。</p>  blue
+
+            // 实例  使用公式 (an + b)。描述：表示周期的长度，n 是计数器（从 0 开始），b 是偏移值。
+            // 在这里，我们指定了下标是 3 的倍数的所有 p 元素的背景色：
+            // p:nth-child(3n+0)
+            // {
+            // background:#ff0000;
+            // }
+
+
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>  被选中  第二个元素  不限制类型
+            // <p>第二个段落。</p>
+            // <p>第三个段落。</p>
+            // <p>第四个段落。</p>
+            // p:nth-child(2){
+            //     background:#ff0000;
+            // }
+
+            // 24.:nth-last-child(n) 选择器匹配属于其元素的第 N 个子元素的每个元素，不论元素的类型，从最后一个子元素开始计数。n 可以是数字、关键词或公式。
+            // 提示：请参阅 :nth-last-of-type() 选择器，该选择器选取父元素的第 N 个指定类型的子元素，从最后一个子元素开始计数。   用法同23
+
+
+            // 25.:nth-of-type(n) 选择器匹配属于父元素的特定类型的第 N 个子元素的每个元素.n 可以是数字、关键词或公式。
+            // 提示：请参阅 :nth-child() 选择器，该选择器选取父元素的第 N 个子元素，与类型无关
+            // Odd 和 even 是可用于匹配下标是奇数或偶数的子元素的关键词（第一个子元素的下标是 1）。
+            // 在这里，我们为奇数和偶数 p 元素指定两种不同的背景色：
+            // p:nth-of-type(odd)
+            // {
+            // background:re'd;
+            // }
+            // p:nth-of-type(even)
+            // {
+            // background:blue;
+            // }
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>  red
+            // <p>第二个段落。</p>  blue
+            // <p>第三个段落。</p>  red
+            // <p>第四个段落。</p>  blue
+            // <p>第五个段落。</p>  red
+
+            // 26.nth-last-of-type() 选择器匹配属于父元素的特定类型的第 N 个子元素的每个元素. 从最后一个子元素开始计数。 n 可以是数字、关键词或公式。与类型有关
+            // 提示：请参阅 :nth-child() 选择器，该选择器选取父元素的第 N 个子元素，与类型无关  从最后一个子元素开始计数。 用法同25
+
+            // 27.:last-child 选择器匹配属于其父元素的最后一个子元素的每个元素。
+            //     提示：p:last-child 等同于 p:nth-last-child(1)。
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>
+            // <p>第二个段落。</p>
+            // <p>第三个段落。</p>
+            // <p>第四个段落。</p>
+            // <p>第五个段落。</p>  被选中
+
+            // p:last-child{
+            //     background:#ff0000;
+            // }
+
+            // 28.:root 选择器匹配文档根元素。
+            // 在 HTML 中，根元素始终是 html 元素。
+            // :root{
+            //     background:#ff0000;   整个文档都被设置为红色背景
+            // }
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>
+            // <p>第二个段落。</p>
+            // <p>第三个段落。</p>
+            // <p>第四个段落。</p>
+            // <p>第五个段落。</p>
+
+            // 29.：empty  选择器匹配没有子元素（包括文本节点）的每个元素。
+            // 实例：指定空的 p 元素的背景色
+            
+            // <h1>这是标题</h1>
+            // <p>第一个段落。</p>
+            // <p></p>   被选中
+            // <p>第三个段落。</p>
+            // <p>第四个段落。</p>
+            // <p>第五个段落。</p>
+            // p:empty{
+            //     width:100px;
+            //     height:20px;
+            //     background:#ff0000;
+            // }
+
+            // 30.:target 选择器可用于选取当前活动的目标元素。
+            // 实例 突出显示活动的 HTML 锚：
+            // <h1>这是标题</h1>
+            // <p><a href="#news1">跳转至内容 1</a></p>  点击这里的时候 id="news1"会加上border和background
+            // <p><a href="#news2">跳转至内容 2</a></p>  点击这里的时候 id="news2"会加上border和background
+            // <p>请点击上面的链接，:target 选择器会突出显示当前活动的 HTML 锚。</p>
+            // <p id="news1"><b>内容 1...</b></p>
+            // <p id="news2"><b>内容 2...</b></p>
+            // :target{
+            //     border: 2px solid #D4D4D4;
+            //     background-color: #e5eecc;
+            // }   
+
+            // 31.:enabled 选择器匹配每个已启用的元素（大多用在表单元素上）。 
+            //    :disabled 选择器匹配每个未启用的元素（大多用在表单元素上）
+            // 实例：为所有 type="text" 的已启用的 input 元素设置红色背景色： 未启用的 input 元素设置蓝色背景色
+            // <form action="">
+            //     First name: <input type="text" value="Mickey" /><br>  red
+            //     Last name: <input type="text" value="Mouse" /><br>    red
+            //     Country: <input type="text" disabled="disabled" value="Disneyland" /><br>  blue
+            //    <input type="radio" checked="checked" value="male" name="gender" /> Male<br> red
+            //    <input type="radio" value="female" name="gender" /> Female<br> red
+            //    <input type="checkbox" checked="checked" value="Bike" /> I have a bike<br> red  添加checked样式
+            //    <input type="checkbox" value="Car" /> I have a car  red
+            // </form>
+
+            // input[type="text"]:enabled{
+            //     background:red;
+            // }
+            // input[type="text"]:disabled{
+            //     background:blue;
+            // }
+            // input[type="checkbox"]:checked{
+            //     background:red;
+            //     height:100px;
+            //     width:100px;
+            //     border: 1px solid red;
+            // }
+
+
+            // 32.:not(selector) 选择器匹配非指定元素/选择器的每个元素。
+            // 实例：设置非 <p> 元素的所有元素的背景色：
+            
+            // <h1>这是标题</h1>
+            // <p>这是一个段落。</p>
+            // <p>这是另一个段落。</p>
+            // <div>这是 div 元素中的文本。</div>
+            // <a href="http://www.w3school.com.cn" target="_blank">访问 W3School ！</a>
+            // :not(p){
+            //     color:#ff0000;   除了p元素 都添加#ff0000的颜色
+            // }
+
+
+            // 32.::selection 选择器匹配被用户选取的部分。
+            // 只能向 ::selection 选择器应用少量 CSS 属性：color、background、cursor 以及 outline。
+            // 实例：使被选中的文本成为红色：
+            // <h1>请试着选取页面上的文本</h1>
+            // <p>这是一个段落。</p>
+            // <div>这是 div 元素中的文本。</div>
+            // <a href="http://www.w3school.com.cn" target="_blank">访问 W3School ！</a>
+
+            // ::selection{
+            //     color:#ff0000;   被选中的元素
+            // }
+    </script>
+
+</body>
+</html>

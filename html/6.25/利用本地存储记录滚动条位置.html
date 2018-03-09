@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5Course - 利用本地存储，记录页面浏览器的位置</title>
+<link rel="stylesheet" type="text/css" href="http://css.h5course.cn/reset.css" />
+<style type="text/css">
+.wrap {
+padding: 15px 0;
+max-width: 640px;
+margin: 0 auto;
+}
+.wrap > h2 {
+padding: 10px 0;
+color: #39f;
+font-size: 24px;
+}
+.wrap > p {
+line-height: 40px;
+font-size: 18px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h2>HTML5学堂官网</h2>
+<p>HTML5学堂，致力于构建一个前端、HTML5的“原创”分享平台。能够为学习者提供一些资料，也为广大前端爱好者提供一个平台。HTML5学堂最初由两名讲师（利利和堡堡）创建，当前有多名HTML5讲师以及HTML5开发工程师组成。H5学堂中，主要涉及HTML与CSS、Java、jQuery、AJAX等前端的基本的知识、HTML5的实例开发、Java底层知识、类库、面试真题、相关技术、行业未来发展等。这里，将知识最通俗易懂的描述出来。我们希望HTML5学堂能够成为一个个性化的学习网站，为您提供最适合您的信息。</p>
+<h2>HTML5学堂微信</h2>
+<p>收罗HTML5与HTML5的相关技术。在这里有原创的HTML5、CSS3、Java等前端知识，也有来自互联网的HTML5全新动态~HTML5学堂由几位讲师倾情打造，或许这里没有最牛的技术，但却将HTML5最浅显易懂的表达了出来。</p>
+<h2>摩登足迹微信号</h2>
+<p>当前你的智能手机,隐藏着哪些功能你不了解的功能,又有哪些优秀的生活软件?“狗带”“宝宝心里苦”到底什么意思?所有内容尽收于此.这里有智能手机的小用法,有各类优秀软件,也有那些你不了解的流行词汇.</p>
+<h2>HTML5学堂官网</h2>
+<p>HTML5学堂，致力于构建一个前端、HTML5的“原创”分享平台。能够为学习者提供一些资料，也为广大前端爱好者提供一个平台。HTML5学堂最初由两名讲师（利利和堡堡）创建，当前有多名HTML5讲师以及HTML5开发工程师组成。H5学堂中，主要涉及HTML与CSS、Java、jQuery、AJAX等前端的基本的知识、HTML5的实例开发、Java底层知识、类库、面试真题、相关技术、行业未来发展等。这里，将知识最通俗易懂的描述出来。我们希望HTML5学堂能够成为一个个性化的学习网站，为您提供最适合您的信息。</p>
+<h2>HTML5学堂微信</h2>
+<p>收罗HTML5与HTML5的相关技术。在这里有原创的HTML5、CSS3、Java等前端知识，也有来自互联网的HTML5全新动态~HTML5学堂由几位讲师倾情打造，或许这里没有最牛的技术，但却将HTML5最浅显易懂的表达了出来。</p>
+<h2>摩登足迹微信号</h2>
+<p>当前你的智能手机,隐藏着哪些功能你不了解的功能,又有哪些优秀的生活软件?“狗带”“宝宝心里苦”到底什么意思?所有内容尽收于此.这里有智能手机的小用法,有各类优秀软件,也有那些你不了解的流行词汇.</p>
+<h2>HTML5学堂官网</h2>
+<p>HTML5学堂，致力于构建一个前端、HTML5的“原创”分享平台。能够为学习者提供一些资料，也为广大前端爱好者提供一个平台。HTML5学堂最初由两名讲师（利利和堡堡）创建，当前有多名HTML5讲师以及HTML5开发工程师组成。H5学堂中，主要涉及HTML与CSS、Java、jQuery、AJAX等前端的基本的知识、HTML5的实例开发、Java底层知识、类库、面试真题、相关技术、行业未来发展等。这里，将知识最通俗易懂的描述出来。我们希望HTML5学堂能够成为一个个性化的学习网站，为您提供最适合您的信息。</p>
+<h2>HTML5学堂微信</h2>
+<p>收罗HTML5与HTML5的相关技术。在这里有原创的HTML5、CSS3、Java等前端知识，也有来自互联网的HTML5全新动态~HTML5学堂由几位讲师倾情打造，或许这里没有最牛的技术，但却将HTML5最浅显易懂的表达了出来。</p>
+<h2>摩登足迹微信号</h2>
+<p>当前你的智能手机,隐藏着哪些功能你不了解的功能,又有哪些优秀的生活软件?“狗带”“宝宝心里苦”到底什么意思?所有内容尽收于此.这里有智能手机的小用法,有各类优秀软件,也有那些你不了解的流行词汇.</p>
+</div>
+<script>
+var ls = window.localStorage;
+// 页面每次加载的时候获取本地存储里面的值
+if (ls.getItem('sTop')) {
+var oldStop = ls.getItem('sTop');
+// 获取到的值来设置页面滚动条的位置
+if (document.documentElement.scrollTop) {
+document.documentElement.scrollTop = oldStop;
+} else {
+document.body.scrollTop = oldStop;
+}
+} else {
+console.log('抱歉，找不到滚动条的值');
+}
+// 监听页面滚动条的状态（是否滚动）
+window.addEventListener('scroll', function() {
+// 滚动时获取页面滚动条的位置
+var sTop = document.documentElement.scrollTop || document.body.scrollTop;
+// 滚动条的位置保存到本地存储里面
+ls.setItem('sTop', sTop);
+}, false);
+</script>
+</body>
+</html>

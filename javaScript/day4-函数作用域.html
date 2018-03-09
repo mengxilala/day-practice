@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day4</title>
+</head>
+<body>
+    <script>
+        var x = 1;
+        function a() {
+            var y = 2;
+            output(x);
+        }
+        function b() {
+            var z = 3;
+            output(x);
+        }
+        function output(value) {
+            var para = document.createElement('p');
+            document.body.appendChild(para);
+            para.textContent = 'Value: ' + value;
+        }
+    </script>
+</body>
+</html>

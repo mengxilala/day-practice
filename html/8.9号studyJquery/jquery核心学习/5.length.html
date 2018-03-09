@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery</title>
+    <script src="../../../js/jquery.js"></script>
+    <style>
+        body {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            border: 1px solid red;
+        }
+
+        div {
+            width: 50px;
+            height: 30px;
+            margin: 5px;
+            float: left;
+            background: green;
+        }
+
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 学习jQuery 不仅仅是过一遍文档  要真正理解并会运用 这样才算学会了 -->
+
+
+    <!-- jQuery 对象中元素的个数。这个函数的返回值与 jQuery 对象的size()属性一致。 -->
+
+    <!-- 描述:计算文档中所有图片数量 -->
+    <img src="../../../images/loading.png" />
+    <img src="../../../images/delete.png" />
+
+    <div></div>
+    <span></span>    
+
+    <script>
+        console.log($("img").length); 2
+        // console.log($("img").size());  1.8版本已经废弃
+
+
+
+        // 示例：
+        $(document.body).click(function () {
+            $(document.body).append($("<div>"));
+            var n = $("div").length;
+            $("span").text("There are " + n + " divs." +
+                "Click to add more.");
+        }).trigger("click");
+        // Trigger the click to start 打开页面的时候触发click事件  document.body触发
+
+    </script>
+
+</body>
+</html>

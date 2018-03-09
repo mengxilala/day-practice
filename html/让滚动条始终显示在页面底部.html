@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>让滚动条始终显示在页面顶部</title>
+    <script src="js/jquery.js"></script>
+
+</head>
+<body>
+    <span class="notice">请点击“插入一行”按钮，插入最新信息，当出现滚动条时，滚动条将自动保持在底部。</span>
+    <div id="scrolldIV" style="overflow:auto; height: 100px; width: 400px; border: 1px solid #999;">
+    </div>
+    <input type="button" value="插入一行" onclick="add();">
+
+
+    <script>
+
+        function add() {
+            var now = new Date();
+            var div = document.getElementById('scrolldIV');
+            div.innerHTML = div.innerHTML + 'time_' + now.getTime() + '<br />';
+            div.scrollTop = div.scrollHeight;
+        }
+    </script>
+</body>
+</html>

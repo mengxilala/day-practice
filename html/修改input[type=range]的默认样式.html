@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改input滑动条的默认样式</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/RangeSlider.js"></script>
+    <style>
+        /* 1.去除系统默认的样式 */
+
+        /* 这是美化滑动控件的第一步，这步操作是为了不使用原有的样式，使之后的自定义样式有效 */
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;   /*-webkit-appearance的CSS属性用于webkit浏览器来显示一个元素使用平台的本地样式基于操作系统的主题。*/
+        }
+
+        /* 2.给滑动轨道(track)添加样式 */
+
+        /* 正式开始自定义控件样式了。首先是自定义滑动控件的轨道 */
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 15px;
+            border-radius: 10px;
+            box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+        }
+
+        /* 原始的控件获取到焦点时，会显示包裹整个控件的边框，所以还需要把边框取消。 */
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        /* 3.给滑块(thumb)添加样式 */
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 25px;
+            width: 25px;
+            margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+            background: #ffffff;
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+            box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+        }
+
+        /* 4.根据滑块所在位置填充进度条 */
+
+        /* 新建一个RangeSlider.js文件，实现对滑动控件属性的设置、事件的监听、以及设置回调函数。监听input事件时，对进度条进行填充 */
+
+        /* 如果要兼容Firefox浏览器，只需要把上述css代码中的 
+        ::-webkit-slider-runnable-track 替换为 ::-moz-range-track ，就可以完成对轨道的美化了；
+        把css代码中的 ::-webkit-slider-thumb 替换为 ::-moz-range-thumb ，这是对滑块的样式进行改造；
+        而如果是要填充进度条就很简单了，不需要像之前在RangeSlider.js中 
+        $input.css( ‘background’, ‘linear-gradient(to right, #059CFA, white ’ + this.value + ‘%, white)’ ); 
+        这样实现填充，只需要新增如下的css代码即可： */
+
+        input[type=range]::-moz-range-progress {
+            background: linear-gradient(to right, #059CFA, white 100%, white);
+            height: 13px;
+            border-radius: 10px;
+        }
+
+
+        /* 如果要想兼容IE 9以上版本的浏览器，对上述css代码要修改的地方稍微多了一些，下面先将针对IE 9+的css代码贴出来： */
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-ms-track {
+            height: 25px;
+            border-radius: 10px;
+            box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112;
+            border-color: transparent; /*去除原有边框*/
+            color: transparent; /*去除轨道内的竖线*/
+        }
+
+        input[type=range]::-ms-thumb {
+            border: solid 0.125em rgba(205, 224, 230, 0.5);
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            background: #ffffff;
+            margin-top: -5px;
+            box-shadow: 0 .125em .125em #3b4547;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            height: 22px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #059CFA, white 100%, white);
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            height: 22px;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: linear-gradient(to right, #059CFA, white 100%, white);
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #ffffff;
+        }
+
+
+        /* 以上就是为了兼容IE 9+完整的css代码，也不是很复杂，同样的和Firefox浏览器一样，它支持直接使用css来自定义进度条，
+        所以在RangeSlider.js里的 $input.css( ‘background’, ‘linear-gradient(to right, #059CFA, white ’ + this.value + ‘%, white)’);填充方法也不需要。 
+        有几个IE浏览器需要特别注意的问题： 
+        1.在测试时发现，IE浏览器没有加载css文件，导致样式没有发生改变，如果使用E浏览器测试时也存在这样的问题，需要将HTML第一行的 <!DOCTYPE html>改为 <!DOCTYPE>； 
+        2.拖动滑块时，IE浏览器没有触发 input 事件，所以只能选择将RangeSlider.js中的监听事件改为 change 事件。 */
+    </style>
+</head>
+<body>
+    <div id="test">
+        <input type="range" value="0">
+    </div>
+
+    <script>
+        var change = function ($input) {
+            console.log("123");
+        }
+
+        $('input').RangeSlider({ min: 0, max: 100, step: 0.1, callback: change });
+
+    </script>
+</body>
+</html>

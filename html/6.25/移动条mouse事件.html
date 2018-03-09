@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type"
+        content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        #selectStuBox {
+            position: relative;
+            width: 200px;
+            height: 50px;
+            margin: 50px auto 0;
+        }
+
+        #selectStuBoxBg {
+            height: 4px;
+            background-color: #cccccc;
+            overflow: hidden;
+        }
+
+        #selectStuBoxBgcolor {
+            background: #24afff;
+            width: 0;
+            height: 4px;
+        }
+
+        #selectStuBoxBt {
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            box-shadow: 0px 0px 8px 5px #c3f5e7;
+            border-radius: 8px;
+            overflow: hidden;
+            position: absolute;
+            left: 0px;
+            margin-left: -16px;
+            top: -5px;
+            cursor: pointer;
+        }
+
+        #selectStuBoxText {
+            width: 64px;
+            height: 33px;
+            background-color: #24afff;
+            position: relative;
+            border-radius: 16px;
+        }
+
+        #selectStuBoxText:after {
+            width: 0;
+            height: 0;
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #24afff;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            margin-left: -6px;
+        }
+    </style>
+    <script type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+    <div id="selectStuBox">
+        <div id="selectStuBoxBg">
+            <div id="selectStuBoxBgcolor"></div>
+        </div>
+        <div id="selectStuBoxBt"></div>
+    </div>
+    <div id="selectStuBoxText"></div>
+    <script type="text/javascript">
+        var selectStuBox = $('#selectStuBox');
+        var selectStuBoxBg = $('#selectStuBoxBg');
+        var selectStuBoxBgcolor = $('#selectStuBoxBgcolor');
+        var selectStuBoxBt = $('#selectStuBoxBt');
+        var selectStuBoxText = $('#selectStuBoxText');
+        var statu = false;
+        var ox = 0;
+        var lx = 0;
+        var left = 0;
+        var bgleft = 0;
+        selectStuBoxBt.mousedown(function (e) {
+
+            lx = selectStuBoxBt.offset().left;
+            ox = e.pageX - left;
+            statu = true;
+            $(document).on('mousemove', onMouseMoveDocument);
+            $(document).on('mouseup', onMouseUpDocument);
+            function onMouseMoveDocument (e) {
+                e.preventDefault();
+                if (statu) {
+                    left = e.pageX - ox;
+                    if (left < 0) {
+                        left = 0;
+                    }
+                    if (left > 200) {
+                        left = 200;
+                    }
+                    selectStuBoxBt.css('left', left);
+                    selectStuBoxBgcolor.width(left);
+                    selectStuBoxText.html(parseInt(left / 2) + '%');
+                }
+
+            };
+            function  onMouseUpDocument(e) {
+
+                statu = false;
+                $(document).off('mousemove', onMouseMoveDocument);
+                $(document).off('mouseup', onMouseUpDocument);
+            };
+        });
+
+
+
+
+
+
+
+
+        // 增加下拉刷新功能
+            //  $(document).on('mousedown', function (e) {
+            //      if ($(".feedThi_img_box").scrollTop() < 1) {
+            //          var pagey = e.pageY || e.clientY + scroll().top;
+
+            //          $(this).on('mousemove', onMouseMoveDocument);
+            //          $(this).on('mouseup', onMouseUpDocument);
+            //      }
+
+            //      function onMouseMoveDocument(e) {
+            //          var movey = e.pageY || e.clientY + scroll().top;
+            //          if (movey - pagey >= 80) {
+            //              $('.refresh2').html('松开刷新');
+            //              $('#msg2').height(movey - pagey + "px").css('line-height', movey - pagey + "px")
+            //          } else if (movey - pagey < 60) {
+            //              $('.refresh2').html('下拉刷新');
+            //              $('#msg2').height(movey - pagey + "px").css('line-height', movey - pagey + "px")
+            //          }
+            //      }
+
+            //      function onMouseUpDocument(e) {
+            //          $('#msg2').animate({ "height": 0 }, 1);
+            //          var movey = e.pageY || e.clientY + scroll().top;
+            //          if (movey - pagey >= 80) {
+            //              vThis.$http
+            //                  .get(apiPrefix + 'feedback?classId=' + localStorage.classId + '&randomId=' + localStorage.lessonRandomId + '&coursewareId=' + localStorage.coursewareId + '&userId=' + localStorage.userId + '&schoolId=' + localStorage.schoolId + '&token=' + localStorage.token + '&type=' + '1')
+            //                  .then((response) => {
+            //                      vThis.feedBackStudent = response.body;
+            //                  });
+            //          }
+
+            //          $(document).off("mousemove", onMouseMoveDocument);
+            //          $(document).off("mouseup", onMouseUpDocument);
+            //      }
+            //  });
+
+
+
+                  //增加下拉刷新功能
+            // $(document).on('mousedown', function (e) {
+            //     var e = e || window.e;
+            //     var pagey = e.pageY || e.clientY + scroll().top;
+            //     $(this).on('mousemove', function (e) {
+            //         var e = e || window.e;
+            //         var movey = e.pageY || e.clientY + scroll().top;
+            //         if (movey - pagey >= 80) {
+            //             $('.refresh2').html('松开刷新');
+            //             $('#msg2').height(movey - pagey + "px").css('line-height', movey - pagey + "px")
+            //         } else if (movey - pagey < 60) {
+            //             $('.refresh2').html('下拉刷新');
+            //             $('#msg2').height(movey - pagey + "px").css('line-height', movey - pagey + "px")
+            //         }
+            //     })
+            //     $(this).on('mouseup', function (e) {
+            //         $('#msg2').animate({ "height": 0 }, 1);
+            //         var e = e || window.e;
+            //         var movey = e.pageY || e.clientY + scroll().top;
+            //         if (movey - pagey >= 80) {
+            //             vThis.$http
+            //                 .get(apiPrefix + 'feedback?classId=' + localStorage.classId + '&randomId=' + localStorage.lessonRandomId + '&coursewareId=' + localStorage.coursewareId + '&userId=' + localStorage.userId + '&schoolId=' + localStorage.schoolId + '&token=' + localStorage.token + '&type=' + '1')
+            //                 .then((response) => {
+            //                     vThis.feedBackStudent = response.body;
+            //                 });
+            //         }
+            //         $(document).off("mousemove");
+            //         $(document).off("mouseup");
+            //     })
+            // })
+    </script>
+
+</body>
+
+</html>
+</span>

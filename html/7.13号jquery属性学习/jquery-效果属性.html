@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-事件属性</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        // 1.show([speed, [easing], [fn]])显示隐藏的匹配元素。
+        // 这个就是 'show( speed, [callback] )' 无动画的版本。
+        // 如果选择的元素是可见的，这个方法将不会改变任何东西。无论这个元素是通过hide()方法隐藏的还是在CSS里设置了display: none; ，这个方法都将有效。
+        // 描述:将隐藏的段落用将近4秒的时间显示出来。。。并在之后执行一个反馈。。。
+        $("p").show(); //无参数
+        $("p").show("slow"); //设置显示的速度
+        $("p").show(4000, function () {  //执行一个动画
+            $(this).text("Animation Done...");
+        });
+
+
+        // 2.hide([speed, [easing], [fn]])隐藏显示的元素
+        // 这个就是 'hide( speed, [callback] )' 的无动画版。如果选择的元素是隐藏的，这个方法将不会改变任何东西。
+        // 描述: 隐藏所有段落
+        $("p").hide();
+        $("p").hide("slow");
+        $("p").hide("fast", function () {
+            alert("Animation Done.");
+        });
+
+
+        // 3.toggle([speed], [easing], [fn])用于绑定两个或多个事件处理器函数，以响应被选元素的轮流的 click 事件。
+        // 如果元素是可见的，切换为隐藏的；如果元素是隐藏的，切换为可见的。
+        // 无参数描述:对表格切换显示/隐藏
+        $('td').toggle();
+        $("p").toggle("slow"); //设置切换速度  slow/fast/normal/具体的值
+
+
+        // 4.slideDown([speed], [easing], [fn])通过高度变化（向下增大）来动态地显示所有匹配的元素，在显示完成后可选地触发一个回调函数。
+        // 这个动画效果只调整元素的高度，可以使匹配的元素以“滑动”的方式显示出来。
+        // 描述:以滑动方式显示隐藏的 <p> 元素：
+        $(".btn2").click(function () {
+            $("p").slideDown();  //设置切换速度  slow/fast/normal/具体的值
+        });
+
+        // 5.slideUp([speed, [easing], [fn]])通过高度变化（向上减小）来动态地隐藏所有匹配的元素，在隐藏完成后可选地触发一个回调函数。
+        // 这个动画效果只调整元素的高度，可以使匹配的元素以“滑动”的方式隐藏起来
+        // 描述: 用600毫秒缓慢的将段落滑上
+        $("p").slideUp("slow"); //同slideDown
+
+        // 6.slideToggle([speed], [easing], [fn])通过高度变化来切换所有匹配元素的可见性，并在切换完成后可选地触发一个回调函数。
+        // 这个动画效果只调整元素的高度，可以使匹配的元素以“滑动”的方式隐藏或显示
+        // 描述: 用600毫秒缓慢的将段落滑上或滑下
+        $("p").slideToggle("slow");
+
+
+        // 7.fadeIn([speed], [easing], [fn])通过不透明度的变化来实现所有匹配元素的淡入效果，并在动画完成后可选地触发一个回调函数。
+        // 这个动画只调整元素的不透明度，也就是说所有匹配的元素的高度和宽度不会发生变化。
+        // 描述: 用600毫秒缓慢的将段落淡入
+        $("p").fadeIn("slow");
+
+        // 8.fadeOut([speed], [easing], [fn])通过不透明度的变化来实现所有匹配元素的淡入效果，并在动画完成后可选地触发一个回调函数。
+        // 这个动画只调整元素的不透明度，也就是说所有匹配的元素的高度和宽度不会发生变化。
+        // 描述: 用600毫秒缓慢的将段落淡入
+        $("p").fadeOut("slow");
+
+        // 9.fadeToggle([speed, [easing], [fn]])通过不透明度的变化来开关所有匹配元素的淡入和淡出效果，并在动画完成后可选地触发一个回调函数。
+        // 这个动画只调整元素的不透明度，也就是说所有匹配的元素的高度和宽度不会发生变化。
+        // 描述: 用600毫秒缓慢的将段落淡入淡出切换
+        $("p").fadeToggle("slow", "linear");
+
+        // 10.fadeTo([[speed], opacity, [easing], [fn]])把所有匹配元素的不透明度以渐进方式调整到指定的不透明度，并在动画完成后可选地触发一个回调函数。
+        // 这个动画只调整元素的不透明度，也就是说所有匹配的元素的高度和宽度不会发生变化。
+        // 描述: 用600毫秒缓慢的将段落的透明度调整到0.66，大约2 / 3的可见度
+        $("p").fadeTo("slow", 0.66);
+        $("p").fadeTo("fast", 0.25, function () {
+            alert("Animation Done.");
+        });
+
+        // 11.animate(params,[speed],[easing],[fn])用于创建自定义动画的函数。
+        // 描述: 点击按钮后div元素的几个不同属性一同变化
+
+        // < button id="go" > Run</button >
+        //     <div id="block">Hello!</div>
+
+        // 在一个动画中同时应用三种类型的效果
+        $("#go").click(function () {
+            $("#block").animate({
+                width: "90%",
+                height: "100%",
+                fontSize: "10em",
+                borderWidth: 10
+            }, 1000);
+        });
+
+        // 12.stop([clearQueue], [jumpToEnd])停止所有在指定元素上正在运行的动画。
+        // 如果队列中有等待执行的动画(并且clearQueue没有设为true) ，他们将被马上执行
+        // clearQueue: 如果设置成true，则清空队列。可以立即结束动画。
+        // gotoEnd: 让当前正在执行的动画立即完成，并且重设show和hide的原始样式，调用回调函数等。
+
+        // 描述: 停止当前正在运行的动画：
+        $("#stop").click(function () {
+            $("#box").stop();
+        });
+
+
+        // 13.delay(duration,[queueName])设置一个延时来推迟执行队列中之后的项目。
+        // 描述:在.slideUp() 和 .fadeIn()之间延时800毫秒。
+        // <div id="foo"  style="border:1px solid red; width:100px; height:100px "></div>
+        $('#foo').slideUp(300).delay(800).fadeIn(400);
+
+
+        // 14.finish( [queue ] )停止当前正在运行的动画，删除所有排队的动画，并完成匹配元素所有的动画。
+        // 当.finish()在一个元素上被调用，立即停止当前正在运行的动画和所有排队的动画（如果有的话），
+        // 并且他们的CSS属性设置为它们的目标值（所有动画的目标值）。所有排队的动画将被删除。
+        // 如果第一个参数提供，该字符串表示的队列中的动画将被停止。
+        // .finish()方法和.stop(true, true)很相似，.stop(true, true)将清除队列，并且目前的动画跳转到其最终值。
+        // 但是，不同的是，.finish() 会导致所有排队的动画的CSS属性跳转到他们的最终值。
+        $("#complete").click(function () {
+            $("div").finish();
+        });
+    </script>
+
+
+</body>
+</html>

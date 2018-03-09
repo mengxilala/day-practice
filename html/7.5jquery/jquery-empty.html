@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-empty/remove/detach/clone的介绍</title>
+    <script src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <!-- empty() 删除匹配的元素集合中所有的子节点。 -->
+    <!-- 描述:把所有段落的子元素（包括文本节点）删除 -->
+    <!-- <p>Hello, <span>Person</span> <a href="#">and person</a></p> -->
+
+
+
+
+    <!-- remove([expr]) 从DOM中删除所有匹配的元素。 -->
+    <!-- 描述:从DOM中把所有段落删除 -->
+    <!-- <p>Hello</p> how are
+    <p>you?</p> -->
+
+
+    <!-- 描述:从DOM中把带有hello类的段落删除 -->
+    <!-- <p class="hello">Hello</p> how are <p>you?</p> -->
+
+
+
+
+    <!-- detach([expr])  从DOM中删除所有匹配的元素。 -->
+    <!-- 这个方法不会把匹配的元素从jQuery对象中删除，因而可以在将来再使用这些匹配的元素。
+    与remove()不同的是，所有绑定的事件、附加的数据等都会保留下来。 -->
+    <!-- 描述1:从DOM中把所有段落删除 -->
+    <!-- <p>Hello</p> how are <p>you?</p> -->
+
+    <!-- 描述:从DOM中把带有hello类的段落删除 -->
+    <!-- <p class="hello">Hello</p> how are <p>you?</p> -->
+
+
+
+    <!-- clone([Even[,deepEven]]) 克隆匹配的DOM元素并且选中这些克隆的副本。
+    在想把DOM文档中元素的副本添加到其他位置时这个函数非常有用。 -->
+    <!-- Even 一个布尔值（true 或者 false）指示事件处理函数是否会被复制 -->
+    <!-- 描述:克隆所有b元素（并选中这些克隆的副本），然后将它们前置到所有段落中。 -->
+    <!-- <b>Hello</b><p>, how are you?</p> -->
+
+
+    <!-- 描述:创建一个按钮，他可以复制自己，并且他的副本也有同样功能。 -->
+    <button>Clone Me!</button>
+    <script>
+        // 描述:把所有段落的子元素（包括文本节点）删除
+        // $("p").empty();
+
+        // 描述:从DOM中把所有段落删除
+        // $("p").remove();
+
+        // 描述:从DOM中把带有hello类的段落删除
+        // $("p").remove(".hello");
+
+
+        // 描述1: 从DOM中把所有段落删除
+        // $("p").detach();
+
+        // 描述:从DOM中把带有hello类的段落删除
+        // $("p").detach(".hello");
+
+
+
+        // 描述:克隆所有b元素（并选中这些克隆的副本），然后将它们前置到所有段落中。
+        // $("b").clone().prependTo("p");
+
+
+        // 描述:创建一个按钮，他可以复制自己，并且他的副本也有同样功能。
+        $("button").click(function () {
+            $(this).clone(true).insertAfter(this);
+        });
+    </script>
+
+</body>
+</html>

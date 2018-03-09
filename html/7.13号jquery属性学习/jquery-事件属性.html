@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-事件属性</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        // 1.ready(fn)当DOM载入就绪可以查询及操纵时绑定一个要执行的函数。
+        // 描述:在DOM加载完成时运行的代码，可以这样写：
+        $(document).ready(function () {
+            console.log('DOM加载就绪');
+        });
+        // 也可以简写为：
+        $(function () {
+            console.log('DOM加载就绪');
+        })
+
+
+
+        // 2.on(events,[selector],[data],fn)在选择元素上绑定一个或多个事件的事件处理函数。
+        $("p").on("click", function () { //点击事件
+            alert($(this).text());
+        });
+
+        function myHandler(event) {  // 回调
+            alert(event.data.foo);
+        }
+        $("p").on("click", { foo: "bar" }, myHandler);
+
+        $("form").on("submit", false); //通过返回false来取消默认的行为并阻止事件起泡。
+
+        $("form").on("submit", function (event) {  //通过使用 preventDefault() 方法只取消默认的行为。
+            event.preventDefault();
+        });
+
+        $("form").on("submit", function (event) { // 通过使用 stopPropagation() 方法只阻止一个事件起泡。
+            event.stopPropagation();
+        });
+
+
+        // 3.off(events,[selector],[fn]) 在选择元素上移除一个或多个事件的事件处理函数。off() 方法移除用.on()绑定的事件处理程序
+        $("p").off("click", "**");
+
+        // 4.bind 同on  jquery3.0已经废弃 
+
+        // 5.one(type,[data],fn) 为每一个匹配元素的特定事件（像click）绑定一个一次性的事件处理函数。 在每个对象上，这个事件处理函数只会被执行一次。
+        // 描述:当所有段落被第一次点击的时候，显示所有其文本。
+        $("p").one("click", function () {
+            alert($(this).text());
+        });
+
+        // 6.trigger(type,[data])在每一个匹配的元素上触发某类事件。这个函数也会导致浏览器同名的默认行为的执行。
+        // 描述:提交第一个表单，但不用submit()
+        $("form:first").trigger("submit");
+
+        // 描述:给一个事件传递参数
+        $("p").click(function (event, a, b) {
+            // 一个普通的点击事件时，a和b是undefined类型
+            // 如果用下面的语句触发，那么a指向"foo",而b指向"bar"
+        }).trigger("click", ["foo", "bar"]);
+
+        // 描述:下面的代码可以显示一个"Hello World"
+        $("p").bind("myEvent", function (event, message1, message2) {
+            alert(message1 + ' ' + message2);
+        });
+        $("p").trigger("myEvent", ["Hello", "World!"]);
+
+
+        // 7.triggerHandler(type, [data])这个特别的方法将会触发指定的事件类型上所有绑定的处理函数。但不会执行浏览器默认动作，也不会产生事件冒泡。
+
+        // 这个方法的行为表现与trigger类似，但有以下三个主要区别：
+        // * 第一，他不会触发浏览器默认事件。
+        // * 第二，只触发jQuery对象集合中第一个元素的事件处理函数。
+        // * 第三，这个方法的返回的是事件处理函数的返回值，而不是据有可链性的jQuery对象。此外，如果最开始的jQuery对象集合为空，则这个方法返回 undefined 。
+
+        // 描述:如果你对一个focus事件执行了 .triggerHandler() ，浏览器默认动作将不会被触发，只会触发你绑定的动作。
+
+        // <button id="old">.trigger("focus")</button>
+        // <button id="new">.triggerHandler("focus")</button> <br /> <br />
+        // <input type="text" value="To Be Focused" />
+
+        $("#old").click(function () {
+            $("input").trigger("focus");
+        });
+        $("#new").click(function () {
+            $("input").triggerHandler("focus");
+        });
+        $("input").focus(function () {
+            $("<span>Focused!</span>").appendTo("body").fadeOut(1000);
+        });
+
+
+        // 8.unbind(type,[data|fn]]) bind()的反向操作，从每一个匹配的元素中删除绑定的事件。jQuery 3.0中已弃用此方法，请用 off()代替。
+        // 如果没有参数，则删除所有绑定的事件。
+        // 你可以将你用bind()注册的自定义事件取消绑定。
+        // 如果提供了事件类型作为参数，则只删除该类型的绑定事件。
+        // 如果把在绑定时传递的处理函数作为第二个参数，则只有这个特定的事件处理函数会被删除。
+
+        // 描述: 把所有段落的所有事件取消绑定
+        $("p").unbind();
+        // 描述: 将段落的click事件取消绑定
+        $("p").unbind("click");
+
+        // 描述: 删除特定函数的绑定，将函数作为第二个参数传入
+        var foo = function () {
+            // 处理某个事件的代码
+        };
+        $("p").bind("click", foo); // ... 当点击段落的时候会触发 foo 
+        $("p").unbind("click", foo); // ... 再也不会被触发 foo
+
+
+        // 9.live(type, [data], fn)jQuery 给所有匹配的元素附加一个事件处理函数，即使这个元素是以后再添加进来的也有效。
+        // <body>
+        //     <div class="clickme">Click here</div>
+        // </body>
+
+        $('.clickme').bind('click', function () {
+            alert("Bound handler called.");
+            $('body').append('<div class="clickme">Another target</div>');
+            //尽管这个新的元素也能够匹配选择器 ".clickme" ，但是由于这个元素是在调用 .bind() 之后添加的，所以点击这个元素不会有任何效果。
+        });
+
+        // .live() 就提供了对应这种情况的方法。如果我们是这样绑定click事件的：
+        $('.clickme').live('click', function () {
+            alert("Live handler called.");
+            ('body').append('<div class="clickme">Another target</div>');
+            // 然后再点击新增的元素，他依然能够触发事件处理函数。
+            // http://jquery.cuishifeng.cn/live.html 参考网站
+            // 当一个事件处理函数用 .live() 绑定后，要停止执行其他的事件处理函数，那么这个函数必须返回 false。 仅仅调用 .stopPropagation() 无法实现这个目的。
+        });
+
+        // 我们可以“live ” 同时绑定mouseover和mouseout事件
+        $('.hoverme').live('mouseover mouseout', function (event) {
+            if (event.type == 'mouseover') {
+                // do something on mouseover
+            } else {
+                // do something on mouseout
+            }
+        });
+
+        // 也可以这样写
+        $("a").live({
+            click: function () {
+                // do something on click
+            },
+            mouseover: function () {
+                // do something on mouseover
+            }
+        });
+
+
+        // 10.die(type, [fn])从元素中删除先前用.live()绑定的所有事件.(此方法与live正好完全相反。)
+        // 如果不带参数，则所有绑定的live事件都会被移除。
+        // 你可以解除用live注册的自定义事件。
+        // 如果提供了type参数，那么会移除对应的live事件。
+        // 如果也指定了第二个参数function, 则只移出指定的事件处理函数。
+
+        // 从 jQuery 1.7 开始，不再建议使用 .die() (以及它的互补方法 .live())。请使用 .off() 来代替，用于移除通过 .on() 绑定的事件处理。
+        // 描述:给按钮解除click事件
+        function aClick() {
+            $("div").show().fadeOut("slow");
+        }
+        $("#unbind").click(function () {
+            $("#theone").die("click", aClick)
+        });
+
+
+        // 11.delegate(selector, [type], [data], fn)指定的元素（属于被选元素的子元素）添加一个或多个事件处理程序，并规定当这些事件发生时运行的函数。
+        // jQuery 3.0中已弃用此方法，请用 on()代替。
+        // 使用 delegate() 方法的事件处理程序适用于当前或未来的元素（比如由脚本创建的新元素）。
+        // 描述:当点击鼠标时，隐藏或显示 p 元素：
+        // <div style="background-color:red">
+        //     <p>这是一个段落。</p>
+        //     <button>请点击这里</button>
+        // </div>
+        $("div").delegate("button", "click", function () {
+            $("p").slideToggle();
+        });
+        // delegate这个方法可作为live()方法的替代，使得每次事件绑定到特定的DOM元素。
+        // 以下两段代码是等同的:
+        $("table").delegate("td", "hover", function () {
+            $(this).toggleClass("hover");
+        });
+        $("table").each(function () {
+            $("td", this).live("hover", function () {
+                $(this).toggleClass("hover");
+            });
+
+        });
+
+
+        // 12.undelegate([selector,[type],fn]) 删除由 delegate() 方法添加的一个或多个事件处理程序。jQuery 3.0中已弃用此方法，请用 off()代替。
+        // 描述: 从p元素删除由 delegate() 方法添加的所有事件处理器：
+        $("p").undelegate();
+        // 描述: 从p元素删除由 delegate() 方法添加的所有click事件处理器：
+        $("p").undelegate("click");
+        // 从form元素删除由 delegate() 方法添加的".whatever"命名空间：
+        var foo = function () {
+            //.....
+        };
+        //用delegate() 方法给click事件增加".whatever"命名空间
+        $("form").delegate(":button", "click.whatever", foo);
+        $("form").delegate("input[type='text']", "keypress.whatever", foo);
+
+        // 用undelegate()方法删除delegate()方法增加的".whatever"命名空间
+        $("form").undelegate(".whatever");
+
+
+
+        // 13.hover([over,]out)一个模仿悬停事件（鼠标移动到一个对象上面及移出这个对象）的方法。这是一个自定义的方法，它为频繁使用的任务提供了一种“保持在其中”的状态。
+        // over,out 描述:鼠标悬停的表格加上特定的类
+        $("td").hover(
+            function () {
+                $(this).addClass("hover");
+            },
+            function () {
+                $(this).removeClass("hover");
+            }
+        );
+
+        // out 描述:hover()方法通过绑定变量"handlerInOut"来切换方法。
+        $("td").bind("mouseenter mouseleave", handlerInOut);
+        $("td").hover(handlerInOut);
+
+
+        // 14.toggle([speed], [easing], [fn])用于绑定两个或多个事件处理器函数，以响应被选元素的轮流的 click 事件。
+        // 如果元素是可见的，切换为隐藏的；如果元素是隐藏的，切换为可见的。
+        // 无参数描述:对表格切换显示/隐藏
+        $('td').toggle();
+        $("p").toggle("slow"); //设置切换速度  slow/fast/normal/具体的值
+
+
+
+        // 15.focus([[data], fn])当元素获得焦点时，触发 focus 事件。
+        // 可以通过鼠标点击或者键盘上的TAB导航触发。这将触发所有绑定的focus函数，注意，某些对象不支持focus方法。
+        // 描述:当页面加载后将 id 为 'login' 的元素设置焦点:
+        $(document).ready(function () {
+            $("#login").focus();
+        });
+        // 描述: 使人无法使用文本框:
+        $("input[type=text]").focus(function () {
+            this.blur();
+        });
+
+
+        // 16.focusin([data], fn)当元素获得焦点时，触发 focusin 事件。
+        // focusin事件跟focus事件区别在于，他可以在父元素上检测子元素获取焦点的情况。
+        // 描述:获得焦点后会触发动画:
+
+        // <p><input type="text" /> <span>focusout fire</span></p>
+        // <p><input type="password" /> <span>focusout fire</span></p>
+
+        $("p").focusin(function () {  //这里如果把foucsin 换成 focus就不起作用 
+            $(this).find("span").css('display', 'inline').fadeOut(1000);
+        });
+
+
+        // 17.focusout([data], fn) 当元素失去焦点时触发 focusout 事件。
+        // focusout事件跟blur事件区别在于，他可以在父元素上检测子元素失去焦点的情况。
+        // 描述:失去焦点后会触发动画:
+        // <p><input type="text" /> <span>focusout fire</span></p>
+        // <p><input type="password" /> <span>focusout fire</span></p>
+
+        $("p").focusout(function () {  //这里如果把foucsout换成 blur 就不起作用 
+            $(this).find("span").css('display', 'inline').fadeOut(1000);
+        });
+
+        // 18.blur([[data], fn])当元素失去焦点时触发 blur 事件。
+        // 这个函数会调用执行绑定到blur事件的所有函数，包括浏览器的默认行为。可以通过返回false来防止触发浏览器的默认行为。blur事件会在元素失去焦点的时候触发，既可以是鼠标行为，也可以是按tab键离开的
+        // 描述:触发所有段落的blur事件
+
+        $("p").blur(function () { alert("Hello World!") });
+
+
+        // 19.change([[data], fn])当元素的值发生改变时，会发生 change 事件。
+        // 该事件仅适用于文本域（text field），以及 textarea 和 select 元素。当用于 select 元素时，change 事件会在选择某个选项时发生。
+        // 当用于 text field 或 text area 时，该事件会在元素失去焦点时发生。
+        // 描述:触发被选元素的 change 事件。
+
+        // <select class="selector">
+        //     <option value="volvo">Volvo</option>
+        //     <option value="saab">Saab</option>
+        //     <option value="opel">Opel</option>
+        //     <option value="audi">Audi</option>
+        // </select>
+        $('.selector').change(function () { // 当用于 select 元素时，change 事件会在选择某个选项时发生。
+            alert('值改变了');
+        });
+
+        // <textarea rows="3" cols="20">
+        //     用于 text field 或 text area 时，该事件会在元素失去焦点时发生。
+        // </textarea>
+
+
+        // 20.click([[data], fn])触发每一个匹配元素的click事件。
+        // 这个函数会调用执行绑定到click事件的所有函数。
+        // 描述:将页面内所有段落点击后隐藏。
+        $("p").click(function () { $(this).hide(); });
+
+
+        // 22.dblclick([[data], fn])当双击元素时，会发生 dblclick 事件。
+        // 当鼠标指针停留在元素上方，然后按下并松开鼠标左键时，就会发生一次 click。在很短的时间内发生两次 click，即是一次 double click 事件。
+        // 提示：如果把 dblclick 和 click 事件应用于同一元素，可能会产生问题。
+        // 描述:给页面上每个段落的双击事件绑上 "Hello World!" 警告框
+        $("p").dblclick(function () { alert("Hello World!"); });
+
+
+        // 23.error([[data],fn])当元素遇到错误（没有正确载入）时，发生 error 事件。
+        // 描述:隐藏JavaScript错误:
+        $(window).error(function () {
+            return true;
+        });
+
+
+        // 24.keydown([[data], fn])当键盘或按钮被按下时，发生 keydown 事件。
+        // 注释：如果在文档元素上进行设置，则无论元素是否获得焦点，该事件都会发生。
+        // 描述:在页面内对键盘按键做出回应，可以使用如下代码:
+        $(window).keydown(function (event) {   // 按钮按下的时候触发
+            switch (event.keyCode) {
+                // ...
+                // 不同的按键可以做不同的事情
+                // 不同的浏览器的keycode不同
+                // 更多详细信息:     http://unixpapa.com/js/key.html
+                // 常用keyCode： 空格 32   Enter 13   ESC 27
+            }
+        });
+
+
+        // 25.keypress([[data], fn])当键盘或按钮被按下时，发生 keypress 事件。
+        // keypress 事件与 keydown 事件类似。当按钮被按下时，会发生该事件。它发生在当前获得焦点的元素上。
+        // 不过，与 keydown 事件不同，每插入一个字符，就会发生 keypress 事件。注释：如果在文档元素上进行设置，则无论元素是否获得焦点，该事件都会发生。
+
+        // 26.keyup([[data], fn])当按钮被松开时，发生 keyup 事件。它发生在当前获得焦点的元素上。
+        // 注释：如果在文档元素上进行设置，则无论元素是否获得焦点，该事件都会发生。
+        $("input").keyup(function () { // 按钮被松开的的时候触发
+            $("input").css("background-color", "#D6D6FF");
+        });
+
+
+        // 27.mousedown([[data], fn])当鼠标指针移动到元素上方，并按下鼠标按键时，会发生 mousedown 事件。
+        // mousedown 与 click 事件不同，mousedown 事件仅需要按键被按下，而不需要松开即可发生。
+        // 描述:当按下鼠标按钮时，隐藏或显示元素：
+        $("button").mousedown(function () {  // 按下鼠标按钮的时候就触发
+            $("p").slideToggle();
+        });
+
+        // 28.mouseup([[data], fn])当在元素上放松鼠标按钮时，会发生 mouseup 事件。
+        // 与 click 事件不同，mouseup 事件仅需要放松按钮。当鼠标指针位于元素上方时，放松鼠标按钮就会触发该事件。
+        // 描述:当松开鼠标按钮时，隐藏或显示元素：
+        $("button").mouseup(function () {  // 松开鼠标按钮的时候就触发
+            $("p").slideToggle();
+        });
+
+        // 29.mouseenter([[data], fn])当鼠标指针穿过元素时，会发生 mouseenter 事件。该事件大多数时候会与mouseleave 事件一起使用。
+        // 与 mouseover 事件不同，只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。如果鼠标指针穿过任何子元素，同样会触发 mouseover 事件。
+        // 描述:当鼠标指针进入（穿过）元素时，改变元素的背景色：
+        $("p").mouseenter(function () {  // 只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件 而mouseover事件指针进入子元素时也会触发
+            $("p").css("background-color", "yellow");
+        });
+
+
+        // 30.mouseover([[data], fn])当鼠标指针位于元素上方时，会发生 mouseover 事件。
+        // 该事件大多数时候会与 mouseout 事件一起使用。
+        // 注释：与 mouseenter 事件不同，不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件。只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。
+        // 描述: 当鼠标指针位于元素上方时时，改变元素的背景色：
+        $("p").mouseover(function () { // 与 mouseenter 事件不同，不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件
+            $("p").css("background-color", "yellow");
+        });
+
+        // 31.mouseleave([[data], fn])当鼠标指针离开元素时，会发生 mouseleave 事件。该事件大多数时候会与mouseenter 事件一起使用。
+        // 与 mouseout 事件不同，只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。如果鼠标指针离开任何子元素，同样会触发 mouseout 事件。
+        // 描述:当鼠标指针离开元素时，改变元素的背景色：：
+        $("p").mouseleave(function () { // 只有在鼠标指针穿过被选元素时，才会触发 mouseleave 事件 而mouseout事件指针进入子元素时也会触发
+            $("p").css("background-color", "#E9E9E4");
+        });
+
+
+        // 32.mouseout([[data], fn])当鼠标指针从元素上移开时，发生 mouseout 事件。
+        // 该事件大多数时候会与 mouseover 事件一起使用。
+        // 注释：与 mouseleave 事件不同，不论鼠标指针离开被选元素还是任何子元素，都会触发 mouseout 事件。只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。
+        // 描述: 当鼠标从元素上移开时，改变元素的背景色：
+        $("p").mouseout(function () { // 与 mouseleave 事件不同，不论鼠标指针离开被选元素还是任何子元素，都会触发 mouseout 事件。
+            $("p").css("background-color", "#E9E9E4");
+        });
+
+        // 33.mousemove([[data], fn])当鼠标指针在指定的元素中移动时，就会发生 mousemove 事件。
+        // mousemove事件处理函数会被传递一个变量——事件对象，其.clientX 和 .clientY 属性代表鼠标的坐标
+        // 描述:获得鼠标指针在页面中的位置：
+        $(document).mousemove(function (e) {
+            $("span").text(e.pageX + ", " + e.pageY);
+        });
+
+        // 34.resize([[data],fn])当调整浏览器窗口的大小时，发生 resize 事件。
+        // 描述: 改变页面窗口的大小时触发:
+        $(window).resize(function () {
+            alert("Stop it!");
+        });
+
+
+        // 35.scroll([[data], fn])当用户滚动指定的元素时，会发生 scroll 事件。
+        // scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。
+        // 描述:当页面发生滚动时，执行的函数:
+        $(window).scroll(function () {
+            /* ...do something... */
+        });
+
+        // 36.select([[data], fn])当 textarea 或文本类型的 input 元素中的文本被选择时，会发生 select 事件。
+        // 这个函数会调用执行绑定到select事件的所有函数，包括浏览器的默认行为。可以通过在某个绑定的函数中返回false来防止触发浏览器的默认行为。
+        // 当文本框中文本被选中时执行的函数:
+        $(":text").select(function () {
+            /* ...do something... */
+        });
+
+
+        // 37.submit([[data], fn])当提交表单时，会发生 submit 事件。该事件只适用于表单元素。
+        // 描述: 如果你要阻止表单提交:
+        $("form").submit(function () {
+            return false;
+        });
+
+        // 38.unload([[data], fn])在当用户离开页面时，会发生 unload 事件。具体来说，当发生以下情况时，会发出 unload 事件：
+        // 点击某个离开页面的链接;在地址栏中键入了新的 URL;使用前进或后退按钮;关闭浏览器;重新加载页面;
+        // 描述:页面卸载的时候弹出一个警告框:
+        $(window).unload(function () {
+            console.log("Bye now!");
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数据处理</title>
+</head>
+<body>
+<script>
+    "use strict";
+     var loginData = {
+     "usable":3,
+     "visited":{
+         "00000000":1
+     },
+     "options":{
+         "resource_share_never_remind":"1",
+         "test3":"1",
+         "resource_push_never_remind":"1",
+         "test1":"1"
+     },
+     "user":{
+         "area":"330108",
+         "relativename":"你杭州学军小学",
+         "isCountryUser":0,
+         "relativeid":"10001",
+         "icon":"http://avatar.xueleyun.com/images/96x96_b29b17ad9b0439e3c000cc2665df60e3.jpg",
+         "mobile":"18967636895",
+         "userId":"1000110002",
+         "positionName":"班主任",
+         "realName":"刘德华",
+         "positionId":"HEADMASTER",
+         "areaName":"滨江区",
+         "identityId":"TEACHER",
+         "schoolId":"10001",
+         "identityDescription":"教师",
+         "schoolName":"杭州学军小学55",
+         "email":"2668134549@qq.com",
+         "status":1
+     },
+         "key":"DA5D9E9E-24DD-4087-87C7-67844E4D02CE",
+         "token":"a210592906df575a20054ec299c252de"
+     }
+    JSON.parse(loginData);
+    console.log(loginData);
+    function shujubianli(){
+        for (var Key in loginData){
+            console.log(key);
+            console.log(loginData[Key]);
+  //          Websitelogo =Websitelogo+'&'+''+Key+'='+loginData[Key]+'';
+            if(key.toString() == "visited" ){
+                for(var key in loginData[Key]){
+                    console.log(key);
+                    console.log(loginData[Key]);
+                }
+            };
+            if(key.toString() == "options" ){
+                for(var key in loginData[Key]){
+                    console.log(key);
+                    console.log(loginData[Key]);
+                }
+            };
+            if(key.toString() == "user" ){
+                for(var key in loginData[Key]){
+                    console.log(key);
+                    console.log(loginData[Key]);
+                }
+            }
+        }
+    };
+</script>
+</body>
+</html>

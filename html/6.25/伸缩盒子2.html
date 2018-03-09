@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+    <title>伸缩盒子2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .warp {
+            width: 100%;
+            height: 500px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            /*flex-direction”和“flex-wrap”属性的缩写版本,默认row nowrap*/
+            /*flex-flow: row nowrap;*/
+            /*设置伸缩容器在横向方向上的对齐方式。*/
+            justify-content: center;
+            /*设置伸缩容器在纵向方向上的对齐方式。*/
+            align-items: center;
+            /*当伸缩容器的纵向还有多余空间时，可以用来调准伸缩容器横向在伸缩容器里的对齐方式*/
+            /*align-content: center;*/
+            border: 1px solid red;
+        }
+        
+        .warp .modular {
+            width: 80px;
+            height: 8        0px;
+            text-align: center;
+            /*设置伸缩项目出現的順序。*/
+            /*order: -1;*/
+            /*设置伸缩项目扩展的比例。*/
+            flex-grow: 1;
+            /*设置伸缩项目收缩的比例。*/
+            /*flex-shrink: 2;*/
+            /*设置伸缩项目的伸缩基准值。*/
+            /*flex-basis: auto;*/
+            /*flex-grow”、“flex-shrink”和“flex-basis”三个属性的缩写*/
+            /*flex: 1 2 100px;*/
+            /*用来在单独的伸缩项目上覆写默认的对齐方式。*/
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warp">
+        <div class="modular">1</div>
+        <div class="modular">2</div>
+        <div class="modular">3</div>
+        <div class="modular">4</div>
+    </div>
+</body>
+
+</html>

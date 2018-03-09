@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed和watch</title>
+    <style>
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        #app {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+
+        input {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+            display: block;
+        }
+
+        p {
+            border-top: 3px double #ccc;
+            margin-top: 20px;
+            padding-top: 20px;
+            text-align: center;
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .team {
+            display: flex;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 3px double #ccc;
+        }
+
+        div {
+            margin: 0 10px;
+        }
+
+        span {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px 60px;
+            outline: none;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 9px #95a5a6;
+            display: block;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        button:active {
+            background-color: #2ecc71;
+            box-shadow: 0 5px #95a5a6;
+            transform: translateY(4px);
+        }
+
+
+        h2 {
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- computed是适用于对多数据变动进行监听，然后来维护一个状态，就是返回一个状态
+    wacth是对一个数据监听，在数据变化时，会返回两个值，一个是value(当前值)，二是oldvalue是变化前的值.主要用于监听一个数据来进行复杂的逻辑操作 -->
+    <div id="app">
+        <h1>比赛时间:{{time}}s</h1>
+        <h2>直播播报:{{result}}</h2>
+        <div class="team">
+            <div>
+                <span>中国队进球数:{{team.china}}</span>
+                <button v-on:click="team.china++">点击中国队进一球</button>
+            </div>
+            <div>
+                <span>韩国队进球数:{{team.korea}}</span>
+                <button v-on:click="team.korea++">点击韩国队进一球</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                time: 5400,
+                team: {
+                    china: 0,
+                    korea: 0
+                },
+                result: "双方僵持"
+            },
+            created() {
+                let time = setInterval(() => {
+                    this.time--;
+                    if (this.time == 0) {
+                        clearInterval(time);
+                    }
+                }, 1000)
+            },
+            watch: {
+                time(value, oldVal) {
+                    if (value > 0 && value < 5400) {
+                        if (this.team.china > this.team.korea) {
+                            this.result = '中国队领先'
+                        } else if (this.team.china < this.team.korea) {
+                            this.result = '韩国队领先'
+                        } else {
+                            this.result = '双方僵持'
+                        }
+                    } else {
+                        if (this.team.china > this.team.korea) {
+                            this.result = '中国队胜利'
+                        } else if (this.team.china < this.team.korea) {
+                            this.result = '韩国队胜利'
+                        } else {
+                            this.result = '双方平局'
+                        }
+                    }
+                },
+                team(value, oldval) {
+                    if (this.time > 0 && this.time < 5400) {
+                        if (value.china > value.korea) {
+                            this.result = '中国队领先'
+                        } else if (value.china < value.korea) {
+                            this.result = '韩国队领先'
+                        } else {
+                            this.result = '双方僵持'
+                        }
+                    } else {
+                        if (value.china > value.korea) {
+                            this.result = '中国队赢'
+                        } else if (value.china < value.korea) {
+                            this.result = '韩国队赢'
+                        } else {
+                            this.result = '平局'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

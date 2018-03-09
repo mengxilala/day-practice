@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的计算属性</title>
+    <style>
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: montserrat;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        #app {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+        #example {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+
+        input {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+            display: block;
+        }
+
+        p {
+            border-top: 3px double #ccc;
+            margin-top: 20px;
+            padding-top: 20px;
+            text-align: center;
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 15px 60px;
+            outline: none;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 9px #95a5a6;
+            display: block;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        button:active {
+            background-color: #2ecc71;
+            box-shadow: 0 5px #95a5a6;
+            transform: translateY(4px);
+        }
+
+        #app1 {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            box-sizing: border-box;
+            min-width: 30vw;
+            margin-left: 10px;
+        }
+
+        #app1 .twitter {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        #app1 img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, .15);
+            box-shadow: 0 0 3px rgba(0, 0, 0, .05);
+            margin-right: 15px;
+        }
+
+
+        #app1 textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+            display: block;
+            resize: none;
+            width: 20%;
+            min-height: 100px;
+        }
+
+        #app1 .content {
+            flex: 1;
+        }
+
+        #app1 p {
+            color: #333;
+            font-size: 12px;
+        }
+
+        #example-1 {
+            background: white;
+            border: 0 none;
+            border-radius: 3px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-left: 10px;
+        }
+
+
+        #example-1 input {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+            display: block;
+        }
+
+        #example-1 p {
+            border-top: 3px double #ccc;
+            margin-top: 20px;
+            padding-top: 20px;
+            text-align: center;
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #example-1 .team {
+            display: flex;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 3px double #ccc;
+        }
+
+        #example-1 .team div {
+            margin: 0 10px;
+        }
+
+        #example-1 .teamspan {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        #example-1 button {
+            padding: 15px 60px;
+            outline: none;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 9px #95a5a6;
+            display: block;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: #fff;
+            width: 100%;
+        }
+
+        #example-1 button :hover {
+            background-color: #2ecc71;
+        }
+
+        #example-1 button:active {
+            background-color: #2ecc71;
+            box-shadow: 0 5px #95a5a6;
+            transform: translateY(4px);
+        }
+
+        h2 {
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- 一个简单的demo -->
+    <div id="app">
+        <button v-on:click="count++">{{count+'分'}}</button>
+        <div>
+            <input v-model="message">
+        </div>
+        <p>{{message.split('').reverse().join('')}}</p>
+    </div>
+
+    <!-- 使用filter -->
+    <div id="example">
+        <button v-on:click="count++">{{count+'分'}}</button>
+        <div>
+            <input v-model="message">
+        </div>
+        <p>{{message | reverseString}}</p>
+    </div>
+
+    <!-- vue的computed -->
+    <div id="app1">
+        <div class="twitter">
+            <img v-bind:src="imgUrl" alt="这是一张图片">
+            <div class="content">
+                <textarea v-model="content" v-bind:maxLength="totalCount"></textarea>
+                <p>您还可以再输入{{reduceCount}}字</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 一个足球比赛记分的示例 -->
+    <div id="example-1">
+        <h1>比赛时间:{{time}}s</h1>
+        <h2>直播播报:{{result}}</h2>
+        <div class="team">
+            <div>
+                <span>中国队进球数:{{team.china}}</span>
+                <button v-on:click="team.china++">点击中国队进一球</button>
+            </div>
+            <div>
+                <span>韩国队进球数:{{team.korea}}</span>
+                <button v-on:click="team.korea++">点击韩国队进一球</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/vue.js"></script>
+    <script>
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                count: 0,
+                message: ''
+            }
+        })
+        // 使用filter
+        var example = new Vue({
+            el: "#example",
+            data: {
+                count: 0,
+                message: ''
+            },
+            filters: {
+                reverseString(value) {
+                    if (!value) return;
+                    value = value.split('').reverse().join('');
+                    return value;
+
+                }
+            }
+        })
+
+        // vue的computed
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                imgUrl: '../../images/loading.png',
+                totalCount: 140, // 总共只给输入140字 
+                content: ''
+            },
+            computed: {
+                reduceCount() {
+                    return this.totalCount - this.content.length;
+                }
+            }
+        })
+
+        // 一个足球比赛记分的示例
+        var example1 = new Vue({
+            el: "#example-1",
+            data: {
+                time: 5400,
+                team: {
+                    china: 0,
+                    korea: 0
+                }
+            },
+
+            // created
+            // 这是它的一个生命周期钩子函数，就是一个vue实例被生成后调用这个函数。一个vue实例被生成后还要绑定到某个html元素上，之后还要进行编译，然后再插入到document中。
+            // 每一个阶段都会有一个钩子函数，方便开发者在不同阶段处理不同逻辑。一般可以在created函数中调用ajax获取页面初始化所需的数据。
+            created() {
+                var time = setInterval(() => {
+                    this.time--;
+                    if (this.time == 0) {
+                        clearInterval(time)
+                    }
+                }, 1000)
+            },
+            computed: {
+                result() {
+                    if (this.time > 0 && this.time < 5400) {
+                        if (this.team.china > this.team.korea) {
+                            return '中国队领先';
+                        } else if (this.team.china < this.team.korea) {
+                            return '韩国队领先';
+                        } else {
+                            return '双方僵持';
+                        }
+                    } else {
+                        if (this.team.china > this.team.korea) {
+                            return '中国队赢';
+                        } else if (this.team.china < this.team.korea) {
+                            return '韩国队赢';
+                        } else {
+                            return '平局';
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

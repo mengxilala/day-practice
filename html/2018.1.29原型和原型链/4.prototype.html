@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>prototype</title>
+</head>
+<body>
+    <script>
+        var obj = { name: 'jack' }
+        var arr = [1, 2, 3]
+        var reg = /hello/g
+        var date = new Date
+        var err = new Error('exception')
+
+        console.log(obj.__proto__ === Object.prototype) // true
+        console.log(arr.__proto__ === Array.prototype)  // true
+        console.log(reg.__proto__ === RegExp.prototype) // true
+        console.log(date.__proto__ === Date.prototype)  // true
+        console.log(err.__proto__ === Error.prototype)  // true
+
+
+        function Person(name) {
+            this.name = name;
+        }
+        var p = new Person('jack')
+        console.log(p.__proto__ === Person.prototype) // true
+
+
+        // p 是 Person 的实例对象，p 的内部原型总是指向其构造器 Person 的原型对象 prototype。
+        // 每个对象都有一个 constructor 属性，可以获取它的构造器，因此以下打印结果也是恒等的：
+
+        function Person(name) {
+            this.name = name
+        }
+        var p = new Person('jack')
+        console.log(p.__proto__ === p.constructor.prototype) // true
+
+
+    </script>
+</body>
+</html>

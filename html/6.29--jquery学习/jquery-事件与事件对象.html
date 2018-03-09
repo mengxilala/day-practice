@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-事件与事件对象</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="testDiv1" onclick="showMsg();">单击事件 1</div>
+    <div id="testDiv2">单击事件 2</div>
+    <div id="testDiv3">
+        <p>好好学习</p>
+        <p>就能天天向上？</p>
+        <p>人丑就要多读书</p>
+    </div>
+    <input type="text" value="study jquery">
+    <!-- <input type="text" value="study vue">
+    <input type="text" value="study angular"> -->
+    <button id="old">触发input的指定事件</button>
+    <script>
+        function showMsg(event) {
+            alert("!!!");
+        }
+
+        //  ie中是事件名称前面有"on". 但是使用bind()函数我们不用区分ie和dom ,  因为内部jQuery已经帮我们统一了事件的名称.
+        $("#testDiv2").bind("click", function (event) { alert("one"); });
+        $("#testDiv2").bind("click", function (event) { alert("two"); });
+
+        // 为每一个匹配元素的特定事件绑定一个事件处理器函数。
+        // $("p").bind("click", function () {
+        //     alert($(this).text());
+        // });
+
+
+        // 为每一个匹配元素的特定事件（像click）绑定一个一次性的事件处理函数。只执行一次
+        // $("p").one("click", function () {
+        //     alert($(this).text());
+        // });
+
+
+        $("p").click(function (event, a, b) {
+            // 一个普通的点击事件时，a和b是undefined类型 
+            // 如果用下面的语句触发，那么a指向111,而b指向"bar" 
+            //console.log(typeof a); //number类型
+            // console.log(typeof b); //string类型
+        }).trigger("click", [111, "bar"]);   // trigger() 方法触发被选元素的指定事件类型。
+
+
+
+        // trigger 与 triggerHandler的区别
+        // 1.都是触发选中元素的某类事件
+        // 2.trigger这个函数会导致浏览器同名的默认行为的执行。如果要阻止这种默认行为，应返回false。
+        // 3.triggerHandler()只会触发第一个匹配的元素上的事件，而 trigger()会触发所有匹配元素的事件；
+        // 4.triggerHandler这个特别的方法将会触发指定的事件类型上所有绑定的处理函数。但不会执行浏览器默认动作.
+        $('input').focus(function () {
+            console.log('我是input的focus事件');
+        });
+
+
+        $("#old").click(function () {
+            $("input").trigger("focus");
+           
+            // 会打印两次 ’我是input的focus事件‘
+        });
+
+        // $("#old").click(function () {
+        //     $("input").triggerHandler("focus");
+        //     // 会打印一次 ’我是input的focus事件‘
+        // });
+    </script>
+</body>
+
+</html>

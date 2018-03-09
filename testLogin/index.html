@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>记住帐号和密码</title>
+</head>
+<body>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <div>
+        用户名:<input type="text" id="txtUserName"> 
+        密码：<input type="password" id="txtPassword">
+        <input type="button" onclick="SetPwdAndChk()" value="进入" />
+        <div id="textArea">
+
+        </div>
+    </div>
+    <script>
+         function SetPwdAndChk() {
+            var user =document.getElementById('txtUserName').value;
+            var pwd =document.getElementById('txtPassword').value;
+            console.log(user);
+            console.log(pwd);
+            localStorage.user = user;
+            localStorage.pwd = pwd;
+        }
+    </script>
+</body>
+</html>

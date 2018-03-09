@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery选择器</title>
+    <script src="../../js/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- selector属性的返回值是String类型，返回该jQuery对象的原始选择器。 通过什么方式获取元素的
+
+    如果当前jQuery对象不是通过传入选择器字符串来获得的，那么将返回空字符串""。 -->
+
+
+    <div id="n1">
+        <div id="n2">
+            <ul id="n3">
+                <li id="n4">item1</li>
+                <li id="n5">item2</li>
+                <li id="n6">item3</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <script>
+        var $li = $("ul li");
+        console.log($li.selector); // ul li
+
+        var $p = $("#n1 p");
+        // 虽然$p是一个空的jQuery对象，没有匹配到任何元素，但也包含了传入的选择器信息
+        console.log($p.selector); // #n1 p
+
+        var $ul = $("#n1").find("ul");
+        // jQuery根据我们的操作自动计算出相应的选择器
+        console.log($ul.selector); // #n1 ul
+
+        var div_n2 = document.getElementById("n2");
+        var $n2 = $(div_n2); // 以DOM元素的方式获取jQuery对象
+        console.log($n2.selector); // (空字符串)
+
+    </script>
+</body>
+
+</html>

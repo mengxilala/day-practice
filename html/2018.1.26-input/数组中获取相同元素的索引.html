@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 数组中获取相同元素的索引，并把相同的元素删除 -->
+    <input type="text" id="input">
+    <button id="button">登录</button>
+    <script>
+        // var aaa = [1, 2, 3, 4, 5, 5, 5, 2, 3, 45, 6,5, 7, 7, 3, 8, 9,5];
+        function searchKeys(needle, haystack) {
+            var result = [];
+            for (i in haystack) {
+                if (haystack[i] == needle) {
+                    result.push(i);
+                }
+            }
+            return result;
+        }
+        // var list = [];
+        // console.log(searchKeys(5, aaa));
+        // list = searchKeys(5, aaa);
+        // for (var i = 0; i < list.length; i++) {
+        //     console.log(list[i]);
+        //     aaa.splice(list[i] - i, 1)
+
+        // }
+
+        // console.log(aaa);
+
+
+
+
+        // f('superman');
+        // var f = function (name) {
+        //     console.log(name);
+        // }
+
+
+        // var getName = function () {
+        //     console.log(2);
+        // }
+        // function getName() {
+        //     console.log(1);
+        // }
+        // getName();
+
+        // var getName = function () {
+        //     console.log(2);
+        // }
+        // function getName() {
+        //     console.log(1);
+        // }
+        // getName();
+
+
+
+
+        // console.log(bar);
+        // var bar = 10;
+        // var bar = 20;
+        // var bar = 30;
+        // foo(); //300
+        // function foo() {
+        //     console.log(100);
+        // }
+
+        // function foo() {
+        //     console.log(200);
+        // }
+
+        // function foo() {
+        //     console.log(300);
+        // }
+        // var bar = 10;
+        // var bar = 20;
+        // var bar = 30;
+
+
+        // console.log(foo);
+        // console.log(bar);
+        // function foo() {
+        //     console.log("函数声明");
+        // }
+        // var bar = "变量";
+
+
+        var value = 'hello';
+        function show() {
+            alert(value);  //hello
+            if (!value) {
+                value = 'function';
+            }else{
+                value = 'object'; 
+            }
+            alert(value); //function
+        }
+        show()
+
+    </script>
+</body>
+</html>

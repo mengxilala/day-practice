@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+</head>
+<body>
+    <!-- 使用v-for遍历数组 -->
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in items">index-{{index}}:{{item}}</li>
+        </ul>
+    </div>
+
+    <!-- 输出一个具有排序效果的数组 -->
+    <div id="example">
+        <ul>
+            <li v-for="(item,index) in sortItems">index-{{index}}:{{item}}</li>
+        </ul>
+        <div>
+            <p v-for="objItem in objItems">{{objItem.firstName}} {{objItem.lastName}} is {{objItem.age}} years old!</p>
+        </div>
+    </div>
+
+    <!-- 使用v-for遍历对象 -->
+    <div id="app1">
+        <ul>
+            <li v-for="(value,key,index) in obj">{{index}}.{{key}}:{{value}}</li>
+        </ul>
+    </div>
+
+
+    <!-- 一段取值范围的v-for -->
+    <div id="app2">
+        <ul>
+            <li v-for="n in 20">{{n}}</li>
+        </ul>
+    </div>
+
+    <!-- v-for和一个template -->
+    <!-- 类似于v-if，你也可以利用带有v-for的<template>渲染多个元素 -->
+    <div id="app3">
+        <ul>
+            <template v-for="(value,key) in obj">
+                <li>
+                    <label v-bind:for="key">{{key}}:</label>
+                    <input type="text" v-bind:placeholder="value" v-bind:id="key">
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <!-- 一个组件的v-for -->
+    <!-- 在自定义组件里，也可以像任何普通元素一样用v-for。 -->
+    <my-component v-for="item in items" v-bind:key="item.id"></my-component>
+    <!-- 2.2.0+ 的版本里，当在组件中使用 v-for 时，key 现在是必须的。 -->
+    <my-component 
+        v-for="(item, index) in items" 
+        v-bind:item="item" 
+        v-bind:index="index" 
+        v-bind:key="item.id" >
+    </my-component>
+    <!-- 不自动注入 item 到组件里的原因是，因为这使得组件会与 v-for 的运作紧密耦合。在一些情况下，明确数据的来源可以使组件可重用 -->
+
+    <!-- 一个简单的TODO示例 -->
+    <div id="todo">
+        <input v-model="newTodoText" v-on:keyup.enter="addNewTodo" placeholder="Add a todo">
+        <ul>
+            <li is="todoItem" v-for="(todo,index) in todos" v-bind:title="todo" v-on:remove="todos.splice(index,1)"></li>
+        </ul>
+    </div>
+
+    <script src="../../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                items: [1, 3, 5, 7, 6, 23, 45]
+            }
+        })
+
+        var example = new Vue({
+            el: "#example",
+            data: {
+                // items: ['qinzi', 'rongzi', 'meizi', 'lazi', 'lanzi']
+                items: [1, 29, 18, 3, 5, 7, 6, 23, 45],
+                objItems: [
+                    {
+                        firstName: 'Jack',
+                        lastName: 'Li',
+                        age: 25
+                    },
+                    {
+                        firstName: 'Rose',
+                        lastName: 'Luo',
+                        age: 22
+                    },
+                ]
+            },
+            computed: {
+                sortItems: function () {
+                    return this.items.sort(sortNumber)
+                }
+            },
+        })
+
+        function sortNumber(a, b) {
+            return b - a;
+        }
+
+        // 在Vue中同样包含一组观察数组变异方法，这些方法将会触发元素的重新更新（视图更新），
+        // 这些方法也是JavaScript中数组中常看到的方法：push()、pop()、shift()、unshift()、splice()、sort()、reverse()。
+        // push():  example.items.push(97)
+        // pop() :  example.items.pop() 从数组的末尾删除一个元素
+        // shift(): example.items.shift()从数组的开头删除一个元素
+        // unshift(): example.items.unshift()从数组的开头添加一个元素
+        // splice() 向/从数组中添加/删除项目，然后返回被删除的项目。注释：该方法会改变原始数组.
+        // http://www.w3school.com.cn/jsref/jsref_splice.asp 参照splice的详解
+        // slice() 方法可从已有的数组中返回选定的元素。注释：该方法不会改变原始数组.但总是返回一个新数组。当使用这些方法时，可以用新数组替换旧数组。
+        // arrayObject.slice(start,end) 包前不包后
+
+        // var arr = new Array(6)
+        // arr[0] = "George"
+        // arr[1] = "John"
+        // arr[2] = "Thomas"
+        // arr[3] = "James"
+        // arr[4] = "Adrew"
+        // arr[5] = "Martin"
+
+        // document.write(arr + "<br />")
+        // document.write(arr.slice(2, 4) + "<br />")
+        // document.write(arr.slice(2) + "<br />")
+        // document.write(arr)
+
+
+        // 输出：
+        // George, John, Thomas, James, Adrew, Martin
+        // Thomas, James
+        // Thomas, James, Adrew, Martin
+        // George, John, Thomas, James, Adrew, Martin
+        // http://w3school.com.cn/jsref/jsref_slice_array.asp 参照slice的详解
+
+
+
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                obj: {
+                    firstName: 'zhang',
+                    lastName: 'mengxi',
+                    age: 23
+                }
+            },
+            mounted() {
+                // 除了Vue.set()之外，还可以使用app.$set实例方法，它其实就是Vue.set的别名
+                this.$set(this.obj, '职位', '码农')
+                // 有时候可能需要为已有对象赋予多个新属性，比如使用Object.assign()或_.extend()。在这种情况下，应该用两个对象的属性创建一个新的对象
+                this.obj = Object.assign({}, this.obj, {
+                    favoriteFood: 'apple',
+                    gender: 23
+                })
+            }
+        })
+
+        //    数组可以变异，但对于对象而言，Vue不能检测对象属性的添加或删除。这主要也是由于JavaScript的限制。
+        //    不过在Vue中，对于已经创建好的实例，可以使用Vue.set(object, key, value)方法向嵌套对象添加响应式属性
+        Vue.set(app1.obj, 'from', '河南');
+
+
+        var app2 = new Vue({
+            el: "#app2",
+            data: {
+
+            }
+        })
+
+        var app3 = new Vue({
+            el: "#app3",
+            data: {
+                obj: {
+                    firstName: 'zhang',
+                    lastName: 'mengxi',
+                    age: 23
+                }
+            }
+        })
+
+        //可以像下面那种方式写 也可以这样写
+        // Vue.component('todoItem',{
+        //     template:` <li> {{ title }} <button v-on:click="$emit('remove')">x</button> </li> `,
+        //     props:['title']
+        // })
+
+        var todo=new Vue({
+            el:"#todo",
+            data:{
+                newTodoText:'',
+                todos:[
+                    'do the dishes',
+                    'take out trashs',
+                    'do the laundry'
+                ]
+            },
+            components:{  //可以像上面那种方式写 也可以这样写
+                'todoItem':{
+                    template:` <li> {{ title }} <button v-on:click="$emit('remove')">x</button> </li> `, 
+                    props:['title']
+                }
+            },
+            methods:{
+                addNewTodo:function(){
+                    this.todos.push(this.newTodoText)
+                    this.newTodoText=''
+                }
+            }
+        })
+    </script>
+</body>
+</html>
